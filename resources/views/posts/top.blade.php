@@ -12,6 +12,13 @@
 
 {{-- 検索ayaka --}}
 <section class="top_search">
+    <input type="search" id="post-search">
+    <button>検索</button>
+    <div class="tags">
+        {{-- @foreach ($tags as $tag)
+          <p>{{ $task }}</p>
+        @endforeach --}}
+    </div>
 
 
 </section>
