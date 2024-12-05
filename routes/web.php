@@ -13,10 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', function () {return view('welcome');})->name('welcome');
 
 Route::get('/login', function () {return view('auth.login');})->name('login');
 
 Route::get('/register', function () {return view('auth.register');})->name('register');
+
+Route::get('/myinfo', function () {return view('auth.myinfo');})->name('myinfo');
+
+Route::get('/top', function () {return view('posts.top');})->name('top');
+
+Route::get('/result', function () {return view('posts.result');})->name('result');
+
+Route::get('/post', function () {return view('posts.post');})->name('post');
+
+Route::get('/notification', function () {return view('posts.notification');})->name('notification');
+
+Route::get('/mypage', function () {return view('posts.mypage');})->name('mypage');
+
+Route::get('/edit', function () {return view('posts.edit');})->name('edit');
+
+Route::get('/create', function () {return view('posts.create');})->name('create');
