@@ -23,6 +23,8 @@ return new class extends Migration
             $table->json('route_data')->nullable(); //ルートデータ
             $table->time('duration')->nullable(); //ルートトラッキングの時間
             $table->timestamps(); //created_at updated_at
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

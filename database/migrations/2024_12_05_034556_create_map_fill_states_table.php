@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_images', function (Blueprint $table) {
+        Schema::create('map_fill_states', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id'); //ユーザーID（外部キー）
             $table->unsignedBigInteger('post_id'); //投稿ID（外部キー）
-            $table->string('img'); //投稿画像パス
+            $table->json('fill_data'); //塗データ
+            $table->int('filled_count')->nullable(); //塗りつぶし数
             $table->timestamps(); //created_at updated_at
 
-            // 外部キー制約
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_images');
+        Schema::dropIfExists('map_fill_states');
     }
 };
