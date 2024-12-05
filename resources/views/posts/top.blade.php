@@ -11,16 +11,23 @@
 {{-- ヘッダーcana --}}
 
 {{-- 検索ayaka --}}
-<section class="reserch"></section>
+<section class="top_search">
 
+
+</section>
 
 {{-- タグayaka --}}
-<section class="selected_tag"></section>
+<section class="top_selected_tag">
 
+
+</section>
 
 {{-- 記事一覧nao --}}
-<section class="all_article_list"></section>
+<section class="top_all_article_list">
+    
 
+
+</section>
 
 {{-- フッダーcana --}}
 
