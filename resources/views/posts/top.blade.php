@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>toppage|trippy</title>
-    <link rel="stylesheet" href="{{ asset('/css/tops.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/top.css') }}">
 </head>
 <body>
 {{-- ヘッダーcana --}}
@@ -15,9 +15,9 @@
     <input type="search" id="post-search">
     <button>検索</button>
     <div class="tags">
-        {{-- @foreach ($tags as $tag)
-          <p>{{ $task }}</p>
-        @endforeach --}}
+        {{-- @foreach ($tags as $tag) --}}
+          <p class="tag">{{ '国内旅行' }}</p>
+        {{-- @endforeach --}}
     </div>
 
 
