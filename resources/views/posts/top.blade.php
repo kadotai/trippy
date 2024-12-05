@@ -24,8 +24,12 @@
 
 {{-- 記事一覧nao --}}
 <section class="top_all_article_list">
-    
-
+    <div class="article_card">
+        <div class="article_card_left">
+            
+        </div>
+        <div class="article_card_right"></div>
+    </div>
 
 </section>
 
