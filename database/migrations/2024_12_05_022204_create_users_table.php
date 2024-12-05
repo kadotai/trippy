@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trippies', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id(); //自動採番
-            $table->varchar('name'); //名前（本名、あだ名ok）
-            $table->varchar('icon')->nullable(); //ユーザーアイコン
+            $table->string('name'); //名前（本名、あだ名ok）
+            $table->string('icon')->nullable(); //ユーザーアイコン
             $table->enum('gender',['male', 'female', 'unspecified']); //性別
             $table->year('birth'); //誕生年
-            $table->varchar('nationality'); //国籍（国コード）
-            $table->varchar('email')->unique(); //メールアドレス
-            $table->varchar('password'); //パスワード（ハッシュ化前提）
+            $table->string('nationality'); //国籍（国コード）
+            $table->string('email')->unique(); //メールアドレス
+            $table->string('password'); //パスワード（ハッシュ化前提）
             $table->timestamps(); //登録、更新日時（自動）
         });
     }
