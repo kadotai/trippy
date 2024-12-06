@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ Route::get('/top', function () {return view('posts.top');})->name('top');
 
 Route::get('/result', function () {return view('posts.result');})->name('result');
 
-Route::get('/post', function () {return view('posts.post');})->name('post');
+Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 

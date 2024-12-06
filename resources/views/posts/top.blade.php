@@ -16,27 +16,21 @@
       <input type="search" id="post-search" class="search_box">
       <button class="search_button">検索</button>
     </div>
-    <div class="tags">
-        {{-- @foreach ($tags as $tag) --}}
-          <p class="tag">{{ '国内旅行' }}</p>
-          <p class="tag">{{ '海外旅行' }}</p>
-          <p class="tag">{{ '傷心旅行' }}</p>
-          <p class="tag">{{ '自分探し' }}</p>
-        {{-- @endforeach --}}
-    </div>
-
-
 </section>
 
 {{-- タグayaka --}}
 <section class="top_selected_tag">
-
-
+       {{-- @foreach ($tags as $tag) --}}
+       <p class="tag">{{ '国内旅行' }}</p>
+       <p class="tag">{{ '海外旅行' }}</p>
+       <p class="tag">{{ '傷心旅行' }}</p>
+       <p class="tag">{{ '自分探し' }}</p>
+     {{-- @endforeach --}}
 </section>
 
 {{-- 記事一覧nao --}}
 <section class="top_all_article_list">
-    <div class="article_card"><a href="" class="article_card_link">
+    <div class="article_card"><a href="{{ route('posts.post') }}" class="article_card_link">
         <div class="article_card_left">
             <h1 class="username">Ryohey</h1>
             <img src="" alt="旅行写真" class="travel_img">
