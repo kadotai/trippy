@@ -12,11 +12,16 @@
 
 {{-- 検索ayaka --}}
 <section class="top_search">
-    <input type="search" id="post-search">
-    <button>検索</button>
+    <div class="search">
+      <input type="search" id="post-search" class="search_box">
+      <button class="search_button">検索</button>
+    </div>
     <div class="tags">
         {{-- @foreach ($tags as $tag) --}}
           <p class="tag">{{ '国内旅行' }}</p>
+          <p class="tag">{{ '海外旅行' }}</p>
+          <p class="tag">{{ '傷心旅行' }}</p>
+          <p class="tag">{{ '自分探し' }}</p>
         {{-- @endforeach --}}
     </div>
 
