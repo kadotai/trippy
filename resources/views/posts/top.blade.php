@@ -30,25 +30,30 @@
 </section>
 
 {{-- 記事一覧nao --}}
-<section class="top_all_article_list"><a href="">
-    <div class="article_card">
+<section class="top_all_article_list">
+    <div class="article_card"><a href="" class="article_card_link">
         <div class="article_card_left">
-            <p class="username">Ryohey</p>
-            <img src="" alt="旅行写真">
+            <h1 class="username">Ryohey</h1>
+            <img src="" alt="旅行写真" class="travel_img">
         </div>
         <div class="article_card_right">
-            <p class="country">Morocco</p>
-            <p class="city">Marrakesh</p>
+            <ul class="where">
+                <li class="country">Morocco</li>
+                <li class="city">&nbsp;Marrakesh</li>
+            </ul>
             <p class="date">2024/11/12~2024/11/30</p>
             <p class="article_tag">#海</p>
             <div class="like_and_comment">
-                <img src="{{ asset('img/like_icon.png') }}" alt="like"><p class="like">111</p>
-                <img src="{{ asset('img/comment_icon.png') }}" alt="comment"><p class="comment">222</p>
+                <div class="like">
+                    <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon"><p class="like_number">111</p>
+                </div>
+                <div class="comment">
+                    <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon"><p class="comment_number">222</p>
+                </div>
             </div>
-
         </div>
-    </div>
-</a></section>
+    </a></div>
+</section>
 
 {{-- フッダーcana --}}
 
