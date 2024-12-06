@@ -34,7 +34,7 @@
     <div class="article_card"><a href="" class="article_card_link">
         <div class="article_card_left">
             <h1 class="username">Ryohey</h1>
-            <img src="" alt="旅行写真" class="travel_img">
+            <img src="{{ asset('img/Morocco.jpg') }}" alt="旅行写真" class="travel_img">
         </div>
         <div class="article_card_right">
             <ul class="where">

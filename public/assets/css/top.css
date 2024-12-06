@@ -21,11 +21,13 @@ a {
 }
 
 .article_card_left {
-    width: 40%;
+    width: 120px;
+    padding: 0 5px;
 }
 
 .article_card_right {
     width: 60%;
+    padding: 0 5px;
 }
 
 .username {
@@ -38,7 +40,10 @@ a {
 }
 
 .travel_img {
-    
+    width: 120px;
+    height: 120px;
+    text-align: center;
+
 }
 
 .where {
@@ -64,17 +69,18 @@ a {
 }
 
 .date {
-    font-size: 10px;
+    font-size: 13px;
     margin: 0;
 }
 
 .article_tag {
-    font-size: 10px;
+    font-size: 13px;
     border: #333;
     background-color: #FFF;
     width: fit-content;
     clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%);
     padding: 0 10px 0 0;
+    margin: 5px 0;
 }
 
 .like_and_comment {
