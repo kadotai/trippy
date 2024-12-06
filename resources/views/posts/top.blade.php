@@ -25,6 +25,10 @@
        <p class="tag">{{ '海外旅行' }}</p>
        <p class="tag">{{ '傷心旅行' }}</p>
        <p class="tag">{{ '自分探し' }}</p>
+       <p class="tag">{{ 'キャニオニング' }}</p>
+       <p class="tag">{{ '洞窟' }}</p>
+       <p class="tag">{{ 'ビーチ' }}</p>
+       <p class="tag">{{ 'ダイビング' }}</p>
      {{-- @endforeach --}}
 </section>
 
@@ -55,6 +59,49 @@
 </section>
 
 {{-- フッダーcana --}}
+
+
+
+{{-- タグ一覧のScriptタグ --}}
+<script>
+// タップ時の誤動作を防ぐためのスワイプ時の処理を実行しない最小距離
+const minimumDistance = 30;
+
+// スワイプ開始時の座標
+let startX = 0;
+let startY = 0;
+
+// スワイプ対象のエリアを取得
+const swipeArea = document.querySelector('.top_selected_tag');
+
+// スワイプ開始時の処理
+swipeArea.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].pageX;
+  startY = e.touches[0].pageY;
+});
+
+// スワイプ終了時の処理
+swipeArea.addEventListener('touchend', (e) => {
+  const endX = e.changedTouches[0].pageX;
+  const endY = e.changedTouches[0].pageY;
+
+  // x軸とy軸の移動量を取得
+  const distanceX = endX - startX;
+  const distanceY = endY - startY;
+
+  // 横方向のスワイプを検知
+  if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > minimumDistance) {
+    if (distanceX > 0) {
+      console.log('右スワイプ');
+      // 右スワイプの処理
+    } else {
+      console.log('左スワイプ');
+      // 左スワイプの処理
+    }
+  }
+});
+
+</script>
 
 </body>
 </html>
