@@ -36,13 +36,28 @@
 
 {{-- 記事一覧nao --}}
 <section class="top_all_article_list">
-    <div class="article_card">
+    <div class="article_card"><a href="" class="article_card_link">
         <div class="article_card_left">
-            
+            <h1 class="username">Ryohey</h1>
+            <img src="" alt="旅行写真" class="travel_img">
         </div>
-        <div class="article_card_right"></div>
-    </div>
-
+        <div class="article_card_right">
+            <ul class="where">
+                <li class="country">Morocco</li>
+                <li class="city">&nbsp;Marrakesh</li>
+            </ul>
+            <p class="date">2024/11/12~2024/11/30</p>
+            <p class="article_tag">#海</p>
+            <div class="like_and_comment">
+                <div class="like">
+                    <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon"><p class="like_number">111</p>
+                </div>
+                <div class="comment">
+                    <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon"><p class="comment_number">222</p>
+                </div>
+            </div>
+        </div>
+    </a></div>
 </section>
 
 {{-- フッダーcana --}}
