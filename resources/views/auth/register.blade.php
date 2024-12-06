@@ -9,6 +9,10 @@
 <body>
 <div class="register-container">
     <div class="register-box">
+    <!-- ロゴ -->
+    <div class="logo-container">
+        <img src="" alt="ロゴ" class="logo">
+    </div>
     <h1>新規登録</h1>
     <form>
         <!-- ユーザー名 -->
@@ -20,38 +24,37 @@
         <!-- ユーザーアイコン -->
         <div class="input-group">
             <label for="user-icon">ユーザーアイコン</label>
-            <input type="file" id="user-icon" accept="image/*">
+            <input type="file" id="user-icon" accept="image/*" onchange="previewIcon(event)">
+            <div class="icon-preview-container">
+                <img id="icon-preview" class="icon-preview" src="#" alt="プレビュー">
+            </div>
         </div>
 
         <!-- 性別 -->
         <div class="input-group">
-            <label for="sex">性別</label>
-            <select id="sex" required>
-            <option value="">選択してください</option>
-            <option value="male">男</option>
-            <option value="female">女</option>
-            <option value="other">それ以外</option>
-            </select>
+            <label>性別</label>
+            <div class="radio-labels">
+                <div>
+                    <input type="radio" id="male" name="sex" value="male" required>
+                    <label for="male">男</label>
+                    <input type="radio" id="female" name="sex" value="female">
+                    <label for="female">女</label>
+                    <input type="radio" id="other" name="sex" value="other">
+                    <label for="other">それ以外</label>
+                </div>
+            </div>
         </div>
 
         <!-- 誕生日 -->
         <div class="input-group">
-            <label for="birthday">誕生日</label>
-            <input type="date" id="birthday" required>
+            <label for="birthday-year">誕生日 (西暦)</label>
+            <input type="number" id="birthday-year" placeholder="西暦を入力してください" min="1900" max="2024" required>
         </div>
 
         <!-- 国籍 -->
         <div class="input-group">
             <label for="nationality">国籍</label>
-            <select id="nationality" required>
-            <option value="">選択してください</option>
-            <option value="japan">日本</option>
-            <option value="usa">アメリカ</option>
-            <option value="uk">イギリス</option>
-            <option value="china">中国</option>
-            <option value="korea">韓国</option>
-            <option value="other">その他</option>
-        </select>
+            <input type="text" id="nationality" placeholder="国籍を入力してください" value="日本" required>
         </div>
 
         <!-- パスワード入力 -->
@@ -71,5 +74,14 @@
     </form>
     </div>
 </div>
+
+<script>
+function previewIcon(event) {
+    const preview = document.getElementById('icon-preview');
+    preview.src = URL.createObjectURL(event.target.files[0]);
+    preview.style.display = 'block';
+}
+</script>
+
 </body>
 </html>
