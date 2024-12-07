@@ -6,10 +6,13 @@
     <title>login</title>
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
 </head>
+
+@extends('layouts.app')
+@section('content')
 <body>
     <div class="login-container">
         <div class="login-box">
-            <img src="" alt="写真">
+            <img src="{{ asset('img/trippy.png')}}" alt="写真">
             <h1>Welcome Back!</h1>
             <p>Log in to your account</p>
             <form>
@@ -28,5 +31,6 @@
             </form>
         </div>
     </div>
+    @endsection
 </body>
 </html>
