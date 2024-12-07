@@ -9,7 +9,8 @@
 </head>
 <body>
 {{-- ヘッダーcana --}}
-
+{{-- @extends('layouts.app')
+@section('content') --}}
 {{-- 検索ayaka --}}
 <section class="top_search">
     <div class="search">
@@ -59,6 +60,8 @@
 </section>
 
 {{-- フッダーcana --}}
+{{-- @endsection --}}
+
 
 
 
@@ -102,6 +105,7 @@ swipeArea.addEventListener('touchend', (e) => {
 });
 
 </script>
+
 
 </body>
 </html>
