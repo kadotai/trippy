@@ -11,6 +11,7 @@
     {{-- Photo --}}
     <div class="Photo">
         <p>Photo</p>
+        <input type="file">
     </div>
 
     {{-- Title --}}
@@ -34,7 +35,15 @@
     {{-- Date --}}
     <div class="Date">
         <p>Date</p>
-        <input type="text">
+        <div class="Date_start_end">
+            <div class="Date_start">
+                <input type="date">
+            </div>
+            <p>~</p>
+            <div class="Date_end">
+                <input type="date">
+        </div>
+    </div>
     </div>
 
     {{-- Tag --}}
@@ -52,15 +61,34 @@
     {{-- memo --}}
     <div class="Memo">
         <p>Memo</p>
-        <input type="text">
+        <input type="text" value="" placeholder="このメモは非公開です" >
     </div>
 
     {{-- Map --}}
 
     {{-- Public --}}
+    <div class="Public">
+        <div class="public_private">
+            <input type="radio" id="contactChoice2" name="open" value="private">
+            <label for="contactChoice2">非公開</label>
+        </div>
+        <div class="public_public">
+            <input type="radio" id="contactChoice1" name="open" value="public">
+            <label for="contactChoice1">公開</label>
+        </div>
+    </div>
 
+    <div class="link">
     {{-- Delete --}}
+        <div class="Delete">
+            <a href="#">削除</a>
+        </div>
 
     {{-- Store --}}
+        <div class="Store">
+            <a href="#">保存</a>
+        </div>
+    </div>
+
 </body>
 </html>
