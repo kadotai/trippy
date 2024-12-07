@@ -8,6 +8,18 @@
 </head>
 <body>
     {{-- ユーザー、アイコン --}}
+    <div class="mypage-container">
+        <section class="profile-section">
+            <div class="profile">
+                <img src="" alt="User Icon" class="profile-icon">
+                <div class="small-profile">
+                    <h2 class="username">名前</h2>
+                    <p class="visited-info">行った都道府県: <strong></strong> / 国: <strong></strong></p>
+                </div>
+            </div>
+            <a href="{{ route('myinfo') }}" class="edit-btn">edit profile</a>
+        </section>
+    </div>
 
     {{-- 国内外地図 --}}
     <div id="my-map"></div>
