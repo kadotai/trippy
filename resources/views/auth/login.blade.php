@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
 </head>
 
-@extends('layouts.app')
-@section('content')
+{{-- @extends('layouts.app')
+@section('content') --}}
 <body>
     <div class="login-container">
         <div class="login-box">
@@ -31,6 +31,6 @@
             </form>
         </div>
     </div>
-    @endsection
+    {{-- @endsection --}}
 </body>
 </html>
