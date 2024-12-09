@@ -14,15 +14,15 @@
 {{-- 検索ayaka --}}
 <section class="top_search">
     <div class="search">
-      <input type="search" id="post-search" class="search_box">
-      <button class="search_button">検索</button>
+      <input type="search" id="post-search" class="search_box" placeholder="キーワードを入力(例:Cebu)">
+      <button class="search_button" id="search_button">検索</button>
     </div>
 </section>
 
 {{-- タグayaka --}}
 <section class="top_selected_tag">
        @foreach ($tags as $tag)
-         <p class="tag">{{ $tag -> tag_name }}</p>
+         <button class="tag-button" data-tag="{{ $tag->id }}">{{ $tag -> tag_name }}</button>
      @endforeach
 </section>
 
@@ -39,6 +39,7 @@
                 <li class="city">&nbsp;Marrakesh</li>
             </ul>
             <p class="date">2024/11/12~2024/11/30</p>
+            <p class="trip_title">モスク参拝</p>
             <p class="article_tag">#海</p>
             <div class="like_and_comment">
                 <div class="like">
@@ -96,6 +97,41 @@ swipeArea.addEventListener('touchend', (e) => {
     }
   }
 });
+
+
+// 検索機能のscriptタグ----------------------
+document.addEventListener("DOMContentLoaded", () => {
+    const selectedTags = new Set();
+
+    // タグ選択を管理
+    document.querySelectorAll(".tag-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const tagId = button.dataset.tagId;
+            if (selectedTags.has(tagId)) {
+                selectedTags.delete(tagId);
+                button.classList.remove("selected");
+            } else {
+                selectedTags.add(tagId);
+                button.classList.add("selected");
+            }
+        });
+    });
+
+    // 検索ボタンの動作
+    document.getElementById("search_button").addEventListener("click", () => {
+        const searchQuery = document.getElementById("post-search").value.trim();
+        const tags = Array.from(selectedTags);
+
+        // クエリパラメータを作成
+        const queryParams = new URLSearchParams();
+        if (searchQuery) queryParams.append("search", searchQuery);
+        if (tags.length > 0) queryParams.append("tags", tags.join(","));
+
+        // 検索結果ページにリダイレクト
+        window.location.href = `/result?${queryParams.toString()}`;
+    });
+});
+
 
 </script>
 

@@ -23,7 +23,7 @@
     overflow-x: scroll; /* 横スクロールを有効にする */
     white-space: nowrap; /* 横に並べる */
 }
-.tag{
+.tag-button{
     display: inline-block;
     font-size: 13px;
     border: #333;
@@ -31,6 +31,12 @@
     width: fit-content;
     clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%);
     padding: 0 20px 0 0;
+    cursor: pointer;
+}
+.tag-button.selected{
+    background-color: #007bff;
+    color: #fff;
+    border-color: #0056b3;
 }
 
 
