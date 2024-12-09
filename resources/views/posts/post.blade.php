@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>create|TRiPPY</title>
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+    />
 
 </head>
 <body>
@@ -19,8 +23,23 @@
     {{-- Photo --}}
     <div class="Photo">
         <h1>Photo</h1>
-        <img src="{{ asset('img/Morocco.jpg') }}" alt="旅行写真" class="travel_img">
+    <!-- Slider main container -->
+<div class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        <img src="{{ asset('img/Morocco.jpg') }}" alt="画像1" class="swiper-slide">
+        <img src="{{ asset('img/Morocco.jpg') }}" alt="画像1" class="swiper-slide">
+        <img src="{{ asset('img/Morocco.jpg') }}" alt="画像1" class="swiper-slide">
+        <img src="{{ asset('img/Morocco.jpg') }}" alt="画像1" class="swiper-slide">
     </div>
+    <!-- 必要に応じてナビボタン -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+        <!-- 必要に応じてページネーション -->
+    <div class="swiper-pagination"></div>
+</div>
+</div>
 
     {{-- Country --}}
     <div class="Country">
@@ -74,6 +93,22 @@
             <a href="#">この投稿好きやで〜</a>
         </div>
     </div>
+
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+<script>
+    const swiper = new Swiper(".swiper", {
+  // ページネーションが必要なら追加
+    pagination: {
+    el: ".swiper-pagination"
+    },
+  // ナビボタンが必要なら追加
+    navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev"
+    }
+});
+</script>
 
 </body>
 </html>
