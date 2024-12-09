@@ -1,0 +1,94 @@
+* {
+    background-color: rgb(255, 208, 232);
+    color: #333;
+}
+
+body {
+    padding: 15%;
+}
+
+h1 {
+    font-weight: bolder;
+    font-size: 13px;
+    font-style: italic;
+    margin: 10px 0;
+}
+
+p {
+    width: 100%;
+    font-size: 13px;
+    margin: 0;
+    background-color: rgb(255, 208, 232);
+    border-style: solid;
+    border-color: #FFF;
+}
+
+.travel_img {
+    width: 120px;
+    height: 120px;
+    text-align: center;
+
+}
+
+.Date_start_end {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Date input {
+    width: 110px;
+    height: 40px;
+    font-size: 13px;
+    margin: 0;
+    background-color: #FFF;
+    border: none;
+}
+
+.article_tag{
+    display: inline-block;
+    font-size: 13px;
+    border: #333;
+    background-color: #FFF;
+    width: fit-content;
+    clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%);
+    padding: 0 20px 0 0;
+}
+
+.Caption input {
+    width: 100%;
+    height: 100px;
+}
+
+.Comment {
+    padding: 20px 0;
+}
+
+.Comment input {
+    width: 100%;
+    height: 100px;
+    background-color: #FFF;
+    border: none;
+}
+
+
+.Comment a {
+    font-size: 13px;
+    color: #FFF;
+    background-color: #333;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.Like {
+    text-align: center;
+}
+
+.Like a {
+    font-size: 13px;
+    color: #333;
+    background-color: rgb(244, 208, 0);
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
