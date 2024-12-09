@@ -57,6 +57,12 @@
             <input type="text" id="nationality" placeholder="国籍を入力してください" value="日本" required>
         </div>
 
+        <!-- メールアドレス -->
+        <div class="input-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" placeholder="メールアドレスを入力してください" required>
+        </div>
+
         <!-- パスワード入力 -->
         <div class="input-group">
             <label for="password">パスワード</label>
