@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>create|TRiPPY</title>
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
     {{-- Photo --}}
@@ -65,7 +71,7 @@
     </div>
 
     {{-- Map --}}
-
+    
     {{-- Public --}}
     <div class="Public">
         <div class="public_private">

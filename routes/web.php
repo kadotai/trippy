@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,3 +37,5 @@ Route::get('/mypage', function () {return view('posts.mypage');})->name('mypage'
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
 Route::get('/create', function () {return view('posts.create');})->name('create');
+
+
