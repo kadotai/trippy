@@ -12,13 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->id(); //自動採番
+            $table->string('name'); //名前（本名、あだ名ok）
+            $table->string('icon')->nullable(); //ユーザーアイコン
+            $table->enum('gender',['male', 'female', 'unspecified']); //性別
+            $table->year('birth'); //誕生年
+            $table->string('nationality'); //国籍（国コード）
+            $table->string('email')->unique(); //メールアドレス
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password'); //パスワード（ハッシュ化前提）
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamps(); //登録、更新日時（自動）
         });
     }
 
