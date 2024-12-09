@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); //ユーザーID（外部キー）
             $table->unsignedBigInteger('post_id'); //投稿ID（外部キー）
             $table->json('fill_data'); //塗データ
-            $table->int('filled_count')->nullable(); //塗りつぶし数
+            $table->integer('filled_count')->nullable(); //塗りつぶし数
             $table->timestamps(); //created_at updated_at
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
