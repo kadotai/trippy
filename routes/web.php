@@ -26,7 +26,7 @@ Route::get('/myinfo', function () {return view('auth.myinfo');})->name('myinfo')
 
 Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
-Route::get('/result', function () {return view('posts.result');})->name('result');
+Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
