@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/mypage.css') }}">
 </head>
 <body>
     {{-- ユーザー、アイコン --}}
@@ -22,14 +23,77 @@
     </div>
 
     {{-- 国内外地図 --}}
-    <div id="my-map-jp"></div>
+    <div id="my-map-jp">地図</div>
 
-    {{-- 履歴 --}}
+    {{-- タブヘッダー --}}
+    <div class="tab-header">
+        <button class="tab-btn active" data-tab="posts">投稿一覧</button>
+        <button class="tab-btn" data-tab="planning">計画中</button>
+        <button class="tab-btn" data-tab="likes">いいね</button>
+    </div>
 
-    {{-- 計画中 --}}
+    {{-- タブコンテンツ --}}
+    <div class="tab-content">
+        {{-- 履歴 --}}
+        <div class="tab-pane active" id="posts">
+            <div class="post-list-container">
+                <div class="post-card clickable" data-route="/details/1">
+                <img src="https://via.placeholder.com/80" alt="投稿写真" class="post-photo">
+                    <div class="post-details">
+                        <div class="title-wrapper">
+                            <h2 class="title">タイトル名</h2>
+                            <span class="status">公開中</span>
+                        </div>
+                        <p class="post-location">国: 日本 / エリア: 東京</p>
+                        <p class="post-date">2024年12月3日</p>
+                        <p class="post-comment">これはサンプルコメントです。</p>
+                        <div class="post-actions">
+                            <button class="like-btn">🤍</button>
+                            <span class="like-count">0</span>
+                            <button class="comment-btn">💬</button>
+                            <button class="edit-btn clickable" data-route="/edit/1">編集</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- 計画中 --}}
+        <div class="tab-pane" id="planning">
+            <div class="post-list-container">
+                <div class="post-card">
+                <img src="https://via.placeholder.com/80" alt="投稿写真" class="post-photo">
+                    <div class="post-details">
+                        <h2 class="title">タイトル名</h2>
+                        <p class="post-location">国: 日本 / エリア: 大阪</p>
+                        <p class="post-date">2024年12月5日</p>
+                        <p class="post-comment">これは計画中のサンプルコメントです。</p>
+                        <button class="edit-btn clickable" data-route="/edit/2">編集</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    {{-- 他人 --}}
-
+        {{-- 他人 --}}
+        <div class="tab-pane" id="likes">
+            <div class="post-list-container">
+                <div class="post-card clickable" data-route="/details/3">
+                <img src="https://via.placeholder.com/80" alt="投稿写真" class="post-photo">
+                    <div class="post-details">
+                        <h2 class="title">タイトル名</h2>
+                        <div class="user-name-overlay">ユーザー名</div>
+                        <p class="post-location">国: 日本 / エリア: 京都</p>
+                        <p class="post-date">2024年12月3日</p>
+                        <p class="post-comment">これはいいねした投稿のコメントです。</p>
+                        <div class="post-actions">
+                            <button class="like-btn">🤍</button>
+                            <span class="like-count">0</span>
+                            <button class="comment-btn">💬</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {{-- 地図のscriptタグ --}}
     <script type="text/javascript" src="https://unpkg.com/japan-map-js@1.0.1/dist/jpmap.min.js"></script>
     <script type="text/javascript" src="dist/jpmap.min.js"></script>
@@ -113,5 +177,6 @@
           }
         });
     </script>
+    <script src="{{ asset('assets/js/mypage.js') }}"></script>
 </body>
 </html>
