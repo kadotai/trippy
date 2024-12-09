@@ -24,7 +24,7 @@ Route::get('/register', function () {return view('auth.register');})->name('regi
 
 Route::get('/myinfo', function () {return view('auth.myinfo');})->name('myinfo');
 
-Route::get('/top', function () {return view('posts.top');})->name('top');
+Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
 Route::get('/result', function () {return view('posts.result');})->name('result');
 

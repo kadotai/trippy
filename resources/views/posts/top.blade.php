@@ -21,16 +21,9 @@
 
 {{-- タグayaka --}}
 <section class="top_selected_tag">
-       {{-- @foreach ($tags as $tag) --}}
-       <p class="tag">{{ '国内旅行' }}</p>
-       <p class="tag">{{ '海外旅行' }}</p>
-       <p class="tag">{{ '傷心旅行' }}</p>
-       <p class="tag">{{ '自分探し' }}</p>
-       <p class="tag">{{ 'キャニオニング' }}</p>
-       <p class="tag">{{ '洞窟' }}</p>
-       <p class="tag">{{ 'ビーチ' }}</p>
-       <p class="tag">{{ 'ダイビング' }}</p>
-     {{-- @endforeach --}}
+       @foreach ($tags as $tag)
+         <p class="tag">{{ $tag -> tag_name }}</p>
+     @endforeach
 </section>
 
 {{-- 記事一覧nao --}}
