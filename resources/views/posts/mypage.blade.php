@@ -22,7 +22,7 @@
     </div>
 
     {{-- 国内外地図 --}}
-    <div id="my-map"></div>
+    <div id="my-map-jp"></div>
 
     {{-- 履歴 --}}
 
