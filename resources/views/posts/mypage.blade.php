@@ -23,7 +23,7 @@
     </div>
 
     {{-- 国内外地図 --}}
-    <div id="my-map-jp">地図</div>
+    <div id="my-map"></div>
 
     {{-- タブヘッダー --}}
     <div class="tab-header">
