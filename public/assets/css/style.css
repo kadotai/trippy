@@ -4,11 +4,14 @@
 }
 
 .top{
+    background: white;
     width: 100%;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 20px;
+
 }
 
 
@@ -22,6 +25,7 @@
 
 .title{
     font-size: 40px;
+    padding-top: 5px;
    
     
 
@@ -32,13 +36,16 @@
 /* footer */
 
 .footer-icons{
+    background-color: white;
     width: 100%;
     height: auto;
     padding-top: 2%;
     border-top: 1px solid black;
     display:flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 0;
 }
 
 .icons {
@@ -46,11 +53,4 @@
     height: auto;
     margin: 0 25%
     
-}
-
-
-footer{
-    position:absolute;
-    bottom: 0;
-    padding-bottom: 5px;
 }
