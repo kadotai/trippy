@@ -7,34 +7,37 @@
     <title>TRiPPY</title>
    {{-- css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/top.css') }}">
+   
+
+
+
+
+
+
 </head> 
 <body>
     
 <header>
-    @include('layouts.header')
-{{-- <div class="top">
+    <div class="top">
     <img class="logo" src="{{ asset('img/trippy.png') }}" alt="アプリロゴ">
     <div class="title">TRiPPY</div>
-</div> --}}
+</div>
 </header>
 
-@yield('contents')
+
+@yield('content')
 
 
-@hasSection('show_footer')
 <footer>
-@include('layouts.footer')
-{{-- 
 <div class="footer-icons">
     <a href="{{ route('posts.top') }}"><img class=icons src="{{ asset('img/footerlogo.jpg')}}" alt="ロゴ"></a>
     <a href="{{ route('create') }}"><img class=icons src="{{ asset('img/footerplus.png') }}" alt="新規"></a>
     <a href="{{ route('notification') }}"><img class=icons src="{{ asset('img/footernotic.png')}}" alt="通知"></a>
     <a href="{{ route('mypage') }}"><img class=icons src="{{ asset('img/footermypage.png')}}" alt="マイぺージ"></a>
-</div> --}}
+</div> 
 
 </footer>
-{{-- @endif --}}
+
 
 
 
