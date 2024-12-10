@@ -28,6 +28,9 @@ Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
 Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
+Route::get('/result',[PostController::class, 'store'])->name('posts.result');
+//↑これあってるかわかんないからいい感じにしてください：太田
+
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
