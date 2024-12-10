@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\AuthController;
 
 
 /*
@@ -21,6 +21,8 @@ Route::get('/', function () {return view('welcome');})->name('welcome');
 Route::get('/login', function () {return view('auth.login');})->name('login');
 
 Route::get('/register', function () {return view('auth.register');})->name('register');
+
+Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
 
 Route::get('/myinfo', function () {return view('auth.myinfo');})->name('myinfo');
 

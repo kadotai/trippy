@@ -14,7 +14,7 @@
             <p>Join us and start connecting with others!</p>
             <div class="button-group">
                 <a href="{{ route('login') }}" class="btn login-btn">Log In</a>
-                <a href="{{ route('register') }}" class="btn register-btn">Register</a>
+                <a href="{{ route('auth.register') }}" class="btn register-btn">Register</a>
             </div>
         </div>
     </div>
