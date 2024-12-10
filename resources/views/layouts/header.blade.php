@@ -7,7 +7,7 @@
     <title>TRiPPY</title>
    {{-- css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    
+    @yield('css')
    
 </head> 
 <body>
