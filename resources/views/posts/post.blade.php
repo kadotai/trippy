@@ -79,20 +79,24 @@
         <p>ホテルの予約はとっていたのですが、あまりにも星空が綺麗だったので野宿しました。</p>
     </div>
 
-    {{-- Map --}}
+    {{-- Tracking --}}
+    <div class="Tracking">
+        <h1>Tracking</h1>
+        </div>
     
+    {{-- Like --}}
+    <div class="Like">
+        <a href="#">この投稿好きやで〜</a>
+    </div>
+
     {{-- Comment --}}
     <div class="Comment">
         <h1>Comment</h1>
         <input type="text">
-        <a href="#">コメント投稿</a>
+        <div class="Comment_a"><a href="#">コメント投稿</a></div>
     </div>
 
-    {{-- Like --}}
-        <div class="Like">
-            <a href="#">この投稿好きやで〜</a>
-        </div>
-    </div>
+</div>
 
 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
