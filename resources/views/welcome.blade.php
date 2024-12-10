@@ -9,7 +9,7 @@
 <body>
     <div class="welcome-container">
         <div class="welcome-box">
-            <img src="" alt="写真1">
+            <img src="{{ asset('img/trippy.png')}}" alt="写真1">
             <h1>Welcome to Our Platform</h1>
             <p>Join us and start connecting with others!</p>
             <div class="button-group">

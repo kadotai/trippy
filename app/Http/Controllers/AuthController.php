@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -49,5 +50,34 @@ class AuthController extends Controller
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
         
+    }
+
+    // ログイン処理
+    public function login(Request $request)
+    {
+        try {
+            // バリデーション
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+    
+            // 認証試行
+            if (Auth::attempt($credentials)) {
+                // 認証成功
+                $request->session()->regenerate();
+                return redirect()->intended(route('posts.top'))->with('success', 'ログインしました！');
+            }
+    
+            // 認証失敗
+            return back()->withErrors([
+                'email' => 'ログイン情報が正しくありません。',
+            ]);
+        } catch (\Exception $e) {
+            // エラー発生時
+            return back()->withErrors([
+                'error' => 'エラーが発生しました: ' . $e->getMessage(),
+            ]);
+        }
     }
 }
