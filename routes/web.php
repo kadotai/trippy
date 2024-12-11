@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RouteController;
 
 
 /*
@@ -33,18 +32,20 @@ Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
 Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
+Route::get('/result',function () {return view('posts.result');})->name('result');
+//↑これあってるかわかんないからいい感じにしてください：太田
+
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
-Route::get('/mypage', function () {return view('posts.mypage');})->name('mypage');
+Route::get('/mypage', [MyPageController::class, 'show'])->name('mypage');
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
 Route::get('/create', function () {return view('posts.create');})->name('create');
 
-Route::post('/save-route', [RouteController::class, 'store']);
+Route::post('/post', [RouteController::class, 'store']);
 
-
-
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

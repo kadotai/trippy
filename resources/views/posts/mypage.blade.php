@@ -12,13 +12,17 @@
     <div class="mypage-container">
         <section class="profile-section">
             <div class="profile">
-                <img src="" alt="User Icon" class="profile-icon">
+                <img src="{{ $user->icon ? asset('storage/'.$user->icon) : asset('assets/images/default-icon.png') }}" alt="User Icon" class="profile-icon">
                 <div class="small-profile">
-                    <h2 class="username">名前</h2>
+                    <h2 class="username">{{ $user->name }}</h2>
                     <p class="visited-info">行った都道府県: <strong></strong> / 国: <strong></strong></p>
                 </div>
             </div>
-            <a href="{{ route('myinfo') }}" class="edit-btn">edit profile</a>
+            <form action="{{ route('logout') }}" method="POST" style="margin-top: 10px;">
+                @csrf
+                <a href="{{ route('myinfo') }}" class="edit-btn">edit profile</a>
+                <button type="submit" class="logout-btn">ログアウト</button>
+            </form>
         </section>
     </div>
 
@@ -97,84 +101,63 @@
     {{-- 地図のscriptタグ --}}
     <script type="text/javascript" src="https://unpkg.com/japan-map-js@1.0.1/dist/jpmap.min.js"></script>
     <script type="text/javascript" src="dist/jpmap.min.js"></script>
-    <script>
-        var d = new jpmap.japanMap(document.getElementById("my-map"), {
-          width: 500, //横幅のサイズ
-          movesIslands: true, //沖縄地方が地図の左上の分離されたスペースに移動する
-        });
-    </script>
-    <script>
-        var areaLinks = {
-                         1:"https://www.pref.hokkaido.lg.jp/",　//リンク先URL
-                         2:"https://www.pref.aomori.lg.jp/",
-        　　　　　　　　　 3:"https://www.pref.iwate.lg.jp/",
-                         4:"https://www.pref.miyagi.lg.jp/",
-                                    ・
-                                    ・
-                                　　省略
-                                    ・
-                                    ・
-                };
-        
+    <script>        
         var d = new jpmap.japanMap(document.getElementById("my-map"), {
             areas: [
-            {code : 1, name: "北海道", color: "#7f7eda", hoverColor: "#b3b2ee"},
-            {code : 2, name: "青森", color: "#759ef4", hoverColor: "#98b9ff"},
-            {code : 3, name: "岩手", color: "#759ef4", hoverColor: "#98b9ff"},
-            {code : 4, name: "宮城", color: "#759ef4", hoverColor: "#98b9ff"},
-            {code : 5, name: "秋田", color: "#759ef4", hoverColor: "#98b9ff"},
-            {code : 6, name: "山形", color: "#759ef4", hoverColor: "#98b9ff"},
-            {code : 7, name: "福島", color: "#759ef4", hoverColor: "#98b9ff"},
-            {code : 8, name: "茨城", color: "#7ecfea", hoverColor: "#b7e5f4"},
-            {code : 9, name: "栃木", color: "#7ecfea", hoverColor: "#b7e5f4"},
-            {code : 10, name: "群馬", color: "#7ecfea", hoverColor: "#b7e5f4"},
-            {code : 11, name: "埼玉", color: "#7ecfea", hoverColor: "#b7e5f4"},
-            {code : 12, name: "千葉", color: "#7ecfea", hoverColor: "#b7e5f4"},
-            {code : 13, name: "東京", color: "#7ecfea", hoverColor: "#b7e5f4"},
-            {code : 14, name: "神奈川", color: "#7ecfea", hoverColor: "#b7e5f4"},
-            {code : 15, name: "新潟", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 16, name: "富山", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 17, name: "石川", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 18, name: "福井", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 19, name: "山梨", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 20, name: "長野", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 21, name: "岐阜", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 22, name: "静岡", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 23, name: "愛知", color: "#7cdc92", hoverColor: "#aceebb"},
-            {code : 24, name: "三重", color: "#ffe966", hoverColor: "#fff19c"},
-            {code : 25, name: "滋賀", color: "#ffe966", hoverColor: "#fff19c"},
-            {code : 26, name: "京都", color: "#ffe966", hoverColor: "#fff19c"},
-            {code : 27, name: "大阪", color: "#ffe966", hoverColor: "#fff19c"},
-            {code : 28, name: "兵庫", color: "#ffe966", hoverColor: "#fff19c"},
-            {code : 29, name: "奈良", color: "#ffe966", hoverColor: "#fff19c"},
-            {code : 30, name: "和歌山", color: "#ffe966", hoverColor: "#fff19c"},
-            {code : 31, name: "鳥取", color: "#ffcc66", hoverColor: "#ffe0a3"},
-            {code : 32, name: "島根", color: "#ffcc66", hoverColor: "#ffe0a3"},
-            {code : 33, name: "岡山", color: "#ffcc66", hoverColor: "#ffe0a3"},
-            {code : 34, name: "広島", color: "#ffcc66", hoverColor: "#ffe0a3"},
-            {code : 35, name: "山口", color: "#ffcc66", hoverColor: "#ffe0a3"},
-            {code : 36, name: "徳島", color: "#fb9466", hoverColor: "#ffbb9c"},
-            {code : 37, name: "香川", color: "#fb9466", hoverColor: "#ffbb9c"},
-            {code : 38, name: "愛媛", color: "#fb9466", hoverColor: "#ffbb9c"},
-            {code : 39, name: "高知", color: "#fb9466", hoverColor: "#ffbb9c"},
-            {code : 40, name: "福岡", color: "#ff9999", hoverColor: "#ffbdbd"},
-            {code : 41, name: "佐賀", color: "#ff9999", hoverColor: "#ffbdbd"},
-            {code : 42, name: "長崎", color: "#ff9999", hoverColor: "#ffbdbd"},
-            {code : 43, name: "熊本", color: "#ff9999", hoverColor: "#ffbdbd"},
-            {code : 44, name: "大分", color: "#ff9999", hoverColor: "#ffbdbd"},
-            {code : 45, name: "宮崎", color: "#ff9999", hoverColor: "#ffbdbd"},
-            {code : 46, name: "鹿児島", color: "#ff9999", hoverColor: "#ffbdbd"},
-            {code : 47, name: "沖縄", color: "#eb98ff", hoverColor: "#f5c9ff"},
+            {code : 1, name: "Hokkaido", color: "#a0a0a0"},
+            {code : 2, name: "Aomori", color: "#a0a0a0"},
+            {code : 3, name: "Iwate", color: "#a0a0a0"},
+            {code : 4, name: "Miyagi", color: "#a0a0a0"},
+            {code : 5, name: "Akita", color: "#a0a0a0"},
+            {code : 6, name: "Yamagata", color: "#a0a0a0"},
+            {code : 7, name: "Fukushima", color: "#a0a0a0"},
+            {code : 8, name: "Ibaraki", color: "#a0a0a0"},
+            {code : 9, name: "Tochigi", color: "#a0a0a0"},
+            {code : 10, name: "Gunma", color: "#a0a0a0"},
+            {code : 11, name: "Saitama", color: "#a0a0a0"},
+            {code : 12, name: "Chiba", color: "#a0a0a0"},
+            {code : 13, name: "Tokyo", color: "#a0a0a0"},
+            {code : 14, name: "Kanagawa", color: "#a0a0a0"},
+            {code : 15, name: "Niigata", color: "#a0a0a0"},
+            {code : 16, name: "Toyama", color: "#a0a0a0"},
+            {code : 17, name: "Ishikawa", color: "#a0a0a0"},
+            {code : 18, name: "Fukui", color: "#a0a0a0"},
+            {code : 19, name: "Yamanashi", color: "#a0a0a0"},
+            {code : 20, name: "Nagano", color: "#a0a0a0"},
+            {code : 21, name: "Gifu", color: "#a0a0a0"},
+            {code : 22, name: "Shizuoka", color: "#a0a0a0"},
+            {code : 23, name: "Aichi", color: "#a0a0a0"},
+            {code : 24, name: "Mie", color: "#a0a0a0"},
+            {code : 25, name: "Shiga", color: "#a0a0a0"},
+            {code : 26, name: "Kyoto", color: "#a0a0a0"},
+            {code : 27, name: "Osaka", color: "#a0a0a0"},
+            {code : 28, name: "Hyogo", color: "#a0a0a0"},
+            {code : 29, name: "Nara", color: "#a0a0a0"},
+            {code : 30, name: "Wakayama", color: "#a0a0a0"},
+            {code : 31, name: "Tottori", color: "#a0a0a0"},
+            {code : 32, name: "Shimane", color: "#a0a0a0"},
+            {code : 33, name: "Okayama", color: "#a0a0a0"},
+            {code : 34, name: "Hiroshima", color: "#a0a0a0"},
+            {code : 35, name: "Yamaguchi", color: "#a0a0a0"},
+            {code : 36, name: "Tokushima", color: "#a0a0a0"},
+            {code : 37, name: "Kagawa", color: "#a0a0a0"},
+            {code : 38, name: "Ehime", color: "#a0a0a0"},
+            {code : 39, name: "Kochi", color: "#a0a0a0"},
+            {code : 40, name: "Fukuoka", color: "#a0a0a0"},
+            {code : 41, name: "Saga", color: "#a0a0a0"},
+            {code : 42, name: "Nagasaki", color: "#a0a0a0"},
+            {code : 43, name: "Kumamoto", color: "#a0a0a0"},
+            {code : 44, name: "Oita", color: "#a0a0a0"},
+            {code : 45, name: "Miyazaki", color: "#a0a0a0"},
+            {code : 46, name: "Kagoshima", color: "#a0a0a0"},
+            {code : 47, name: "Okinawa", color: "#a0a0a0"},
           ],
         
-          showsPrefectureName: true,
-          width: 1000,
+          showsPrefectureName: false,
+          width: 410,
           movesIslands: true,
           borderLineColor: "#000000",
           lang: 'ja',
-          onSelect: function(data){
-             location.href = areaLinks[data.area.code];
-          }
         });
     </script>
     <script src="{{ asset('assets/js/mypage.js') }}"></script>
