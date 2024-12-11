@@ -11,7 +11,7 @@
         <div class="register-box">
             <!-- ロゴ -->
             <div class="logo-container">
-                <img src="{{ asset('img/trippy.png')}}" alt="ロゴ" class="logo">
+                <img src="{{ asset('img/trippy.png')}}" alt="User Icon" class="profile-icon">
             </div>
             <h1>新規登録</h1>
             <form action="{{ route('auth.register') }}" method="POST" enctype="multipart/form-data">

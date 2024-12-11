@@ -25,6 +25,7 @@
             </form>
         </section>
     </div>
+    
 
     {{-- 国内外地図 --}}
     <div id="my-map"></div>

@@ -28,11 +28,11 @@ class AuthController extends Controller
             if ($request->hasFile('user_icon')) {
                 $iconPath = $request->file('user_icon')->store('icons', 'public');
             }
-        
+
             // ユーザー作成
             $user = User::create([
                 'name' => $request->username,
-                'icon' => $iconPath,
+                'user_icon' => $iconPath,
                 'gender' => $request->sex,
                 'birth' => $request->birth,
                 'nationality' => $request->nationality,
@@ -40,7 +40,6 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            // dd($request->all());
 
             
             Auth::login($user); // 登録後に自動的にログイン
