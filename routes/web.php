@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\MyPageController;
 
 
@@ -41,7 +40,7 @@ Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
-Route::get('/mypage', function () {return view('posts.mypage');})->name('mypage');
+Route::get('/mypage', [MyPageController::class, 'show'])->name('mypage');
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
