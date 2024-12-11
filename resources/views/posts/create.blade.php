@@ -66,6 +66,16 @@
     </div>
 
     {{-- Map --}}
+    <div class="Tracking">
+        <p>Tracking</p>
+    <div id="map" style="height: 400px;"></div> <!-- 地図の表示領域 -->
+
+    {{-- スタートボタンとストップボタン --}}
+    <div class="MapControl">
+        <button id="startTracking">スタート</button>
+        <button id="stopTracking" disabled>ストップ</button>
+    </div>
+    </div>
     
     {{-- Public --}}
     <div class="Public">
@@ -86,10 +96,143 @@
         </div>
 
     {{-- Store --}}
-        <div class="Store">
-            <a href="#">保存</a>
-        </div>
+    <div class="Store">
+        <button id="saveRoute">保存</button>
+    </div>
     </div>
 
+    <script>
+        let marker;
+        let watchId;
+        let route = [];
+        let startTime = null; // 開始時刻を保持するグローバル変数
+    
+        // 地図の初期化
+        function initMap() {
+            const initialPosition = { lat: 35.6895, lng: 139.6917 }; // 東京
+    
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: initialPosition,
+            });
+    
+            marker = new google.maps.Marker({
+                position: initialPosition,
+                map: map,
+            });
+        }
+    
+        // スタートボタンが押されたとき
+        document.getElementById('startTracking').addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                alert("位置情報が利用できません");
+                return;
+            }
+    
+            alert("ルートトラッキングを開始します！");
+            startTime = Date.now(); // トラッキング開始時刻を記録
+    
+            watchId = navigator.geolocation.watchPosition(
+                position => {
+                    const { latitude, longitude } = position.coords;
+    
+                    // 現在位置をオブジェクト形式で保存
+                    const currentPosition = { lat: latitude, lng: longitude };
+                    route.push(currentPosition); // 正しい形式で保存
+    
+                    // 地図の中心を現在位置に移動
+                    map.setCenter(currentPosition);
+    
+                    // マーカーの位置を更新
+                    marker.setPosition(currentPosition);
+    
+                    // 地図上にルートを描画
+                    new google.maps.Polyline({
+                        path: route, // 修正後の `route` を使用
+                        geodesic: true,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2,
+                        map: map
+                    });
+                },
+                error => {
+                    console.error("位置情報エラー:", error);
+                },
+                { enableHighAccuracy: true }
+            );
+    
+            document.getElementById('startTracking').disabled = true;
+            document.getElementById('stopTracking').disabled = false;
+        });
+    
+        // ストップボタンが押されたとき
+        document.getElementById('stopTracking').addEventListener('click', async () => {
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                alert("ルートトラッキングを終了しました！");
+            }
+    
+            // 距離を計算 (Haversine Formula)
+            function calculateDistance(route) {
+                const R = 6371; // 地球の半径 (km)
+                let totalDistance = 0;
+    
+                for (let i = 1; i < route.length; i++) {
+                    const lat1 = route[i - 1].lat;
+                    const lon1 = route[i - 1].lng;
+                    const lat2 = route[i].lat;
+                    const lon2 = route[i].lng;
+    
+                    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+                    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    
+                    const a =
+                        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                    totalDistance += R * c;
+                }
+    
+                return totalDistance;
+            }
+    
+            const distance = calculateDistance(route);
+            const duration = (Date.now() - startTime) / 1000; // 所要時間を秒で計算
+    
+            const data = {
+                route_data: route, // 修正後の形式で保存
+                distance: distance,
+                duration: duration
+            };
+    
+            try {
+                const response = await fetch('/save-route', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(data)
+                });
+    
+                if (response.ok) {
+                    alert("データが保存されました！");
+                } else {
+                    alert("データの保存に失敗しました。");
+                }
+            } catch (error) {
+                console.error("保存エラー:", error);
+                alert("通信エラーが発生しました。");
+            }
+    
+            document.getElementById('startTracking').disabled = false;
+            document.getElementById('stopTracking').disabled = true;
+        });
+    </script>
+    
+    
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSeGO53Uzs4JgZGrKy-eokk0aAb_vGbM&callback=initMap" async defer></script>
 </body>
 </html>
