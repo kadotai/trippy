@@ -45,7 +45,21 @@ Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
 Route::get('/create', function () {return view('posts.create');})->name('create');
 
+<<<<<<< Updated upstream
 Route::post('/post', [RouteController::class, 'store']);
+=======
+Route::post('/create', [RouteController::class, 'store']);
+
+Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+
+Route::post('/post', [PostController::class, 'store'])->name('posts.store');
+
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+
+
+
+>>>>>>> Stashed changes
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
