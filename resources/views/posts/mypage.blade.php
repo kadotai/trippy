@@ -12,13 +12,17 @@
     <div class="mypage-container">
         <section class="profile-section">
             <div class="profile">
-                <img src="" alt="User Icon" class="profile-icon">
+                <img src="{{ $user->icon ? asset('storage/'.$user->icon) : asset('assets/images/default-icon.png') }}" alt="User Icon" class="profile-icon">
                 <div class="small-profile">
-                    <h2 class="username">名前</h2>
+                    <h2 class="username">{{ $user->name }}</h2>
                     <p class="visited-info">行った都道府県: <strong></strong> / 国: <strong></strong></p>
                 </div>
             </div>
-            <a href="{{ route('myinfo') }}" class="edit-btn">edit profile</a>
+            <form action="{{ route('logout') }}" method="POST" style="margin-top: 10px;">
+                @csrf
+                <a href="{{ route('myinfo') }}" class="edit-btn">edit profile</a>
+                <button type="submit" class="logout-btn">ログアウト</button>
+            </form>
         </section>
     </div>
 

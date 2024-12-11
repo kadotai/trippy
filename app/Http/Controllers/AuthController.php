@@ -30,7 +30,7 @@ class AuthController extends Controller
             }
         
             // ユーザー作成
-            User::create([
+            $user = User::create([
                 'name' => $request->username,
                 'icon' => $iconPath,
                 'gender' => $request->sex,
@@ -41,6 +41,12 @@ class AuthController extends Controller
             ]);
 
             // dd($request->all());
+
+            
+            Auth::login($user); // 登録後に自動的にログイン
+            $request->session()->regenerate(); // セッションを再生成
+
+            // return redirect()->route('mypage');
 
         
             // 登録成功後、リダイレクト
@@ -79,5 +85,14 @@ class AuthController extends Controller
                 'error' => 'エラーが発生しました: ' . $e->getMessage(),
             ]);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('welcome');
     }
 }
