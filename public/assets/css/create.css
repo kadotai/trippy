@@ -1,9 +1,6 @@
-* {
+body {
     background-color: rgb(255, 208, 232);
     color: #333;
-}
-
-body {
     padding: 15%;
 }
 
@@ -53,6 +50,28 @@ input {
     height: 100px;
 }
 
+#map {
+    width: 100%;  /* 地図の横幅を調整 */
+    height: 400px; /* 地図の高さを調整 */
+    margin: 0;
+}
+
+.MapControl {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.MapControl button {
+    font-size: 13px;
+    color: #333;
+    background-color: #FFF;
+    border-radius: 20px;
+    padding: 5px 10px;
+    text-decoration: none;
+    margin: 5px;
+}
+
+
 .public_private , .public_public {
     font-size: 13px;
     display: flex;
@@ -92,4 +111,5 @@ input {
 .link {
     display: flex;
     justify-content: center;
+    margin: 20px 0;
 }
