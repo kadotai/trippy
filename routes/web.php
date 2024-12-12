@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MyPageController;
 
 
 /*
@@ -40,10 +41,19 @@ Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
-Route::get('/mypage', function () {return view('posts.mypage');})->name('mypage');
+Route::get('/mypage', [MyPageController::class, 'show'])->name('mypage');
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
 Route::get('/create', function () {return view('posts.create');})->name('create');
 
+Route::post('/create', [RouteController::class, 'store']);
+
+Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+
+Route::post('/post', [PostController::class, 'store'])->name('posts.store');
+
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
