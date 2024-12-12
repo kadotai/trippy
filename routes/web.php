@@ -32,7 +32,8 @@ Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
 Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
-Route::get('/result',function () {return view('posts.result');})->name('result');
+// Route::get('/result', [PostController::class, 'result'])->name('posts.result');
+// Route::get('/result',function () {return view('posts.result');})->name('result');
 //↑これあってるかわかんないからいい感じにしてください：太田
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
