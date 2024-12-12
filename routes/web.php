@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RouteController;
 
 
 /*
@@ -43,7 +44,7 @@ Route::get('/mypage', [MyPageController::class, 'show'])->name('mypage');
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
-Route::get('/create', function () {return view('posts.create');})->name('create');
+// Route::get('/create', function () {return view('posts.create');})->name('create');
 
 Route::post('/create', [RouteController::class, 'store']);
 

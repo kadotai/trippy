@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Prefecture;
 
 class PostController extends Controller
 {
@@ -29,7 +30,11 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        // return view('posts.create');
+
+        $prefectures = Prefecture::all(); // 都道府県データを取得
+        return view('posts.create', compact('prefectures')); // ビューに渡す
+
     }
 
     function store(Request $request)
@@ -44,6 +49,11 @@ class PostController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'content' => 'required|string',
             'post_type' => 'required|in:public,private',
+        ]);
+
+        $request->validate([
+            'route_date' => 'nullable|string',
+            'duration' => 'nullable|string',
         ]);
 
         // 写真を保存
@@ -119,14 +129,6 @@ class PostController extends Controller
             ->get();
 
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags')); 
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'route_date' => 'nullable|string',
-            'duration' => 'nullable|string',
-        ]);
     }
 }
 

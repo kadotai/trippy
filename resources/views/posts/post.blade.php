@@ -63,8 +63,29 @@
                 <h1>Caption</h1>
                 <p>{{ $post->caption }}</p>
             </div>
+
+            {{-- Tracking --}}
+            <div class="Tracking">
+                <h1>Tracking</h1>
+            </div>
+
         @endforeach
+
+            {{-- Like --}}
+            <div class="Like">
+                <a href="#">この投稿好きやで〜</a>
+            </div>
+
+            {{-- Comment --}}
+            <div class="Comment">
+                <h1>Comment</h1>
+                <input type="text">
+            <div class="Comment_a"><a href="#">コメント投稿</a></div>
     </div>
+    </div>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
 
     <script>
         const swiper = new Swiper(".swiper", {

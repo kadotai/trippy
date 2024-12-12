@@ -6,10 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>create|TRiPPY</title>
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
+
 </head>
 <body>
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf <!-- CSRF保護のため -->
+
+        {{-- Select_trip --}}
+        <p>Select your trip</p>
+        <div class="Select_trip">
+            <button id="domestic">国内旅行</button>
+            <button id="overseas">海外旅行</button>
+        </div>
         
         {{-- Photo --}}
         <div class="Photo">
@@ -23,16 +31,37 @@
             <input type="text" name="title" required>
         </div>
 
+        {{-- domestic_trip --}}
+        <div class="domestic_trip">
+        {{-- Country --}}
+        <div class="Country">
+            <p>Country</p>
+            <input type="text" value="Japan" placeholder="" name="country" required>
+        </div>
+        {{-- City --}}
+        <div class="City">
+            <p>City</p>
+            <select name="pref" name="country" required>
+                @foreach ($prefectures as $prefecture)
+                <option value="{{ $prefecture->prefecture_name }}">{{ $prefecture->prefecture_name }}</option>
+                @endforeach
+
+            </select>
+        </div>
+        </div>
+
+        {{-- overseas_trip --}}
+        <div class="overseas_trip">
         {{-- Country --}}
         <div class="Country">
             <p>Country</p>
             <input type="text" name="country" required>
         </div>
-
         {{-- City --}}
         <div class="City">
             <p>City</p>
             <input type="text" name="city" required>
+        </div>
         </div>
 
         {{-- Date --}}
@@ -93,7 +122,7 @@
 
             {{-- Store --}}
             <div class="Store">
-                <a href="{{ route('posts.store') }}" id="saveRoute"></a>
+                <a href="{{ route('posts.store') }}" id="saveRoute">保存</a>
             </div>
         </div>
     </form>
@@ -228,6 +257,34 @@
             document.getElementById('startTracking').disabled = false;
             document.getElementById('stopTracking').disabled = true;
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const domesticButton = document.getElementById('domestic');
+    const overseasButton = document.getElementById('overseas');
+    const domesticTrip = document.querySelector('.domestic_trip');
+    const overseasTrip = document.querySelector('.overseas_trip');
+
+    // 初期状態を設定（国内旅行を表示、海外旅行を非表示）
+    domesticTrip.style.display = 'block';
+    overseasTrip.style.display = 'none';
+
+    // 国内旅行ボタンがクリックされた場合
+    domesticButton.addEventListener('click', (event) => {
+        event.preventDefault(); // ボタンのデフォルト動作を無効化
+        domesticTrip.style.display = 'block';
+        overseasTrip.style.display = 'none';
+    });
+
+    // 海外旅行ボタンがクリックされた場合
+    overseasButton.addEventListener('click', (event) => {
+        event.preventDefault(); // ボタンのデフォルト動作を無効化
+        domesticTrip.style.display = 'none';
+        overseasTrip.style.display = 'block';
+    });
+});
+
+
+
     </script>
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSeGO53Uzs4JgZGrKy-eokk0aAb_vGbM&callback=initMap" async defer></script>
