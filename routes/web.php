@@ -42,6 +42,8 @@ Route::get('/notification', function () {return view('posts.notification');})->n
 
 Route::get('/mypage', [MyPageController::class, 'show'])->name('mypage');
 
+Route::patch('/mypage', [MyPageController::class, 'getPrefectures'])->name('mypage');
+
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
 Route::get('/create', function () {return view('posts.create');})->name('create');

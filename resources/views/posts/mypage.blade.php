@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset('assets/css/mypage.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body>
     {{-- ユーザー、アイコン --}}
@@ -101,57 +103,24 @@
     {{-- 地図のscriptタグ --}}
     <script type="text/javascript" src="https://unpkg.com/japan-map-js@1.0.1/dist/jpmap.min.js"></script>
     <script type="text/javascript" src="dist/jpmap.min.js"></script>
-    <script>        
-        var d = new jpmap.japanMap(document.getElementById("my-map"), {
-            areas: [
-            {code : 1, name: "Hokkaido", color: "#a0a0a0"},
-            {code : 2, name: "Aomori", color: "#a0a0a0"},
-            {code : 3, name: "Iwate", color: "#a0a0a0"},
-            {code : 4, name: "Miyagi", color: "#a0a0a0"},
-            {code : 5, name: "Akita", color: "#a0a0a0"},
-            {code : 6, name: "Yamagata", color: "#a0a0a0"},
-            {code : 7, name: "Fukushima", color: "#a0a0a0"},
-            {code : 8, name: "Ibaraki", color: "#a0a0a0"},
-            {code : 9, name: "Tochigi", color: "#a0a0a0"},
-            {code : 10, name: "Gunma", color: "#a0a0a0"},
-            {code : 11, name: "Saitama", color: "#a0a0a0"},
-            {code : 12, name: "Chiba", color: "#a0a0a0"},
-            {code : 13, name: "Tokyo", color: "#a0a0a0"},
-            {code : 14, name: "Kanagawa", color: "#a0a0a0"},
-            {code : 15, name: "Niigata", color: "#a0a0a0"},
-            {code : 16, name: "Toyama", color: "#a0a0a0"},
-            {code : 17, name: "Ishikawa", color: "#a0a0a0"},
-            {code : 18, name: "Fukui", color: "#a0a0a0"},
-            {code : 19, name: "Yamanashi", color: "#a0a0a0"},
-            {code : 20, name: "Nagano", color: "#a0a0a0"},
-            {code : 21, name: "Gifu", color: "#a0a0a0"},
-            {code : 22, name: "Shizuoka", color: "#a0a0a0"},
-            {code : 23, name: "Aichi", color: "#a0a0a0"},
-            {code : 24, name: "Mie", color: "#a0a0a0"},
-            {code : 25, name: "Shiga", color: "#a0a0a0"},
-            {code : 26, name: "Kyoto", color: "#a0a0a0"},
-            {code : 27, name: "Osaka", color: "#a0a0a0"},
-            {code : 28, name: "Hyogo", color: "#a0a0a0"},
-            {code : 29, name: "Nara", color: "#a0a0a0"},
-            {code : 30, name: "Wakayama", color: "#a0a0a0"},
-            {code : 31, name: "Tottori", color: "#a0a0a0"},
-            {code : 32, name: "Shimane", color: "#a0a0a0"},
-            {code : 33, name: "Okayama", color: "#a0a0a0"},
-            {code : 34, name: "Hiroshima", color: "#a0a0a0"},
-            {code : 35, name: "Yamaguchi", color: "#a0a0a0"},
-            {code : 36, name: "Tokushima", color: "#a0a0a0"},
-            {code : 37, name: "Kagawa", color: "#a0a0a0"},
-            {code : 38, name: "Ehime", color: "#a0a0a0"},
-            {code : 39, name: "Kochi", color: "#a0a0a0"},
-            {code : 40, name: "Fukuoka", color: "#a0a0a0"},
-            {code : 41, name: "Saga", color: "#a0a0a0"},
-            {code : 42, name: "Nagasaki", color: "#a0a0a0"},
-            {code : 43, name: "Kumamoto", color: "#a0a0a0"},
-            {code : 44, name: "Oita", color: "#a0a0a0"},
-            {code : 45, name: "Miyazaki", color: "#a0a0a0"},
-            {code : 46, name: "Kagoshima", color: "#a0a0a0"},
-            {code : 47, name: "Okinawa", color: "#a0a0a0"},
-          ],
+    <script>
+        
+
+      fetch('/mypage', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+      })
+      .then(response => response.json())
+      .then(prefectureIds => {
+           var d = new jpmap.japanMap(document.getElementById("my-map"), {
+            areas: Array.from({length:47}, (_, i) => ({
+                code: i + 1,
+                name: 'Prefecture ${i + 1}',
+                color: prefectureIds.includes(i + 1) ? "#f8b500" : "#a0a0a0"
+            })),
         
           showsPrefectureName: false,
           width: 410,
@@ -159,6 +128,8 @@
           borderLineColor: "#000000",
           lang: 'ja',
         });
+    })
+    .catch(error => console.error('Error fetching prefecture data:', error));
     </script>
     <script src="{{ asset('assets/js/mypage.js') }}"></script>
 </body>
