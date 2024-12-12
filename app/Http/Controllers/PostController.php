@@ -46,6 +46,11 @@ class PostController extends Controller
             'post_type' => 'required|in:public,private',
         ]);
 
+        $request->validate([
+            'route_date' => 'nullable|string',
+            'duration' => 'nullable|string',
+        ]);
+
         // 写真を保存
         $photoPath = null;
         if ($request->hasFile('photo')) {
@@ -121,12 +126,5 @@ class PostController extends Controller
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags')); 
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'route_date' => 'nullable|string',
-    //         'duration' => 'nullable|string',
-    //     ]);
-    // }
 }
 
