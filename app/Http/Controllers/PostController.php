@@ -106,9 +106,9 @@ class PostController extends Controller
     public function showResults(Request $request)
     {
 
-// postsテーブルからすべてのデータを取得
+    // postsテーブルからすべてのデータを取得
         $posts = Post::all();
-//Usersテーブルからユーザーネームを取得
+    //Usersテーブルからユーザーネームを取得
         $posts = Post::with('user')->get();
         
 
@@ -134,16 +134,14 @@ class PostController extends Controller
             ->get();
 
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
-   
-           
     }
     
     public function showPosts()
-{
+    {
     $posts = Post::with('images')->get(); // Postと関連する画像を取得
 
     return view('posts.result', compact('posts'));
-}
+    }
 }
 
 
