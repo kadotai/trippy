@@ -137,13 +137,6 @@ class PostController extends Controller
    
            
     }
-    public function store(Request $request)
-    {
-        $request->validate([
-            'route_date' => 'nullable|string',
-            'duration' => 'nullable|string',
-        ]);
-    }
     
     public function showPosts()
 {
@@ -151,7 +144,7 @@ class PostController extends Controller
 
     return view('posts.result', compact('posts'));
 }
-
+}
 
 
 
