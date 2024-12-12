@@ -39,6 +39,106 @@
     border-color: #0056b3;
 }
 
+/* 検索欄 */
+
+.search{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.search_box{
+    margin-right: 10px;
+    height: 30px;
+    width: 220px;
+}
+.search_button{
+    height: 30px;
+    width: 60px;
+    border: none;
+    background-color: yellow;
+    /* ↑いったん見えないから黄色にしてる */
+}
+
+/* タグ表示 */
+.result_selected_tag {
+    background-color: yellow; 
+    /* ↑いったん見えないから黄色にしてる */
+    height: 45px;
+    width: 100%;
+    overflow-x: scroll; /* 横スクロールを有効にする */
+    white-space: nowrap; /* 横に並べる */
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tag:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.tag.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #0056b3;
+}
+
+/* 投稿結果 */
+.result_posts {
+    display: flex;
+    flex-wrap: wrap; /* フレックスで複数列対応 */
+    gap: 20px; /* 各投稿間のスペース */
+    justify-content: center; /* 中央揃え */
+    margin-top: 20px;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 300px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post:hover {
+    transform: scale(1.03); /* ホバーで少し拡大 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* ホバー時の影を強調 */
+}
+
+.post h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.post .tag {
+    display: inline-block;
+    margin: 5px 5px 0 0;
+    background-color: #e9ecef;
+    color: #333;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 3px;
+}
+
 
 /* 記事一覧nao */
 a {

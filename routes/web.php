@@ -30,10 +30,11 @@ Route::get('/myinfo', function () {return view('auth.myinfo');})->name('myinfo')
 
 Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
-Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
+// Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
-Route::get('/result',function () {return view('posts.result');})->name('result');
+// Route::get('/result',function () {return view('posts.result');})->name('result');
 //↑これあってるかわかんないからいい感じにしてください：太田
+Route::get('/result', [PostController::class, 'showResults'])->name('posts.result');
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
@@ -47,11 +48,13 @@ Route::get('/create', function () {return view('posts.create');})->name('create'
 
 Route::post('/create', [RouteController::class, 'store']);
 
-Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+// Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
 

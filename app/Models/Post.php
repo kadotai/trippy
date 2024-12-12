@@ -29,4 +29,6 @@ class Post extends Model
         'end_date', 'content', 'route_data', 'distance',
         'duration', 'post_type'
     ];
+
+
 }

@@ -121,12 +121,12 @@ class PostController extends Controller
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags')); 
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'route_date' => 'nullable|string',
-            'duration' => 'nullable|string',
-        ]);
-    }
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'route_date' => 'nullable|string',
+    //         'duration' => 'nullable|string',
+    //     ]);
+    // }
 }
 
