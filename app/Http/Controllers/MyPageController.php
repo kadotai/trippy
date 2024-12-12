@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Post;
 
 class MyPageController extends Controller
 {
@@ -16,8 +17,18 @@ class MyPageController extends Controller
             // ユーザーが未ログインの場合はログイン画面へリダイレクト
             return redirect()->route('login')->with('error', 'ログインしてください。');
         }
-        
         // ビューにユーザー情報を渡す
-        return view('posts.mypage', compact('user'));
+        return view('posts.mypage', compact('user'));        
+    }
+
+    public function getPrefectures(Request $request)
+    {
+        $user = Auth::user();
+
+        $prefectureIds = Post::where('user_id', $user->id)
+        ->pluck('prefecture_id');
+
+        return response()->json($prefectureIds);
     }
 }
+
