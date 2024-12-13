@@ -16,18 +16,25 @@
     <section class="result_search">
         <div class="search">
             <form action="{{ route('posts.result') }}" method="GET">
-                <input type="search" name="search" id="post-search" class="search_box" placeholder="投稿を検索">
+                {{-- キーワード検索 --}}
+                <input type="search" name="search" id="post_search" class="search_box" placeholder="投稿を検索">
+                {{-- タグ --}}
+                <section class="result_selected_tag">
+                    <form action="{{ route('posts.result') }}" method="GET">
+                        <p>タグを選択</p>
+                    </form>
+                    @foreach ($tags as $tag)
+                    <p class="tag">{{ $tag->tag_name }}</p>
+                    @endforeach
+                </section>
+
+                </select>
                 <button type="submit" class="search_button">検索</button>
             </form>
         </div>
     </section>
     
-    {{-- タグ --}}
-    <section class="result_selected_tag">
-        @foreach ($tags as $tag)
-          <p class="tag">{{ $tag->tag_name }}</p>
-        @endforeach
-    </section>
+
 
     {{-- 検索結果の件数 --}}
     <section class="result_count">
