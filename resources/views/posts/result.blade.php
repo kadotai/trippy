@@ -1,76 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>result|trippy</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/top.css') }}">
-    @extends('layouts.original')
-    @section('css')
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>result|trippy</title>
+        @extends('layouts.original')
+        @section('css')
+        <link rel="stylesheet" href="{{ asset('assets/css/top.css') }}">
+        @endsection
+    </head>
+    <body>
+        @section('content')
+        {{-- 検索欄 --}}
+        <section class="result_search">
+            <div class="search">
+                <form action="{{ route('posts.result') }}" method="GET">
+                    {{-- キーワード検索 --}}
+                    <input type="search" name="search" id="post_search" class="search_box" placeholder="投稿を検索">
+                    <button type="submit" class="search_button">検索</button>
+                </form>
+                
+            </div>
+        </section>
 
-</head>
-<body>
-    @section('content')
-    {{-- 検索欄 --}}
-    <section class="result_search">
-        <div class="search">
-            <form action="{{ route('posts.result') }}" method="GET">
-                {{-- キーワード検索 --}}
-                <input type="search" name="search" id="post_search" class="search_box" placeholder="投稿を検索">
-                {{-- タグ --}}
-                <section class="result_selected_tag">
-                    <form action="{{ route('posts.result') }}" method="GET">
-                        <p>タグを選択</p>
-                    </form>
-                    @foreach ($tags as $tag)
-                    <p class="tag">{{ $tag->tag_name }}</p>
-                    @endforeach
-                </section>
+        {{-- タグ --}}
+        <section class="result_selected_tag">
 
-                </select>
-                <button type="submit" class="search_button">検索</button>
-            </form>
-@section('content')
-
-
-
-
-
-
-
-{{-- @foreach($posts as $post)
-{{-- データベースからデータ引っ張って来れるように --}}
-<section class="top_all_article_list">
-    <div class="article_card"><a href="{{ route('posts.post') }}" class="article_card_link">
-        <div class="article_card_left">
-            <h1 class="username">ユーザーneme</h1>
-            <img src="" alt="旅行写真" class="travel_img">
-        </div>
-    </section>
+            @foreach ($tags as $tag)
+                <p class="tag">{{ $tag->tag_name }}</p>
+            @endforeach
+        </section>
     
-
-
-    {{-- 検索結果の件数 --}}
-    <section class="result_count">
-        <p>検索結果: {{ $results->count() }} 件</p>
-    </section>
-
-    <section class="search_used_tags">
-        @if(request()->has('search'))
-            <p>{{ request('search') }}</p>
-        @elseif(count($tags) > 0)
-            <p>
-                @foreach ($tags as $tag)
-                    <span class="tag">{{ $tag->tag_name }}</span>
-                @endforeach
-            </p>
-        @endif
-    </section>
-
-    {{-- 検索結果 --}}
-    <section>
-        <section class="result_posts">
+        {{-- 検索結果の件数 --}}
+        <section class="result_count">
+            <p>検索結果: {{ $results->count() }} 件</p>
+        </section>
+    
+        {{-- 検索結果 --}}
+        {{-- <section class="result_posts">
             @foreach ($results as $post)
                 <div class="post">
                     <h2>{{ $post->title }}</h2>
@@ -82,74 +50,47 @@
                     </p>
                 </div>
             @endforeach
+        </section> --}}
+    
+        {{-- その他の記事 --}}
+        <section class="top_all_article_list">
+            @foreach($posts as $post)
+            <div class="article_card">
+                <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
+                    <div class="article_card_left">
+                        <h1 class="username">{{ $post->user->name }}</h1>
+                        @if ($post->images->isNotEmpty())
+                            {{-- 画像がある場合は表示 --}}
+                            <img src="{{ asset($post->images->first()->image_path) }}" alt="旅行写真" class="travel_img">
+                        @else
+                            {{-- 画像がない場合のデフォルト --}}
+                            <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
+                        @endif
+                    </div>
+                    <div class="article_card_right">
+                        <ul class="where">
+                            <li class="country">{{ $post->country->country_name ?? 'Country not found' }}</li>
+                            <li class="city">&nbsp;{{ $post->city }}</li>
+                        </ul>
+                        <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
+                        <p class="trip_title">{{ $post->title }}</p>
+                        <p class="article_tag">{{ $post->tag }}</p>
+                        <div class="like_and_comment">
+                            <div class="like">
+                                <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon">
+                                <p class="like_number">{{ $post->likes }}</p>
+                            </div>
+                            <div class="comment">
+                                <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon">
+                                <p class="comment_number">{{ $post->comments }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @endforeach
         </section>
-    </section>
-
-    {{-- その他の記事のセクション --}}
-    <section class="top_all_article_list">
-        <div class="article_card"><a href="{{ route('posts.post') }}" class="article_card_link">
-            <div class="article_card_left">
-                <h1 class="username">Ryohey</h1>
-                <img src="{{ asset('img/Morocco.jpg') }}" alt="旅行写真" class="travel_img">
-            </div>
-            <div class="article_card_right">
-                <ul class="where">
-                    <li class="country">Morocco</li>
-                    <li class="city">&nbsp;Marrakesh</li>
-                </ul>
-                <p class="date">2024/11/12~2024/11/30</p>
-                <p class="trip_title">モスク参拝</p>
-                <p class="article_tag">#海</p>
-                <div class="like_and_comment">
-                    <div class="like">
-                        <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon"><p class="like_number">111</p>
-                    </div>
-                    <div class="comment">
-                        <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon"><p class="comment_number">222</p>
-                    </div>
-                </div>
-            </div>
-        </a></div>
-    </section>
-
-@foreach($posts as $post)
-<section class="top_all_article_list">
-    <div class="article_card">
-        <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
-            <div class="article_card_left">
-                <h1 class="username">{{ $post->user->name }}</h1>
-                @if ($post->images->isNotEmpty())
-                    {{-- 画像がある場合は表示 --}}
-                    <img src="{{ asset($post->images->first()->image_path) }}" alt="旅行写真" class="travel_img">
-                @else
-                    {{-- 画像がない場合のデフォルト --}}
-                    <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
-                @endif
-            </div>
-            <div class="article_card_right">
-                <ul class="where">
-                    <li class="country">{{ $post->country->country_name ?? 'Country not found'}}</li>
-                    <li class="city">&nbsp;{{ $post->city }}</li>
-                </ul>
-                <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
-                <p class="trip_title">{{ $post->title }}</p>
-                <p class="article_tag">{{ $post->tag }}</p>
-                <div class="like_and_comment">
-                    <div class="like">
-                        <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon">
-                        <p class="like_number">{{ $post->likes }}</p>
-                    </div>
-                    <div class="comment">
-                        <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon">
-                        <p class="comment_number">{{ $post->comments }}</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
-</section>
-@endforeach
-@endsection
+        @endsection
 
     {{-- タグ一覧のScriptタグ --}}
     <script>

@@ -53,7 +53,7 @@ Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
 Route::post('/create', [RouteController::class, 'store']);
 
-// Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 

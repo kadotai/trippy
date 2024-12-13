@@ -119,11 +119,11 @@ class PostController extends Controller
     {
 
 
-        $posts = Post::with('country')->get();
+        // $posts = Post::with('country')->get();
 
 
 // postsテーブルからすべてのデータを取得
-        $posts = Post::all();
+        // $posts = Post::all();
     //Usersテーブルからユーザーネームを取得
         $posts = Post::with('user')->get();
         
