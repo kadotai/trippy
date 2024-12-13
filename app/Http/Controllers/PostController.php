@@ -8,6 +8,8 @@ use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Prefecture;
 
+
+
 class PostController extends Controller
 {
     public function show()
@@ -115,6 +117,14 @@ class PostController extends Controller
 
     public function showResults(Request $request)
     {
+
+    // postsテーブルからすべてのデータを取得
+        $posts = Post::all();
+    //Usersテーブルからユーザーネームを取得
+        $posts = Post::with('user')->get();
+        
+
+
         $searchQuery = $request->query('search'); // 検索キーワード
         $selectedTags = $request->query('tags'); // 選択されたタグ（カンマ区切り）
 
@@ -135,8 +145,24 @@ class PostController extends Controller
             })
             ->get();
 
-        return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags')); 
+        return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
     }
+    
+    // public function showPosts()
+    // {
+    // $posts = Post::with('images')->get(); // Postと関連する画像を取得
 
+    // return view('posts.result', compact('posts'));
+    // }
 }
 
+
+
+// public function result()
+//     {
+        // // postsテーブルからすべてのデータを取得
+        // $posts = Post::all();
+        // // dd($posts);
+        // // ビューにデータを渡して表示
+        // return view('posts.result', compact('posts'));
+    // }

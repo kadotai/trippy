@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\MyPageController;
 
 
 /*
@@ -33,7 +34,8 @@ Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
 Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
-Route::get('/result',function () {return view('posts.result');})->name('result');
+// Route::get('/result', [PostController::class, 'result'])->name('posts.result');
+// Route::get('/result',function () {return view('posts.result');})->name('result');
 //↑これあってるかわかんないからいい感じにしてください：太田
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
@@ -41,6 +43,8 @@ Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
 Route::get('/mypage', [MyPageController::class, 'show'])->name('mypage');
+
+Route::patch('/mypage', [MyPageController::class, 'getPrefectures'])->name('mypage');
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
