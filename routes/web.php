@@ -47,7 +47,7 @@ Route::patch('/mypage', [MyPageController::class, 'getPrefectures'])->name('mypa
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
-Route::get('/create', function () {return view('posts.create');})->name('create');
+// Route::get('/create', function () {return view('posts.create');})->name('create');
 
 Route::post('/create', [RouteController::class, 'store']);
 

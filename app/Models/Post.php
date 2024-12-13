@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Post_image;
 
 class Post extends Model
 {
@@ -32,7 +33,7 @@ class Post extends Model
     // リレーション: 1対多 (Post と Photo)
     public function photos()
     {
-        return $this->hasMany(Photo::class);
+        return $this->hasMany(Post_image::class);
     }
 
     // フィルアブル属性 (一括代入可能な属性)
@@ -41,4 +42,10 @@ class Post extends Model
         'end_date', 'content', 'route_data', 'distance',
         'duration', 'post_type'
     ];
+    //cana12/13
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class,'country_id','id');
+    }
 }

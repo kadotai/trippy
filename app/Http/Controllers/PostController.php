@@ -106,6 +106,9 @@ class PostController extends Controller
     public function showResults(Request $request)
     {
 
+        $posts = Post::with('country')->get();
+
+
 // postsテーブルからすべてのデータを取得
         $posts = Post::all();
 //Usersテーブルからユーザーネームを取得
@@ -137,13 +140,14 @@ class PostController extends Controller
    
            
     }
-    public function store(Request $request)
-    {
-        $request->validate([
-            'route_date' => 'nullable|string',
-            'duration' => 'nullable|string',
-        ]);
-    }
+// //12/12 cana
+//     public function showResult($id)
+//     {
+//         $post = Post::find($id); //指定したidの投稿を取得
+//         $images = $post->images; //投稿に関する画像を取得
+//         return view('posts.result',compact('post','images')); //ビューにデータを渡して表示
+//     }
+   
     
     public function showPosts()
 {
@@ -154,12 +158,4 @@ class PostController extends Controller
 
 
 
-
-// public function result()
-//     {
-        // // postsテーブルからすべてのデータを取得
-        // $posts = Post::all();
-        // // dd($posts);
-        // // ビューにデータを渡して表示
-        // return view('posts.result', compact('posts'));
-    // }
+}

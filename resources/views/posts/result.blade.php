@@ -57,7 +57,7 @@
             </div>
             <div class="article_card_right">
                 <ul class="where">
-                    <li class="country">{{ $post->country }}</li>
+                    <li class="country">{{ $post->country->country_name ?? 'Country not found'}}</li>
                     <li class="city">&nbsp;{{ $post->city }}</li>
                 </ul>
                 <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
