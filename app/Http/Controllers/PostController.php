@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Prefecture;
 
 
 
@@ -31,7 +32,13 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        // return view('posts.create');
+
+        $prefectures = Prefecture::all(); // 都道府県データを取得
+        $tags = Tag::all();
+        return view('posts.create', compact('prefectures','tags'));
+
+
     }
 
     function store(Request $request)
@@ -101,6 +108,11 @@ class PostController extends Controller
         ->route('posts.create') // フォームページにリダイレクト
         ->withInput() // 入力値を保持
         ->with('success', '投稿が保存されました！'); // 成功メッセージ
+
+        $request->validate([
+            'route_date' => 'nullable|string',
+            'duration' => 'nullable|string',
+        ]);
     }
 
     public function showResults(Request $request)
@@ -136,12 +148,12 @@ class PostController extends Controller
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
     }
     
-    public function showPosts()
-    {
-    $posts = Post::with('images')->get(); // Postと関連する画像を取得
+    // public function showPosts()
+    // {
+    // $posts = Post::with('images')->get(); // Postと関連する画像を取得
 
-    return view('posts.result', compact('posts'));
-    }
+    // return view('posts.result', compact('posts'));
+    // }
 }
 
 

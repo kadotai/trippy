@@ -32,7 +32,7 @@ class Post extends Model
     // リレーション: 1対多 (Post と Photo)
     public function photos()
     {
-        return $this->hasMany(Photo::class);
+        return $this->hasMany(Post_image::class);
     }
 
     // フィルアブル属性 (一括代入可能な属性)
