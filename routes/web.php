@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RouteController;
 use App\Http\Controllers\MyPageController;
 
 
@@ -55,7 +56,7 @@ Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+// Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
