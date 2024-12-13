@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" id="tripForm">
         @csrf <!-- CSRF保護のため -->
 
         {{-- Select_trip --}}
@@ -22,7 +22,8 @@
         {{-- Photo --}}
         <div class="Photo">
             <p>Photo</p>
-            <input type="file" name="photo">
+            <input id="inputElm" type="file" name="photo" multiple />
+            <div id="preview" ></div>
         </div>
 
         {{-- Title --}}
@@ -81,7 +82,11 @@
         {{-- Tag --}}
         <div class="Tag">
             <p>Tag</p>
-            <input type="text" name="tag" required>
+            <section class="top_selected_tag">
+                @foreach ($tags as $tag)
+                    <button class="tag-button" data-tag="{{ $tag->id }}">{{ $tag ->tag_name }}</button>
+                @endforeach
+            </section>
         </div>
 
         {{-- Caption --}}
@@ -282,6 +287,26 @@
         overseasTrip.style.display = 'block';
     });
 });
+
+const inputElm = document.getElementById('inputElm');
+    inputElm.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        
+        const fileReader = new FileReader();
+        // 画像を読み込む
+        fileReader.readAsDataURL(file);
+
+        // 画像読み込み完了時の処理
+        fileReader.addEventListener('load', (e) => {
+            // imgタグ生成
+            const imgElm = document.createElement('img');
+            imgElm.src = e.target.result; // e.target.resultに読み込んだ画像のURLが入っている
+            
+            // imgタグを挿入
+            const targetElm = document.getElementById('preview');
+            targetElm.appendChild(imgElm);
+        });
+    });
 
 
 

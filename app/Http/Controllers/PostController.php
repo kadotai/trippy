@@ -33,7 +33,9 @@ class PostController extends Controller
         // return view('posts.create');
 
         $prefectures = Prefecture::all(); // 都道府県データを取得
-        return view('posts.create', compact('prefectures')); // ビューに渡す
+        $tags = Tag::all();
+        return view('posts.create', compact('prefectures','tags'));
+
 
     }
 
@@ -104,6 +106,11 @@ class PostController extends Controller
         ->route('posts.create') // フォームページにリダイレクト
         ->withInput() // 入力値を保持
         ->with('success', '投稿が保存されました！'); // 成功メッセージ
+
+        $request->validate([
+            'route_date' => 'nullable|string',
+            'duration' => 'nullable|string',
+        ]);
     }
 
     public function showResults(Request $request)
@@ -130,5 +137,6 @@ class PostController extends Controller
 
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags')); 
     }
+
 }
 
