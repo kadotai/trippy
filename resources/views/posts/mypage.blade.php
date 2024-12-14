@@ -198,6 +198,7 @@
 
             var options = {
                 colorAxis: { colors: ['#e0f3f8', '#2c7bb6'] }, // カラースケール設定
+                legend: 'none', // カラーバーを非表示
             };
 
             var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
