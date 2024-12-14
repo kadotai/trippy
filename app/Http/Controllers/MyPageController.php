@@ -6,13 +6,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Like;
+use Illuminate\Support\Facades\DB;
 
 class MyPageController extends Controller
 {
     public function show()
     {
         // 現在ログインしているユーザーを取得
-        $user = Auth::user();
+    $user = Auth::user();
+
+    if (!$user) {
+        // ユーザーが未ログインの場合はログイン画面へリダイレクト
+        return redirect()->route('login')->with('error', 'ログインしてください。');
+    }
+
+    // 訪問した国の数をカウントするロジック（例: visited_countries テーブルに基づく）
+    $visitedCountriesCount = DB::table('posts')
+        ->where('user_id', $user->id)
+        ->distinct('country_id')
+        ->count();
 
         if (!$user) {
             // ユーザーが未ログインの場合はログイン画面へリダイレクト
@@ -30,7 +42,7 @@ class MyPageController extends Controller
                 $likedPosts = Post::whereIn('id', $likedPostIds)->get();
                 
         // ビューにユーザー情報を渡す
-        return view('posts.mypage', compact('user', 'posts', 'plannedPosts', 'likedPosts'));        
+        return view('posts.mypage', compact('user', 'posts', 'plannedPosts', 'likedPosts', 'visitedCountriesCount);        
     }
 
     public function getPrefectures(Request $request)
@@ -42,6 +54,7 @@ class MyPageController extends Controller
 
         return response()->json($prefectureIds);
     }
+
 
     public function edit($id)
 {
@@ -62,6 +75,5 @@ class MyPageController extends Controller
     // 編集画面に投稿データを渡す
     return view('posts.edit', compact('post'));
 }
-
 }
 

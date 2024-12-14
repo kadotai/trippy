@@ -17,7 +17,9 @@
                 <img src="{{ $user->icon ? asset('storage/'.$user->icon) : asset('assets/images/default-icon.png') }}" alt="User Icon" class="profile-icon">
                 <div class="small-profile">
                     <h2 class="username">{{ $user->name }}</h2>
-                    <p class="visited-info">行った国: <strong></strong></p>
+
+                    <p class="visited-info">行った国数: <strong>{{ $visitedCountriesCount }}</strong></p>
+
                 </div>
             </div>
             <form action="{{ route('logout') }}" method="POST" style="margin-top: 10px;">
@@ -28,13 +30,8 @@
         </section>
     </div>
 
-    {{-- 国内外地図 --}}
+    {{-- 世界地図 --}}
     <div id="map-container">
-        <div id="map-toggle">
-            <span id="toggle-domestic">国内 /</span>
-            <span id="toggle-overseas"> 海外</span>
-        </div>
-        <div id="my-map"></div>
         <div id="regions_div"></div>
     </div>
 
@@ -179,78 +176,36 @@
         chart.draw(data, options);
       }
       </script> --}}
+    
+    {{-- 地図のscriptタグ --}}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Google GeoChart の初期設定
+        google.charts.load('current', { 'packages': ['geochart'] });
+        google.charts.setOnLoadCallback(drawRegionsMap);
 
-      {{-- 地図のscriptタグ --}}
-<script type="text/javascript" src="https://unpkg.com/japan-map-js@1.0.1/dist/jpmap.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-      // 日本地図描画関数
-      function drawJapanMap(prefectureIds) {
-          document.getElementById('my-map').innerHTML = ''; // リセット
-          new jpmap.japanMap(document.getElementById("my-map"), {
-              areas: Array.from({ length: 47 }, (_, i) => ({
-                  code: i + 1,
-                  name: `Prefecture ${i + 1}`,
-                  color: prefectureIds.includes(i + 1) ? "#f8b500" : "#a0a0a0"
-              })),
-              showsPrefectureName: false,
-              width: 410,
-              movesIslands: true,
-              borderLineColor: "#000000",
-              lang: 'ja',
-          });
-      }
+        // 地図描画関数
+        function drawRegionsMap() {
+            // サンプルデータを使用（必要に応じてサーバーからデータを取得して更新）
+            var data = google.visualization.arrayToDataTable([
+                ['Country', 'Popularity'],
+                ['Japan', 100], // 必要に応じてデータを追加
+                ['United States', 80],
+                ['France', 60],
+                ['Brazil', 50]
+            ]);
 
-      // 初期設定：世界地図を表示
-      google.charts.load('current', { 'packages': ['geochart'] });
-      google.charts.setOnLoadCallback(drawRegionsMap);
+            var options = {
+                colorAxis: { colors: ['#e0f3f8', '#2c7bb6'] }, // カラースケール設定
+            };
 
-      function drawRegionsMap() {
-          var data = google.visualization.arrayToDataTable([
-              ['Country', 'Popularity'],
-              ['Japan', 100] // サンプルデータ
-          ]);
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+            chart.draw(data, options);
+        }
+    });
+    </script>
 
-          var options = {};
-          var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-          chart.draw(data, options);
-      }
-
-      // 都道府県データを取得し、日本地図を準備
-      let prefectureIds = [];
-      fetch('/mypage', {
-          method: 'PATCH',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-          }
-      })
-      .then(response => response.json())
-      .then(data => {
-          prefectureIds = data;
-      })
-      .catch(error => console.error('Error fetching prefecture data:', error));
-
-      // 国内外の切り替えイベント
-      document.getElementById('toggle-domestic').addEventListener('click', function() {
-          document.getElementById('my-map').style.display = 'block';
-          document.getElementById('regions_div').style.display = 'none';
-          this.classList.add('active');
-          document.getElementById('toggle-overseas').classList.remove('active');
-
-          // 日本地図を再描画
-          drawJapanMap(prefectureIds);
-      });
-
-      document.getElementById('toggle-overseas').addEventListener('click', function() {
-          document.getElementById('my-map').style.display = 'none';
-          document.getElementById('regions_div').style.display = 'block';
-          this.classList.add('active');
-          document.getElementById('toggle-domestic').classList.remove('active');
-      });
-  });
-</script>
 
 
 
