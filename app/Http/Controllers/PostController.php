@@ -169,6 +169,16 @@ class PostController extends Controller
 
     // return view('posts.result', compact('posts'));
     // }
+
+    public function search(Request $request) {
+        $keyword = $request->input('keyword');
+
+        $posts = Post::where('title', 'LIKE', "%{$keyword}%")
+                 ->orWhere('content', 'LIKE', "%{$keyword}%")
+                 ->get();
+
+        return response()->json($posts);
+    }
 }
 
 

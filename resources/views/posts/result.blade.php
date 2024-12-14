@@ -26,7 +26,6 @@
 
         {{-- タグ --}}
         <section class="result_selected_tag">
-
             @foreach ($tags as $tag)
                 <p class="tag">{{ $tag->tag_name }}</p>
             @endforeach
@@ -38,7 +37,7 @@
         </section>
     
         {{-- 検索結果 --}}
-        {{-- <section class="result_posts">
+        <section class="result_posts">
             @foreach ($results as $post)
                 <div class="post">
                     <h2>{{ $post->title }}</h2>
@@ -50,7 +49,7 @@
                     </p>
                 </div>
             @endforeach
-        </section> --}}
+        </section>
     
         {{-- その他の記事 --}}
         <section class="top_all_article_list">
@@ -163,6 +162,25 @@
             window.location.href = `/result?${queryParams.toString()}`;
         });
     });
+
+    document.getElementById('search_button').addEventListener('click', function() {
+    const keyword = document.getElementById('post_search').value;
+
+    fetch(`/search?keyword=${encodeURIComponent(keyword)}`)
+        .then(response => response.json())
+        .then(data => {
+            const resultContainer = document.getElementById('results');
+            resultContainer.innerHTML = ''; // 結果をクリア
+            data.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p>${post.content}</p>
+                `;
+                resultContainer.appendChild(postElement);
+            });
+        });
+});
     </script>
 </body>
 </html>
