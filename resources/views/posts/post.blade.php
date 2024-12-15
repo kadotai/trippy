@@ -75,6 +75,20 @@
             <div class="Like">
                 <a href="#">この投稿好きやで〜</a>
             </div>
+        
+    {{-- ちょっと練習で記載させてもろてますcana--}}
+            {{-- @foreach ($posts as $post)
+    <div class="post">
+        <h3>{{ $post->title }}</h3>
+        <button 
+            class="like-button" 
+            data-post-id="{{ $post->id }}" 
+            data-liked="{{ $post->likes->contains('user_id', auth()->id()) ? 'true' : 'false' }}">
+            {{ $post->likes->contains('user_id', auth()->id()) ? 'いいね解除' : 'いいね' }}
+        </button>
+        <p>いいね数: {{ $post->likes->count() }}</p>
+    </div>
+@endforeach --}}
 
             {{-- Comment --}}
             <div class="Comment">
@@ -93,6 +107,29 @@
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }
         });
     </script>
+
+{{-- <script> いいねつけたり消したり練習でつけさしてもろてますcana--}}
+    {{-- //     document.querySelectorAll('.like-button').forEach(button => {
+    //         button.addEventListener('click', function() {
+    //             const postId = this.dataset.postId;
+    //             const liked = this.dataset.liked === 'true';
+    
+    //             fetch(`/posts/${postId}/like`, {
+    //                 method: liked ? 'DELETE' : 'POST',
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                     'Content-Type': 'application/json',
+    //                 }
+    //             })
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 alert(data.message);
+    //                 location.reload(); // 状態更新のためリロード
+    //             });
+    //         });
+    //     }); --}}
+    {{-- </script> --}}
+
     
 </body>
 

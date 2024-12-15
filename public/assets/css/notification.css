@@ -1,0 +1,11 @@
+
+
+.noti-card{
+    background-color:rgb(254, 249, 234);
+    border: solid 1px;
+    height: 150px;
+}
+
+.noti-btn{
+    text-decoration:none;
+}

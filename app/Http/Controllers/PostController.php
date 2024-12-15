@@ -25,7 +25,8 @@ class PostController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        return view('posts.top', compact('tags'));
+        $posts = Post::all(); // データベースからすべての投稿を取得
+        return view('posts.top', compact('tags', 'posts));
     }
 
     public function create()
@@ -105,6 +106,9 @@ class PostController extends Controller
             })
             ->get();
 
-        return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
+$posts = Post::withCount('comments')->get();
+$posts = Post::withCount('likes')->get();
+        return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
+   
     }
 }
