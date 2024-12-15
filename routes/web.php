@@ -45,8 +45,6 @@ Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
 // Route::get('/result', [PostController::class, 'result'])->name('posts.result');
-// Route::get('/result',function () {return view('posts.result');})->name('result');
-//↑これあってるかわかんないからいい感じにしてください：太田
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
@@ -58,13 +56,11 @@ Route::patch('/mypage', [MyPageController::class, 'getPrefectures'])->name('mypa
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
-// Route::get('/create', function () {return view('posts.create');})->name('create');
-
-Route::post('/create', [RouteController::class, 'store']);
-
 Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
-Route::post('/post', [PostController::class, 'store'])->name('posts.store');
+Route::post('/create', [PostController::class, 'store'])->name('posts.store');
+
+Route::post('/post', [PostController::class, 'show'])->name('posts.show');
 
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 

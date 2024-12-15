@@ -11,58 +11,34 @@
 <body>
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" id="tripForm">
         @csrf <!-- CSRF保護のため -->
-
-        {{-- Select_trip --}}
-        <p>Select your trip</p>
-        <div class="Select_trip">
-            <button id="domestic">国内旅行</button>
-            <button id="overseas">海外旅行</button>
-        </div>
         
         {{-- Photo --}}
         <div class="Photo">
             <p>Photo</p>
-            <input id="inputElm" type="file" name="photo" multiple />
+            <input id="inputElm" type="file" name="img[]" multiple />
             <div id="preview" ></div>
         </div>
 
         {{-- Title --}}
         <div class="Title">
             <p>Title</p>
-            <input type="text" name="title" required>
+            <input type="text" name="title">
         </div>
 
-        {{-- domestic_trip --}}
-        <div class="domestic_trip">
         {{-- Country --}}
         <div class="Country">
             <p>Country</p>
-            <input type="text" value="Japan" placeholder="" name="country" required>
-        </div>
-        {{-- City --}}
-        <div class="City">
-            <p>City</p>
-            <select name="pref" name="country" required>
-                @foreach ($prefectures as $prefecture)
-                <option value="{{ $prefecture->prefecture_name }}">{{ $prefecture->prefecture_name }}</option>
+            <select name="country" id="select_country">
+                @foreach ($countries as $country)
+                <option value="{{ $country->country_name}}">{{ $country->country_name }}</option>
                 @endforeach
-
             </select>
         </div>
-        </div>
 
-        {{-- overseas_trip --}}
-        <div class="overseas_trip">
-        {{-- Country --}}
-        <div class="Country">
-            <p>Country</p>
-            <input type="text" name="country" required>
-        </div>
         {{-- City --}}
         <div class="City">
             <p>City</p>
-            <input type="text" name="city" required>
-        </div>
+            <input type="text" name="city">
         </div>
 
         {{-- Date --}}
@@ -70,11 +46,11 @@
             <p>Date</p>
             <div class="Date_start_end">
                 <div class="Date_start">
-                    <input type="date" name="date_start" required>
+                    <input type="date" name="start_date">
                 </div>
                 <p>~</p>
                 <div class="Date_end">
-                    <input type="date" name="date_end" required>
+                    <input type="date" name="end_date">
                 </div>
             </div>
         </div>
@@ -82,9 +58,9 @@
         {{-- Tag --}}
         <div class="Tag">
             <p>Tag</p>
-            <section class="top_selected_tag">
+            <section class="create_selected_tag">
                 @foreach ($tags as $tag)
-                    <button class="tag-button" data-tag="{{ $tag->id }}">{{ $tag ->tag_name }}</button>
+                    <button class="tag-button" name="tags[]" data-tag="{{ $tag->id }}">{{ $tag ->tag_name }}</button>
                 @endforeach
             </section>
         </div>
@@ -92,7 +68,7 @@
         {{-- Caption --}}
         <div class="Caption">
             <p>Caption</p>
-            <input type="text" name="caption" required>
+            <input type="text" name="caption">
         </div>
 
         {{-- Map --}}
@@ -105,6 +81,10 @@
                 <button type="button" id="startTracking">スタート</button>
                 <button type="button" id="stopTracking" disabled>ストップ</button>
             </div>
+
+            {{-- 隠しフィールド --}}
+            <input type="hidden" name="route_data" id="routeDataInput">
+            <input type="hidden" name="duration" id="durationInput">
         </div>
 
         {{-- Public --}}
@@ -127,12 +107,12 @@
 
             {{-- Store --}}
             <div class="Store">
-                <a href="{{ route('posts.store') }}" id="saveRoute">保存</a>
+                <button type="submit" id="saveRoute">保存</button>
             </div>
         </div>
     </form>
 
-    <script>
+    {{-- <script>
         let marker;
         let watchId;
         let route = [];
@@ -268,24 +248,6 @@
     const overseasButton = document.getElementById('overseas');
     const domesticTrip = document.querySelector('.domestic_trip');
     const overseasTrip = document.querySelector('.overseas_trip');
-
-    // 初期状態を設定（国内旅行を表示、海外旅行を非表示）
-    domesticTrip.style.display = 'block';
-    overseasTrip.style.display = 'none';
-
-    // 国内旅行ボタンがクリックされた場合
-    domesticButton.addEventListener('click', (event) => {
-        event.preventDefault(); // ボタンのデフォルト動作を無効化
-        domesticTrip.style.display = 'block';
-        overseasTrip.style.display = 'none';
-    });
-
-    // 海外旅行ボタンがクリックされた場合
-    overseasButton.addEventListener('click', (event) => {
-        event.preventDefault(); // ボタンのデフォルト動作を無効化
-        domesticTrip.style.display = 'none';
-        overseasTrip.style.display = 'block';
-    });
 });
 
 const inputElm = document.getElementById('inputElm');
@@ -310,7 +272,100 @@ const inputElm = document.getElementById('inputElm');
 
 
 
+    </script> --}}
+
+    <script>
+        let marker;
+        let watchId;
+        let route = [];
+        let startTime = null; // 開始時刻を保持するグローバル変数
+        let map;
+
+        // 地図の初期化
+        function initMap() {
+            const initialPosition = { lat: 35.6895, lng: 139.6917 }; // 東京
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: initialPosition,
+            });
+
+            marker = new google.maps.Marker({
+                position: initialPosition,
+                map: map,
+            });
+        }
+
+        // スタートボタンが押されたとき
+        document.getElementById('startTracking').addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                alert("位置情報が利用できません");
+                return;
+            }
+
+            alert("ルートトラッキングを開始します！");
+            startTime = Date.now(); // トラッキング開始時刻を記録
+
+            watchId = navigator.geolocation.watchPosition(
+                position => {
+                    const { latitude, longitude } = position.coords;
+
+                    const currentPosition = { lat: latitude, lng: longitude };
+                    route.push(currentPosition);
+
+                    map.setCenter(currentPosition);
+                    marker.setPosition(currentPosition);
+
+                    new google.maps.Polyline({
+                        path: route,
+                        geodesic: true,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2,
+                        map: map
+                    });
+                },
+                error => {
+                    console.error("位置情報エラー:", error);
+                },
+                { enableHighAccuracy: true }
+            );
+
+            document.getElementById('startTracking').disabled = true;
+            document.getElementById('stopTracking').disabled = false;
+        });
+
+        // ストップボタンが押されたとき
+        document.getElementById('stopTracking').addEventListener('click', () => {
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                alert("ルートトラッキングを終了しました！");
+            }
+
+            const duration = (Date.now() - startTime) / 1000; // 所要時間を秒で計算
+            document.getElementById('routeDataInput').value = JSON.stringify(route);
+            document.getElementById('durationInput').value = duration;
+
+            document.getElementById('startTracking').disabled = false;
+            document.getElementById('stopTracking').disabled = true;
+        });
+
+        const inputElm = document.getElementById('inputElm');
+        inputElm.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const fileReader = new FileReader();
+
+            fileReader.readAsDataURL(file);
+            fileReader.addEventListener('load', (e) => {
+                const imgElm = document.createElement('img');
+                imgElm.src = e.target.result;
+
+                const targetElm = document.getElementById('preview');
+                targetElm.appendChild(imgElm);
+            });
+        });
     </script>
+
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSeGO53Uzs4JgZGrKy-eokk0aAb_vGbM&callback=initMap" async defer></script>
 </body>
