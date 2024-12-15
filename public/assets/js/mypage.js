@@ -41,25 +41,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // いいねボタンの処理（カウント機能付き）
     const likeBtns = document.querySelectorAll('.like-btn');
     likeBtns.forEach((btn) => {
-        btn.addEventListener('click', (event) => {
+        btn.addEventListener('click', async (event) => {
             event.stopPropagation(); // 親カードのクリックイベントを停止
 
+            const postId = btn.getAttribute('data-post-id');
             const liked = btn.classList.contains('liked');
             const likeCountSpan = btn.nextElementSibling; // いいね数の要素を取得
             let likeCount = parseInt(likeCountSpan.textContent, 10);
 
-            if (liked) {
-                btn.classList.remove('liked');
-                btn.textContent = '🤍'; // いいねを外す
-                likeCount -= 1;
-            } else {
-                btn.classList.add('liked');
-                likeCount += 1;
-                btn.textContent = '❤️'; // いいねをつける
-            }
+            // Ajaxリクエストで「いいね」の状態をサーバーに反映
+            try {
+                const response = await fetch(`/like/${postId}`, {
+                    method: liked ? 'DELETE' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    },
+                    body: JSON.stringify({ post_id: postId }),
+                });
 
-            // カウントを更新
-            likeCountSpan.textContent = likeCount;
+                if (response.ok) {
+                    if (liked) {
+                        btn.classList.remove('liked');
+                        btn.textContent = '🤍'; // いいねを外す
+                        likeCount -= 1;
+                    } else {
+                        btn.classList.add('liked');
+                        btn.textContent = '❤️'; // いいねをつける
+                        likeCount += 1;
+                    }
+
+                    // カウントを更新
+                    likeCountSpan.textContent = likeCount;
+                } else {
+                    console.error('Error liking the post');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         });
     });
 
@@ -68,7 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
     commentBtns.forEach((btn) => {
         btn.addEventListener('click', (event) => {
             event.stopPropagation(); // 親カードのクリックイベントを停止
-            window.location.href = '/comment-page'; // コメントページに遷移
+            const postId = btn.closest('.post-card').getAttribute('data-route');
+            window.location.href = `/post/${postId}/comments`; // コメントページに遷移
         });
     });
 });

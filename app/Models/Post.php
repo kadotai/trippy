@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Post_image;
+use App\Models\Like;
 
 class Post extends Model
 {
@@ -15,17 +16,17 @@ class Post extends Model
     protected $table = 'posts';
 
     // リレーション: 多対多 (Post と Tag)
-    public function tags()
+    public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'post_tags', 'post_id', 'tag_id');
     }
 
     public function images()
     {
-        return $this->hasMany(Post_Image::class, 'post_id');
+        return $this->hasMany(Post_Image::class, );
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -38,13 +39,13 @@ class Post extends Model
 
     // フィルアブル属性 (一括代入可能な属性)
     protected $fillable = [
-        'user_id', 'title', 'country', 'city', 'start_date',
+        'user_id', 'title', 'country_id', 'city', 'start_date',
         'end_date', 'content', 'route_data', 'distance',
         'duration', 'post_type'
     ];
     //cana12/13
 
-    public function country()
+    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Country::class,'country_id','id');
     }
@@ -53,8 +54,14 @@ class Post extends Model
     {
         return $this->hasMany(Like::class,'post_id', 'id');
     }
+  
     public function comments()
     {
         return $this->hasMany(Comment::class,'post_id','id');
+    }
+
+    public function getLikesCountAttribute()
+    {
+    return $this->likes()->count();  // 関連するいいねの数をカウント
     }
 }

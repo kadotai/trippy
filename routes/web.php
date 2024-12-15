@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\UserController;
 
 
 
@@ -30,7 +31,15 @@ Route::get('/register', function () {return view('auth.register');})->name('regi
 
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
 
-Route::get('/myinfo', function () {return view('auth.myinfo');})->name('myinfo');
+// Route::get('/myinfo', function () {return view('auth.myinfo');})->name('myinfo');
+
+// Route::get('/myinfo', [UserController::class, 'edit'])->name('myinfo');
+
+Route::post('/myinfo', [UserController::class, 'update'])->name('myinfo');
+
+Route::get('/myinfo', [UserController::class, 'edit'])->name('myinfo.edit');
+
+Route::put('/myinfo/update', [UserController::class, 'update'])->name('myinfo.update');
 
 Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 
