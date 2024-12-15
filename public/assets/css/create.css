@@ -4,21 +4,6 @@ body {
     padding: 15%;
 }
 
-.Select_trip {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 50px;
-}
-
-#domestic, #overseas {
-    font-size: 13px;
-    color: #FFF;
-    background-color: #333;
-    border-radius: 20px;
-    padding: 5px 10px;
-    margin: 0;
-}
-
 p {
     font-weight: bolder;
     font-size: 13px;
@@ -74,9 +59,8 @@ input , .City select {
     border: none;
 }
 
-.top_selected_tag{
-    background-color: #fff; 
-    /* ↑いったん見えないから黄色にしてる */
+.create_selected_tag{
+  　background-color: #fff; 
     height: 45px;
     width: 100%;
     overflow-x: scroll; /* 横スクロールを有効にする */
@@ -154,7 +138,7 @@ input , .City select {
     margin: 20px;
 }
 
-.Store a {
+.Store button {
     font-size: 13px;
     color: #FFF;
     background-color: #333;
