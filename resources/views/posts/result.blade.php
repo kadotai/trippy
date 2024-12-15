@@ -13,7 +13,7 @@
 
 {{-- @foreach($posts as $post)
 {{-- データベースからデータ引っ張って来れるように --}}
-<section class="top_all_article_list">
+{{-- <section class="top_all_article_list">
     <div class="article_card"><a href="{{ route('posts.post') }}" class="article_card_link">
         <div class="article_card_left">
             <h1 class="username">ユーザーneme</h1>
@@ -37,7 +37,7 @@
             </div>
         </div>
     </a></div>
-</section>
+</section> --}}
 {{-- @endforeach --}}
 
 
@@ -66,11 +66,11 @@
                 <div class="like_and_comment">
                     <div class="like">
                         <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon">
-                        <p class="like_number">{{ $post->likes }}</p>
+                        <p class="like_number">{{ $post->likes->count() }}</p> {{-- {{ $post->likes_count }} withCountつかってこれで表示できるようにしたい--}}
                     </div>
                     <div class="comment">
                         <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon">
-                        <p class="comment_number">{{ $post->comments }}</p>
+                        <p class="comment_number">{{ $post->comments->count() }}</p> {{-- {{ $post->comments_count }} withCount使ってこれで表示させたい--}}
                     </div>
                 </div>
             </div>

@@ -28,7 +28,8 @@ class PostController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        return view('posts.top', compact('tags'));
+        $posts = Post::all(); // データベースからすべての投稿を取得
+        return view('posts.top', compact('tags', 'posts));
     }
 
     public function create()
@@ -164,5 +165,34 @@ class PostController extends Controller
     //         ->get();
 
     //     return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
+
+    public function showResults(Request $request)
+    {
+        $posts = Post::with('country')->get();
+        $posts = Post::with('user')->get();
+
+        $searchQuery = $request->query('search'); // 検索キーワード
+        $selectedTags = $request->query('tags'); // 選択されたタグ（カンマ区切り）
+
+        $selectedTagsArray = $selectedTags ? explode(',', $selectedTags) : [];
+
+        //タグ一覧を取得
+        $tags = Tag::all();
+
+        // データベース検索処理
+        $results = Post::query()
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                return $query->where('title', 'LIKE', "%{$searchQuery}%");
+            })
+            ->when(!empty($selectedTagsArray), function ($query) use ($selectedTagsArray) {
+                return $query->whereHas('tags',function($subQuery) use ($selectedTagsArray){
+                    $subQuery->whereIn('tags.id', $selectedTagsArray);
+                });
+            })
+            ->get();
+
+$posts = Post::withCount('comments')->get();
+$posts = Post::withCount('likes')->get();
+        return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
     }
 }

@@ -52,7 +52,12 @@ class Post extends Model
 
     public function likes()
     {
-    return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class,'post_id', 'id');
+    }
+  
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'post_id','id');
     }
 
     public function getLikesCountAttribute()
