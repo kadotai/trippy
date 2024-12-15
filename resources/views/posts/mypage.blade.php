@@ -24,8 +24,8 @@
             </div>
             <form action="{{ route('logout') }}" method="POST" style="margin-top: 10px;">
                 @csrf
-                <a href="{{ route('myinfo') }}" class="edit-btn">edit profile</a>
-                <button type="submit" class="logout-btn">ログアウト</button>
+                <a href="{{ route('myinfo') }}" class="edit-btn">Edit Profile</a>
+                <button type="submit" class="logout-btn">Logout</button>
             </form>
         </section>
     </div>
@@ -197,7 +197,7 @@
             ]);
 
             var options = {
-                colorAxis: { colors: ['#e0f3f8', '#2c7bb6'] }, // カラースケール設定
+                colorAxis: { colors: ['#e0f3f8', '#41b62c'] }, // カラースケール設定
                 legend: 'none', // カラーバーを非表示
             };
 

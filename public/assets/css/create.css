@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(255, 208, 232);
+    background-color: rgb(254, 249, 234);
     color: #333;
     padding: 15%;
 }
@@ -75,26 +75,31 @@ input , .City select {
 }
 
 .top_selected_tag{
+    background-color: #fff; 
+    /* ↑いったん見えないから黄色にしてる */
     height: 45px;
     width: 100%;
     overflow-x: scroll; /* 横スクロールを有効にする */
     white-space: nowrap; /* 横に並べる */
 }
 .tag-button{
+    color: #028391;
     display: inline-block;
     font-size: 13px;
-    border: #333;
-    background-color: #FFF;
+    border-color: #028391;
+    background-color: #fff;
     width: fit-content;
-    clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%);
-    padding: 0 30px 0 0;
+    /* clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%); */
+    border-radius: 10px;
+    padding: 5px 10px;
     cursor: pointer;
 }
 .tag-button.selected{
-    background-color: #007bff;
+    background-color: #028391;
     color: #fff;
-    border-color: #0056b3;
+    border-color: #028391;
 }
+
 
 .Caption input {
     width: 100%;
