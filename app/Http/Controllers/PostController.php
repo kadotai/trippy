@@ -8,37 +8,31 @@ use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Prefecture;
 
-
-
 class PostController extends Controller
 {
     public function show()
     {
-        // 投稿を取得
-    $posts = Post::with('photos')->get(); // Post モデルと関連する photos を取得
+        // 投稿と関連する画像を取得
+        $posts = Post::with('photos')->get(); // Post モデルと関連する photos を取得
 
-    // ビューに渡す
-    return view('posts.post', compact('posts'));
+        // 計画中の投稿一覧も同様に取得
+        $plannedPosts = Post::where('post_type', false)->with('photos')->get();
+
+        // ビューに渡す
+        return view('posts.post', compact('posts', 'plannedPosts'));
     }
 
     public function index()
     {
         $tags = Tag::all();
-        // return view('posts.top', compact('tags'));
-
-        $posts = Post::all(); // データベースからすべての投稿を取得
-        return view('posts.index', compact('posts'));
+        return view('posts.top', compact('tags'));
     }
 
     public function create()
     {
-        // return view('posts.create');
-
         $prefectures = Prefecture::all(); // 都道府県データを取得
         $tags = Tag::all();
-        return view('posts.create', compact('prefectures','tags'));
-
-
+        return view('posts.create', compact('prefectures', 'tags'));
     }
 
     function store(Request $request)
@@ -53,8 +47,6 @@ class PostController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'content' => 'required|string',
             'post_type' => 'required|in:public,private',
-            'route_date' => 'nullable|string',
-            'duration' => 'nullable|string',
         ]);
 
         // 写真を保存
@@ -86,97 +78,33 @@ class PostController extends Controller
         }
 
         return redirect()->back()->with('success', '投稿が保存されました！');
-
-        // 入力データのバリデーション
-    $validated = $request->validate([
-        'title' => 'required|string|max:255',
-        'country' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-        'content' => 'nullable|string',
-    ]);
-
-    // データを保存
-    Post::create($validated);
-
-    // フォームに戻る（入力内容を保持）
-    return redirect()
-        ->route('posts.create') // フォームページにリダイレクト
-        ->withInput() // 入力値を保持
-        ->with('success', '投稿が保存されました！'); // 成功メッセージ
-
-        $request->validate([
-            'route_date' => 'nullable|string',
-            'duration' => 'nullable|string',
-        ]);
     }
 
     public function showResults(Request $request)
-{
-    $searchQuery = $request->query('search');
-    $selectedTags = $request->query('tags');
-    $selectedTagsArray = $selectedTags ? explode(',', $selectedTags) : [];
+    {
+        $posts = Post::with('country')->get();
+        $posts = Post::with('user')->get();
 
-    $tags = Tag::all();
+        $searchQuery = $request->query('search'); // 検索キーワード
+        $selectedTags = $request->query('tags'); // 選択されたタグ（カンマ区切り）
 
-    $results = Post::query()
-        ->when($searchQuery, function ($query) use ($searchQuery) {
-            $query->where('title', 'LIKE', "%{$searchQuery}%");
-        })
-        ->when(!empty($selectedTagsArray), function ($query) use ($selectedTagsArray) {
-            $query->whereHas('tags', function ($subQuery) use ($selectedTagsArray) {
-                $subQuery->whereIn('tags.id', $selectedTagsArray);
-            });
-        })
-        ->get();
+        $selectedTagsArray = $selectedTags ? explode(',', $selectedTags) : [];
 
-    return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags'));
-}
-// //12/12 cana
-//     public function showResult($id)
-//     {
-//         $post = Post::find($id); //指定したidの投稿を取得
-//         $images = $post->images; //投稿に関する画像を取得
-//         return view('posts.result',compact('post','images')); //ビューにデータを渡して表示
-//     }
-   
+        //タグ一覧を取得
+        $tags = Tag::all();
 
-    
-    // public function showPosts()
-    // {
-    // $posts = Post::with('images')->get(); // Postと関連する画像を取得
-
-    // return view('posts.result', compact('posts'));
-    // }
-
-    public function search(Request $request) {
-        $keyword = $request->input('keyword');
-        $selectedTags = $request->input('tags') ? explode(',', $request->input('tags')) : [];
-    
-        $posts = Post::query()
-            ->when($keyword, function ($query) use ($keyword) {
-                $query->where('title', 'LIKE', "%{$keyword}%")
-                      ->orWhere('content', 'LIKE', "%{$keyword}%");
+        // データベース検索処理
+        $results = Post::query()
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                return $query->where('title', 'LIKE', "%{$searchQuery}%");
             })
-            ->when($selectedTags, function ($query) use ($selectedTags) {
-                $query->whereHas('tags', function ($subQuery) use ($selectedTags) {
-                    $subQuery->whereIn('tags.id', $selectedTags);
+            ->when(!empty($selectedTagsArray), function ($query) use ($selectedTagsArray) {
+                return $query->whereHas('tags',function($subQuery) use ($selectedTagsArray){
+                    $subQuery->whereIn('tags.id', $selectedTagsArray);
                 });
             })
             ->get();
-    
-        return response()->json($posts);
+
+        return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
     }
 }
-
-
-
-// public function result()
-//     {
-        // // postsテーブルからすべてのデータを取得
-        // $posts = Post::all();
-        // // dd($posts);
-        // // ビューにデータを渡して表示
-        // return view('posts.result', compact('posts'));
-    // }
