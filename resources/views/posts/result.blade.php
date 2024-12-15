@@ -17,10 +17,11 @@
             <div class="search">
                 <form action="{{ route('posts.result') }}" method="GET">
                     {{-- キーワード検索 --}}
-                    <input type="search" name="search" id="post_search" class="search_box" placeholder="投稿を検索">
+                    <input type="search" name="search" 
+                    id="post_search" class="search_box" placeholder="投稿を検索" 
+                    value="{{ request('search') }}">
                     <button type="submit" class="search_button">検索</button>
                 </form>
-                
             </div>
         </section>
 
