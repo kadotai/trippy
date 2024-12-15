@@ -13,7 +13,7 @@
 <div class="notifititle">🔔NOTIFICATIONS</div>
 <a href="{{ route('posts.post') }}" class='noti-btn'>
     <div class="coment noti-card">
-    <h2>{{  }}がコメントしました</h2>
+    <h2>がコメントしました</h2>
     <h2>あなたの投稿：内容…</h2>
     </div>
 </a>
