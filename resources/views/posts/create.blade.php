@@ -16,7 +16,7 @@
         <div class="Photo">
             <p>Photo</p>
             <input id="inputElm" type="file" name="img[]" multiple />
-            <div id="preview" ></div>
+            <div id="preview"></div>
         </div>
 
         {{-- Title --}}
@@ -60,7 +60,7 @@
             <p>Tag</p>
             <section class="create_selected_tag">
                 @foreach ($tags as $tag)
-                    <button class="tag-button" name="tags[]" data-tag="{{ $tag->id }}">{{ $tag ->tag_name }}</button>
+                    <button type="button" class="tag-button" name="tags[]" data-tag="{{ $tag->id }}">{{ $tag ->tag_name }}</button>
                 @endforeach
             </section>
         </div>
@@ -364,6 +364,49 @@ const inputElm = document.getElementById('inputElm');
                 targetElm.appendChild(imgElm);
             });
         });
+
+          // タグの選択機能
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedTags = new Set(); // 選択されたタグIDを保持するSet
+        const tagButtons = document.querySelectorAll('.tag-button'); // タグボタンを取得
+        const form = document.getElementById('tripForm'); // フォーム全体
+
+        // タグボタンのクリックイベントを設定
+        tagButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault(); // デフォルトの動作を無効化
+
+                const tagId = button.getAttribute('data-tag'); // タグのIDを取得
+
+                // 選択状態の切り替え
+                if (selectedTags.has(tagId)) {
+                    selectedTags.delete(tagId);
+                    button.classList.remove('selected'); // 選択中のスタイルを削除
+                } else {
+                    selectedTags.add(tagId);
+                    button.classList.add('selected'); // 選択中のスタイルを追加
+                }
+
+                // フォームに選択されたタグを反映
+                updateHiddenInputs();
+            });
+        });
+
+        // 非表示の<input>要素を更新する関数
+        function updateHiddenInputs() {
+            // 既存のタグ入力を削除
+            document.querySelectorAll('input[name="tags[]"]').forEach(input => input.remove());
+
+            // 選択されたタグIDをhidden inputとして追加
+            selectedTags.forEach(tagId => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'tags[]';
+                input.value = tagId;
+                form.appendChild(input);
+            });
+        }
+    });
     </script>
 
     
