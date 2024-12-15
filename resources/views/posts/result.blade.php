@@ -37,7 +37,7 @@
         </section>
     
         {{-- 検索結果 --}}
-        <section class="result_posts">
+        {{-- <section class="result_posts">
             @foreach ($results as $post)
                 <div class="post">
                     <h2>{{ $post->title }}</h2>
@@ -49,11 +49,13 @@
                     </p>
                 </div>
             @endforeach
-        </section>
+        </section> --}}
+
+        {{-- <div id="results"></div> --}}
     
         {{-- その他の記事 --}}
         <section class="top_all_article_list">
-            @foreach($posts as $post)
+            @foreach($results as $post)
             <div class="article_card">
                 <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
                     <div class="article_card_left">

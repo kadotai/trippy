@@ -24,7 +24,7 @@ class PostController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        return view('posts.top', compact('tags'));
+        // return view('posts.top', compact('tags'));
 
         $posts = Post::all(); // データベースからすべての投稿を取得
         return view('posts.index', compact('posts'));
@@ -53,9 +53,6 @@ class PostController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'content' => 'required|string',
             'post_type' => 'required|in:public,private',
-        ]);
-
-        $request->validate([
             'route_date' => 'nullable|string',
             'duration' => 'nullable|string',
         ]);
@@ -116,43 +113,26 @@ class PostController extends Controller
     }
 
     public function showResults(Request $request)
-    {
+{
+    $searchQuery = $request->query('search');
+    $selectedTags = $request->query('tags');
+    $selectedTagsArray = $selectedTags ? explode(',', $selectedTags) : [];
 
+    $tags = Tag::all();
 
-        // $posts = Post::with('country')->get();
+    $results = Post::query()
+        ->when($searchQuery, function ($query) use ($searchQuery) {
+            $query->where('title', 'LIKE', "%{$searchQuery}%");
+        })
+        ->when(!empty($selectedTagsArray), function ($query) use ($selectedTagsArray) {
+            $query->whereHas('tags', function ($subQuery) use ($selectedTagsArray) {
+                $subQuery->whereIn('tags.id', $selectedTagsArray);
+            });
+        })
+        ->get();
 
-
-// postsテーブルからすべてのデータを取得
-        // $posts = Post::all();
-    //Usersテーブルからユーザーネームを取得
-        $posts = Post::with('user')->get();
-        
-
-
-        $searchQuery = $request->query('search'); // 検索キーワード
-        $selectedTags = $request->query('tags'); // 選択されたタグ（カンマ区切り）
-
-        $selectedTagsArray = $selectedTags ? explode(',', $selectedTags) : [];
-
-        //タグ一覧を取得
-        $tags = Tag::all();
-
-        // データベース検索処理
-        $results = Post::query()
-            ->when($searchQuery, function ($query) use ($searchQuery) {
-                return $query->where('title', 'LIKE', "%{$searchQuery}%");
-            })
-            ->when(!empty($selectedTagsArray), function ($query) use ($selectedTagsArray) {
-                return $query->whereHas('tags',function($subQuery) use ($selectedTagsArray){
-                    $subQuery->whereIn('tags.id', $selectedTagsArray);
-                });
-            })
-            ->get();
-
-        return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
-   
-           
-    }
+    return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags'));
+}
 // //12/12 cana
 //     public function showResult($id)
 //     {
@@ -172,11 +152,20 @@ class PostController extends Controller
 
     public function search(Request $request) {
         $keyword = $request->input('keyword');
-
-        $posts = Post::where('title', 'LIKE', "%{$keyword}%")
-                 ->orWhere('content', 'LIKE', "%{$keyword}%")
-                 ->get();
-
+        $selectedTags = $request->input('tags') ? explode(',', $request->input('tags')) : [];
+    
+        $posts = Post::query()
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->where('title', 'LIKE', "%{$keyword}%")
+                      ->orWhere('content', 'LIKE', "%{$keyword}%");
+            })
+            ->when($selectedTags, function ($query) use ($selectedTags) {
+                $query->whereHas('tags', function ($subQuery) use ($selectedTags) {
+                    $subQuery->whereIn('tags.id', $selectedTags);
+                });
+            })
+            ->get();
+    
         return response()->json($posts);
     }
 }
