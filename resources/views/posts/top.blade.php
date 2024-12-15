@@ -22,7 +22,7 @@
 {{-- タグayaka --}}
 <section class="top_selected_tag">
        @foreach ($tags as $tag)
-         <button class="tag-button" data-tag="{{ $tag->id }}">{{ $tag ->tag_name }}</button>
+         <button class="tag-button" data-tag="{{ $tag->id }}">#{{ $tag ->tag_name }}</button>
      @endforeach
 </section>
 
