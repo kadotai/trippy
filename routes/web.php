@@ -65,9 +65,10 @@ Route::post('/create', [RouteController::class, 'store']);
 
 Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
-Route::get('/search', [PostController::class, 'search']);
+Route::get('/search', [PostController::class, 'showResults']);
 
 Route::get('/search', [PostController::class, 'search'])->name('posts.search');
+
 
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 

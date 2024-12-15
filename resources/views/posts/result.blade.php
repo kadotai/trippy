@@ -51,7 +51,7 @@
             @endforeach
         </section> --}}
 
-        {{-- <div id="results"></div> --}}
+        <div id="results">
     
         {{-- その他の記事 --}}
         <section class="top_all_article_list">
@@ -92,6 +92,7 @@
             @endforeach
         </section>
         @endsection
+    </div>
 
     {{-- タグ一覧のScriptタグ --}}
     <script>
@@ -166,12 +167,11 @@
     });
 
     document.getElementById('search_button').addEventListener('click', function() {
-    const keyword = document.getElementById('post_search').value;
-
+    const keyword = document.getElementById('post_search').value; // idを統一
     fetch(`/search?keyword=${encodeURIComponent(keyword)}`)
         .then(response => response.json())
         .then(data => {
-            const resultContainer = document.getElementById('results');
+            const resultContainer = document.getElementById('results'); // 結果表示領域
             resultContainer.innerHTML = ''; // 結果をクリア
             data.forEach(post => {
                 const postElement = document.createElement('div');
@@ -181,8 +181,10 @@
                 `;
                 resultContainer.appendChild(postElement);
             });
-        });
+        })
+        .catch(error => console.error('Error:', error)); // エラーハンドリング
 });
+
     </script>
 </body>
 </html>
