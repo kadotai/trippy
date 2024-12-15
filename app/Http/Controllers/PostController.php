@@ -29,7 +29,7 @@ class PostController extends Controller
     {
         $tags = Tag::all();
         $posts = Post::all(); // データベースからすべての投稿を取得
-        return view('posts.top', compact('tags', 'posts));
+        return view('posts.top', compact('tags', 'posts'));
     }
 
     public function create()
@@ -96,6 +96,7 @@ class PostController extends Controller
 
     // **6. 完了後のリダイレクト**
     return redirect()->route('posts.create')->with('success', '投稿が保存されました。');
+   }
     //     // フォームからのデータを検証します
     //     $validatedData = $request->validate([
     //         'img.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
