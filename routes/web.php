@@ -5,6 +5,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\LikeController;
+
 
 
 /*
@@ -40,6 +42,10 @@ Route::get('/result',[PostController::class, 'showResults'])->name('posts.result
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
+Route::post('/posts/{post}/like',[LikeController::class,'like'])->name('posts.like');
+
+Route::delete('posts/{post}/like',[LikeController::class,'unlike'])->name('posts.unlike');
+
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
 Route::get('/mypage', [MyPageController::class, 'show'])->name('mypage');
@@ -59,4 +65,6 @@ Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
 
