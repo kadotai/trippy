@@ -9,6 +9,11 @@ class Post_tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'post_id', // 一括代入可能なカラム
+        'tag_id',
+    ];
+
     public function post()
     {
         return $this->belongsTo(Post::class);
