@@ -30,7 +30,11 @@
 
 <footer>
 <div class="footer-icons">
+<<<<<<< Updated upstream
     <a href="{{ route('posts.top') }}"><img class=icons src="{{ asset('img/footerlogo.png')}}" alt="ロゴ"></a>
+=======
+    <a href="{{ route('posts.top') }}"><img class=icons src="{{ asset('img/footerlogo.jpg')}}" alt="ロゴ"></a>
+>>>>>>> Stashed changes
     <a href="{{ route('posts.create') }}"><img class=icons src="{{ asset('img/footerplus.png') }}" alt="新規"></a>
     <a href="{{ route('notification') }}"><img class=icons src="{{ asset('img/footernotic.png')}}" alt="通知"></a>
     <a href="{{ route('mypage') }}"><img class=icons src="{{ asset('img/footermypage.png')}}" alt="マイぺージ"></a>
