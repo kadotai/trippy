@@ -1,11 +1,18 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="{{ asset('assets/css/myinfo.css') }}">
-</head>
-<body>
+</head> --}}
+{{-- <body> --}}
+    @extends('layouts.footer')
+
+    @section('css')
+    <link rel="stylesheet" href="{{ asset('assets/css/myinfo.css') }}">
+    @endsection
+
+    @section('content')
     <h1>Edit Profile</h1>
 
     <!-- 成功メッセージの表示 -->
@@ -54,5 +61,7 @@
         
         <button type="submit">Update</button>
     </form>
-</body>
-</html>
+
+    @endsection
+{{-- </body>
+</html> --}}
