@@ -23,7 +23,7 @@ class Post extends Model
 
     public function images()
     {
-        return $this->hasMany(Post_Image::class, );
+        return $this->hasMany(Post_image::class,);
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -31,7 +31,7 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    // リレーション: 1対多 (Post と Photo)
+    // リレーション: 1対多 (Post と )
     public function photos()
     {
         return $this->hasMany(Post_image::class);
