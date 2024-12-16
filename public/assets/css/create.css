@@ -60,7 +60,7 @@ input , .City select {
 }
 
 .create_selected_tag{
-  　background-color: #fff; 
+    background-color: #fff; 
     height: 45px;
     width: 100%;
     overflow-x: scroll; /* 横スクロールを有効にする */

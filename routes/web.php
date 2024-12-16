@@ -49,9 +49,7 @@ Route::get('/result',[PostController::class, 'showResults'])->name('posts.result
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
-Route::post('/posts/{post}/like',[LikeController::class,'like'])->name('posts.like');
-
-Route::delete('posts/{post}/like',[LikeController::class,'unlike'])->name('posts.unlike');
+Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->middleware('auth');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
