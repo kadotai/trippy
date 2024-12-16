@@ -14,13 +14,13 @@ class LikeController extends Controller
             'user_id' =>$request->user()->id,
         ]);
     }
-    return responses()->json(['message' => 'いいねしました!']);
+    return response()->json(['message' => 'いいねしました!']);
 }
 public function unlike(Request $request, Post $post)
 {
     // いいねを削除
     $post->likes()->where('user_id',$request->user()->id)->delete();
 
-    return response()->jspn(['message'=>'いいねを解除しました!']);
+    return response()->json(['message'=>'いいねを解除しました!']);
 }
 }
