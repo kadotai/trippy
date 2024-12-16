@@ -41,6 +41,9 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        //デバッグ用↓
+        // dd($request->all(), $request->file('images'));
+
          // **1. バリデーション**
     $request->validate([
         'title' => 'nullable|string|max:255',
@@ -50,9 +53,9 @@ class PostController extends Controller
         'end_date' => 'nullable|date',
         'tags' => 'nullable|array',
         'tags.*' => 'exists:tags,id',
-        'img' => 'required|array',
+        'images' => 'required|array',
         // 'img' => 'nullable|array',
-        'img.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'route_data' => 'nullable|array',
         'duration' => 'nullable|string',
     ]);
@@ -74,10 +77,27 @@ class PostController extends Controller
         'post_type' => $request->input('open') === 'public',
     ]);
 
+        // 3. デバッグコードで送信された画像データを確認
+        if (is_array($request->file('images'))) {
+            foreach ($request->file('images') as $image) {
+                // 4. 画像をストレージに保存
+                $path = $image->store('img', 'public');
+    
+                // 5. Post_image（子）データを保存
+                Post_image::create([
+                    'post_id' => $post->id, // 外部キー
+                    'img' => $path,         // 保存パス
+                ]);
+            }
+        } else {
+            // 配列で送信されていない場合
+            dd('images is not an array', $request->file('images'));
+        }
+
     // **4. post_images テーブルに画像を保存**
-    if ($request->has('img')) {
-        foreach ($request->file('img') as $image) {
-            $path = $image->store('images', 'public'); // `storage/app/public/images/` に保存
+    if ($request->hasFile('images') && is_array($request->file('images'))) {
+        foreach ($request->file('images') as $image) {
+            $path = $image->store('img', 'public'); // `storage/app/public/images/` に保存
             Post_image::create([
                 'post_id' => $post->id,
                 'img' => $path,

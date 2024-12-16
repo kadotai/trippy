@@ -1,11 +1,12 @@
 {{-- ヘッダーcana --}}
 @extends('layouts.original')
-@section('content')
 
+@section('css')
 <title>toppage|trippy</title>
 <link rel="stylesheet" href="{{ asset('assets/css/top.css') }}">
+@endsection
 
-
+@section('content')
 
 {{-- 検索ayaka --}}
 <section class="top_search">
