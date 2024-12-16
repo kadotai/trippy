@@ -69,7 +69,7 @@
                                     @endif
                                 <span class="like-count">{{ $post->likes_count }}</span>
                                 <button class="comment-btn">💬</button>
-                                <button class="edit-btn clickable" data-route="{{ route('edit', $post->id) }}">編集</button>
+                                <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">編集</button>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                             <p class="post-location">国:{{ $plan->country->name }} / エリア: {{ $plan->city }}</p>
                             <p class="post-date">年月日:{{ $plan->start_date }}~{{ $plan->end_date }}</p>
                             <p class="post-comment">コメント:{{ $plan->content }}</p>
-                            <button class="edit-btn clickable" data-route="{{ route('edit', $plan->id) }}">編集</button>
+                            <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">編集</button>
                         </div>
                     </div>
                 @endforeach

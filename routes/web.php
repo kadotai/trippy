@@ -65,11 +65,12 @@ Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
 Route::post('/create', [PostController::class, 'store'])->name('posts.store');
 
-Route::post('/post', [PostController::class, 'show'])->name('posts.show');
+Route::post('/post/{id}', [PostController::class, 'show'])->name('posts.show');
 
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
 
-
+Route::put('/post/{id}', [PostController::class, 'update'])->name('posts.update');

@@ -42,7 +42,7 @@ class MyPageController extends Controller
                 $likedPosts = Post::whereIn('id', $likedPostIds)->get();
                 
         // ビューにユーザー情報を渡す
-        return view('posts.mypage', compact('user', 'posts', 'plannedPosts', 'likedPosts', 'visitedCountriesCount'));       
+        return view('posts.mypage', compact('user', 'posts', 'plannedPosts', 'likedPosts', 'visitedCountriesCount'));
     }
 
     public function getPrefectures(Request $request)

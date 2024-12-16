@@ -23,6 +23,10 @@ class PostController extends Controller
 
         // ビューに渡す
         return view('posts.post', compact('posts', 'plannedPosts'));
+
+        $post = Post::find($id);
+
+        return view('posts.show',['post'=>$post]);
     }
 
     public function index()
@@ -97,7 +101,7 @@ class PostController extends Controller
 
     // **6. 完了後のリダイレクト**
     return redirect()->route('posts.create')->with('success', '投稿が保存されました。');
-   }
+}
     //     // フォームからのデータを検証します
     //     $validatedData = $request->validate([
     //         'img.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -197,4 +201,40 @@ $posts = Post::withCount('comments')->get();
 $posts = Post::withCount('likes')->get();
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
     }
+
+    public function edit($id)
+{
+    $post = Post::with('tags', 'photos')->findOrFail($id);
+    $countries = Country::all();
+    $tags = Tag::all();
+    return view('posts.edit', compact('post', 'countries', 'tags'));
+
+    // $post = Post::find($id);
+
+    // return view('posts.edit',['post'=> $post]);
+}
+
+public function update(Request $request, $id)
+{
+    $post = Post::findOrFail($id);
+
+    // 入力データの検証
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date|after_or_equal:start_date',
+        // 他の検証ルールを追加
+    ]);
+
+    // データ更新
+    $post->update($request->only(['title', 'country', 'city', 'start_date', 'end_date', 'content', 'post_type']));
+
+    // タグの更新
+    if ($request->has('tags')) {
+        $post->tags()->sync($request->input('tags'));
+    }
+
+    return redirect()->route('posts.index')->with('success', '投稿が更新されました！');
+// }一旦ねnao
+}
 }
