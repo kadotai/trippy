@@ -25,18 +25,20 @@
 
 {{-- 記事一覧nao --}}
 <section class="top_all_article_list">
-    <div class="article_card"><a href="{{ route('posts.post') }}" class="article_card_link">
+    <div class="article_card">
+        @foreach ($posts as $post)
+        <a href="{{ route('posts.post') }}" class="article_card_link">
         <div class="article_card_left">
-            <h1 class="username">Ryohey</h1>
+            <h1 class="username">Takeru Sato</h1>
             <img src="{{ asset('img/Morocco.jpg') }}" alt="旅行写真" class="travel_img">
         </div>
         <div class="article_card_right">
             <ul class="where">
-                <li class="country">Morocco</li>
-                <li class="city">&nbsp;Marrakesh</li>
+                <li class="country">{{ $post->country->country_name }}</li>
+                <li class="city">&nbsp;{{ $post->city }}</li>
             </ul>
-            <p class="date">2024/11/12~2024/11/30</p>
-            <p class="trip_title">モスク参拝</p>
+            <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
+            <p class="trip_title">{{ $post->title }}</p>
             <p class="article_tag">#海</p>
             <div class="like_and_comment">
                 <div class="like">
@@ -47,7 +49,9 @@
                 </div>
             </div>
         </div>
-    </a></div>
+    </a>
+    @endforeach
+</div>
 </section>
 
 

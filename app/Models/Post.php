@@ -47,7 +47,7 @@ class Post extends Model
 
     public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Country::class,'country_id','id');
+        return $this->belongsTo(Country::class,'country_id');
     }
 
     public function likes()

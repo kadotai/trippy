@@ -33,7 +33,9 @@ class PostController extends Controller
     {
         $tags = Tag::all();
         $posts = Post::all(); // データベースからすべての投稿を取得
+        $country = Post::with('country')->get();
         return view('posts.top', compact('tags', 'posts'));
+
     }
 
     public function create()
