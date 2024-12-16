@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
 
 </head>
-<body>
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" id="tripForm">
         @csrf <!-- CSRF保護のため -->
         
@@ -269,10 +268,8 @@ const inputElm = document.getElementById('inputElm');
             targetElm.appendChild(imgElm);
         });
     });
-
-
-
     </script> --}}
+
 
     <script>
         let marker;
@@ -409,7 +406,11 @@ const inputElm = document.getElementById('inputElm');
     });
     </script>
 
-    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSeGO53Uzs4JgZGrKy-eokk0aAb_vGbM&callback=initMap" async defer></script>
-</body>
-</html>
+
+    
+    {{-- フッター:cana --}}
+    @extends('layouts.footer')
+    @section('content')
+
+    @endsection
