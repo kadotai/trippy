@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>toppage|trippy</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/top.css') }}">
-</head>
-<body>
 {{-- ヘッダーcana --}}
-{{-- @extends('layouts.app')
-@section('content') --}}
+@extends('layouts.original')
+@section('content')
+
+<title>toppage|trippy</title>
+<link rel="stylesheet" href="{{ asset('assets/css/top.css') }}">
+
+
+
 {{-- 検索ayaka --}}
 <section class="top_search">
     <div class="search">
@@ -52,11 +48,6 @@
         </div>
     </a></div>
 </section>
-
-{{-- フッダーcana --}}
-{{-- @endsection --}}
-
-
 
 
 {{-- タグ一覧のScriptタグ --}}
@@ -134,7 +125,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 </script>
-
-
-</body>
-</html>
+@endsection
