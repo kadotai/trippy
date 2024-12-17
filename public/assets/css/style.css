@@ -26,9 +26,6 @@
 .title{
     font-size: 40px;
     padding-top: 5px;
-   
-    
-
 }
 
 
@@ -45,7 +42,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     position: sticky;
-    bottom: 0
+    bottom: 0;
     left: 0;
 }
 
