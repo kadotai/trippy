@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新規登録</title>
+@extends('layouts.header')
+
+@section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
-</head>
-<body>
+@endsection
+
+@section('content')
     <div class="register-container">
         <div class="register-box">
-            <!-- ロゴ -->
-            <div class="logo-container">
-                <img src="{{ asset('img/trippy.png')}}" alt="ロゴ" class="logo">
-            </div>
             <h1>新規登録</h1>
             <form action="{{ route('auth.register') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -37,9 +31,9 @@
                     <div class="radio-labels">
                         <div>
                             <input type="radio" id="male" name="sex" value="male" required>
-                            <label for="male">男</label>
+                            <label for="male">男性</label>
                             <input type="radio" id="female" name="sex" value="female">
-                            <label for="female">女</label>
+                            <label for="female">女性</label>
                             <input type="radio" id="unspecified" name="sex" value="unspecified">
                             <label for="other">それ以外</label>
                         </div>
@@ -81,10 +75,11 @@
             </form>
         </div>
     </div>
+
     @if(session('error'))
-    <div class="alert alert-danger">
-        <strong>エラー:</strong> {{ session('error') }}
-    </div>
+        <div class="alert alert-danger">
+            <strong>エラー:</strong> {{ session('error') }}
+        </div>
     @endif
 
     @if(session('success'))
@@ -103,7 +98,6 @@
         </div>
     @endif
 
-
     <script>
         function previewIcon(event) {
             const preview = document.getElementById('icon-preview');
@@ -111,5 +105,4 @@
             preview.style.display = 'block';
         }
     </script>
-</body>
-</html>
+@endsection

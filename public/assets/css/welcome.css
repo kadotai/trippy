@@ -27,7 +27,7 @@ body, html {
 .welcome-box img {
     width: 130px;
 }
-.welcome-box h1 {
+.welcome-box h1 ,h2{
     font-size: 28px;
     color: #ff6f91;
     margin-bottom: 10px;
@@ -78,3 +78,4 @@ body, html {
     background: #66bb6a;
     transform: scale(1.05);
 }
+
