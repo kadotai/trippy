@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+public function showPost($id)
+{
+    $post = Post::Find($id);
+    return view('posts.post',['post'=>$post]);
+}
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑
+    
     public function show()
     {
         // 投稿と関連する画像を取得
@@ -205,8 +213,7 @@ class PostController extends Controller
     //         ->get();
 
     //     return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
-}
-} 
+}} 
     public function showResults(Request $request)
     {
         $posts = Post::with('country')->get();
