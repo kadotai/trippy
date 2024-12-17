@@ -7,6 +7,8 @@ use App\Http\Controllers\RouteController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+
 
 
 
@@ -49,6 +51,10 @@ Route::get('/result',[PostController::class, 'showResults'])->name('posts.result
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
+Route::post('/post/{post}/like',[LikeController::class,'like'])->name('posts.like');
+
+Route::delete('post/{post}/like',[LikeController::class,'unlike'])->name('posts.unlike');
+
 Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->middleware('auth');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
@@ -61,6 +67,8 @@ Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
 Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
+Route::post('/post{id}', [PostController::class, 'store'])->name('posts.store');
+
 Route::post('/create', [PostController::class, 'store'])->name('posts.store');
 
 Route::post('/post/{id}', [PostController::class, 'show'])->name('posts.show');
@@ -68,6 +76,10 @@ Route::post('/post/{id}', [PostController::class, 'show'])->name('posts.show');
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::post('/post/{post}/comments',[CommentController::class,'store'])->name('comments.store');
+
+Route::delete('/post/{comment}',[CommentController::class, 'destroy'])->name('comments.destroy');
 
 Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
 

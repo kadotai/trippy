@@ -36,5 +36,13 @@ class LikeController extends Controller
         ]);
     }
 
-    
+    return response()->json(['message' => 'いいねしました!']);
+}
+public function unlike(Request $request, Post $post)
+{
+    // いいねを削除
+    $post->likes()->where('user_id',$request->user()->id)->delete();
+
+    return response()->json(['message'=>'いいねを解除しました!']);
+}
 }
