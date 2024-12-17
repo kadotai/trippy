@@ -24,7 +24,7 @@
     </div>
 
     <div id="map-container">
-        <div id="regions_div"></div>
+        <div id="regions_div" style="width: 100vw;"></div>
     </div>
 
     <div class="tab-header">
@@ -45,9 +45,9 @@
                         <div class="post-details">
                             <div class="title-wrapper">
                                 <h2 class="title">タイトル名:{{ $post->title }}</h2>
-                                <span class="status">公開中:{{ $post->post_type ? '公開' : '非公開' }}</span>
+                                <span class="status">公開中:{{ $post->post_id ? '公開' : '非公開' }}</span>
                             </div>
-                            <p class="post-location">国:{{ $post->country_id }} / エリア: {{ $post->city }}</p>
+                            <p class="post-location">国:{{ $post->country->country_name }} / エリア: {{ $post->city }}</p>
                             <p class="post-date">年月日:{{ $post->start_date }}~{{ $post->end_date }}</p>
                             <p class="post-comment">コメント:{{ $post->content }}</p>
                             <div class="post-actions">
@@ -114,26 +114,28 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            google.charts.load('current', { 'packages': ['geochart'] });
-            google.charts.setOnLoadCallback(drawRegionsMap);
+    document.addEventListener('DOMContentLoaded', function() {
+        // Google GeoChart の初期設定
+        google.charts.load('current', { 'packages': ['geochart'] });
+        google.charts.setOnLoadCallback(drawRegionsMap);
 
-            function drawRegionsMap() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Country', 'Popularity'],
-                    ['Japan', 100],
-                    ['United States', 80],
-                    ['France', 60],
-                    ['Brazil', 50]
-                ]);
-                var options = {
-                    colorAxis: { colors: ['#e0f3f8', '#41b62c'] },
-                    legend: 'none',
-                };
-                var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-                chart.draw(data, options);
-            }
-        });
+        // 地図描画関数
+        function drawRegionsMap() {
+            // サンプルデータを使用（必要に応じてサーバーからデータを取得して更新）
+            var data = google.visualization.arrayToDataTable([
+                ['Country', 'Popularity'],
+                ['Japan', 100], // 必要に応じてデータを追加
+                ['United States', 80],
+                ['France', 60],
+                ['Brazil', 50]
+            ]);
+
+            var options = {
+                backgroundColor: '#028391',
+                colorAxis: { colors: ['#99ab4e', '#99ab4e'] }, // カラースケール設定
+                legend: 'none', // カラーバーを非表示
+                
+            };
 
         function toggleLike(postId) {
             fetch(`/posts/${postId}/like`, {
