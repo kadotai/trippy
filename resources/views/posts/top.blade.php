@@ -27,7 +27,9 @@
 <section class="top_all_article_list">
     <div class="article_card">
         @foreach ($posts as $post)
-        <a href="{{ route('posts.post') }}" class="article_card_link">
+        <a href="{{ route('posts.showPost',['id'=> $post->id]) }}" class="article_card_link">
+
+        {{-- <a href="{{ route('posts.post') }}" class="article_card_link"> --}}
         <div class="article_card_left">
             <h1 class="username">{{ $post->user->name }}</h1>
         @if ($post->images->isNotEmpty()) 
@@ -46,10 +48,10 @@
             <p class="article_tag" data-tag="{{ $tag->id }}">#{{ $tag ->tag_name }}</p>
             <div class="like_and_comment">
                 <div class="like">
-                    <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon"><p class="like_number">111</p>
+                    <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon"><p class="like_number">{{ $post->likes->count() }}</p>
                 </div>
                 <div class="comment">
-                    <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon"><p class="comment_number">222</p>
+                    <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon"><p class="comment_number">{{ $post->comments->count() }}</p>
                 </div>
             </div>
         </div>
