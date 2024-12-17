@@ -241,8 +241,13 @@ $posts = Post::withCount('likes')->get();
     $tags = Tag::all();
 
     return view('posts.result', compact('results', 'tags'));
+<<<<<<< Updated upstream
 
 }
+=======
+}
+
+>>>>>>> Stashed changes
     public function edit($id)
 {
     $post = Post::with('tags', 'photos')->findOrFail($id);
@@ -279,4 +284,11 @@ public function update(Request $request, $id)
 // }一旦ねnao
     }
 
+<<<<<<< Updated upstream
+=======
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+>>>>>>> Stashed changes
 }

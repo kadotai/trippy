@@ -41,8 +41,6 @@
         {{-- <section class="result_posts">
             @foreach ($results as $post)
                 <div class="post">
-                    <h2>{{ $post->title }}</h2>
-                    <p>{{ $post->content }}</p>
                     <p>タグ: 
                         @foreach ($post->tags as $tag)
                             <span class="tag">{{ $tag->tag_name }}</span>

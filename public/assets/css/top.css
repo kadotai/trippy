@@ -85,12 +85,23 @@
 }
 
 /* 投稿結果 */
+.result_search {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    height: auto;
+}
 .result_posts {
-    display: flex;
-    flex-wrap: wrap; /* フレックスで複数列対応 */
-    gap: 20px; /* 各投稿間のスペース */
-    justify-content: center; /* 中央揃え */
-    margin-top: 20px;
+    margin-top: 60px; /* 検索バーの高さ分だけ余白をつける */
+    height: calc(100vh - 60px); /* 残りの画面の高さを計算 */
+    overflow-y: auto; /* スクロール可能にする */
+    padding: 10px;
+    background-color: #f9f9f9;
 }
 
 .post {
