@@ -9,8 +9,9 @@
 <body>
     <div class="login-container">
         <div class="login-box">
+            <h1 class="overlay-text">TRiPPY</h1> 
             <img src="{{ asset('img/trippy.png')}}" alt="写真">
-            <h1>Welcome Back!</h1>
+            <h2>Welcome Back!</h2>
             <p>Log in to your account</p>
 
             @if ($errors->any())
