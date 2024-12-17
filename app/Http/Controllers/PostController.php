@@ -209,8 +209,7 @@ class PostController extends Controller
 } 
     public function showResults(Request $request)
     {
-        $posts = Post::with('country')->get();
-        $posts = Post::with('user')->get();
+        $posts = Post::with(['country', 'user'])->get();
 
         $searchQuery = $request->query('search'); // 検索キーワード
         $selectedTags = $request->query('tags'); // 選択されたタグ（カンマ区切り）
@@ -236,9 +235,29 @@ $posts = Post::withCount('comments')->get();
 $posts = Post::withCount('likes')->get();
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
     }
-        
-    public function edit($id)
+
+    public function result(Request $request)
 {
+    $query = Post::query();
+
+    // 検索キーワードが入力されている場合のみ条件を追加
+    if ($request->has('search') && !empty($request->input('search'))) {
+        $keyword = $request->input('search');
+        $query->where('title', 'LIKE', "%{$keyword}%")
+              ->orWhere('content', 'LIKE', "%{$keyword}%");
+    }
+
+    // 検索結果を取得
+    $results = $query->get();
+
+    // タグを取得（必要であれば）
+    $tags = Tag::all();
+
+    return view('posts.result', compact('results', 'tags'));
+
+}
+    public function edit($id)
+    {
     $post = Post::with('tags', 'photos')->findOrFail($id);
     $countries = Country::all();
     $tags = Tag::all();
@@ -271,5 +290,10 @@ public function update(Request $request, $id)
 
     return redirect()->route('posts.index')->with('success', '投稿が更新されました！');
 // }一旦ねnao
-}
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 }
