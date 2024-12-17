@@ -48,14 +48,14 @@ Route::get('/top', [PostController::class, 'index'])->name('posts.top');
 Route::get('/result',[PostController::class, 'showResults'])->name('posts.result');
 
 // Route::get('/result', [PostController::class, 'result'])->name('posts.result');
-// Route::get('/result',function () {return view('posts.result');})->name('result');
-//↑これあってるかわかんないからいい感じにしてください：太田
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
 Route::post('/post/{post}/like',[LikeController::class,'like'])->name('posts.like');
 
 Route::delete('post/{post}/like',[LikeController::class,'unlike'])->name('posts.unlike');
+
+Route::post('/posts/{post}/like', [LikeController::class, 'toggleLike'])->middleware('auth');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
@@ -65,13 +65,13 @@ Route::patch('/mypage', [MyPageController::class, 'getPrefectures'])->name('mypa
 
 Route::get('/edit', function () {return view('posts.edit');})->name('edit');
 
-// Route::get('/create', function () {return view('posts.create');})->name('create');
-
-Route::post('/create', [RouteController::class, 'store']);
-
 Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
 Route::post('/post{id}', [PostController::class, 'store'])->name('posts.store');
+
+Route::post('/create', [PostController::class, 'store'])->name('posts.store');
+
+Route::post('/post/{id}', [PostController::class, 'show'])->name('posts.show');
 
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
@@ -81,5 +81,6 @@ Route::post('/post/{post}/comments',[CommentController::class,'store'])->name('c
 
 Route::delete('/post/{comment}',[CommentController::class, 'destroy'])->name('comments.destroy');
 
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
 
-
+Route::put('/post/{id}', [PostController::class, 'update'])->name('posts.update');

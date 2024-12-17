@@ -1,7 +1,11 @@
 body {
-    background-color: rgb(255, 208, 232);
+    background-color: #FFF;
     color: #333;
     padding: 15%;
+}
+
+h1 {
+    color:#028391;
 }
 
 label {
@@ -16,7 +20,7 @@ input {
     height: 40px;
     font-size: 13px;
     margin: 0;
-    background-color: #FFF;
+    background-color: rgb(254, 249, 234);
     border: none;
 }
 

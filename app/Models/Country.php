@@ -9,4 +9,11 @@ class Country extends Model
 {
     use HasFactory;
     protected $fillable = ['country_name'];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class,'country_id');
+    }
+
 }
+

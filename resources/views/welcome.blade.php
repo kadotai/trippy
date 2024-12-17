@@ -9,8 +9,11 @@
 <body>
     <div class="welcome-container">
         <div class="welcome-box">
-            <img src="{{ asset('img/trippy.png')}}" alt="写真1">
-            <h1>Welcome to Our Platform</h1>
+            <div class="image-container">
+                <h1 class="overlay-text">TRiPPY</h1> <!-- 画像の上に表示される文字 -->
+                <img src="{{ asset('img/trippy.png')}}" alt="写真1">
+            </div>
+            <h2>Welcome to Our Platform</h2>
             <p>Join us and start connecting with others!</p>
             <div class="button-group">
                 <a href="{{ route('login') }}" class="btn login-btn">Log In</a>

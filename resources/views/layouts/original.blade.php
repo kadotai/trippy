@@ -10,10 +10,6 @@
    @yield('css')
 
 
-
-
-
-
 </head> 
 <body>
     

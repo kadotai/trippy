@@ -7,6 +7,7 @@ use App\Models\Post;
 
 class RouteController extends Controller
 {
+    //↓これ今ルートから外したから使ってないことになってるはず：太田
     public function store(Request $request)
     {
         $validated = $request->validate([
