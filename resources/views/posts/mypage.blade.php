@@ -115,13 +115,9 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Google GeoChart の初期設定
             google.charts.load('current', { 'packages': ['geochart'] });
             google.charts.setOnLoadCallback(drawRegionsMap);
-    
-            // 地図描画関数
             function drawRegionsMap() {
-                // サンプルデータを使用（必要に応じてサーバーからデータを取得して更新）
                 var data = google.visualization.arrayToDataTable([
                     ['Country', 'Popularity'],
                     ['Japan', 100], // 必要に応じてデータを追加
@@ -129,13 +125,11 @@
                     ['France', 60],
                     ['Brazil', 50]
                 ]);
-    
                 var options = {
                     backgroundColor: '#028391',
                     colorAxis: { colors: ['#99ab4e', '#99ab4e'] }, // カラースケール設定
                     legend: 'none', // カラーバーを非表示
                 };
-    
                 var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
                 chart.draw(data, options);
             }
@@ -169,6 +163,5 @@
             }
         }); // document.addEventListenerの終了
     </script>
-    
     <script src="{{ asset('assets/js/mypage.js') }}"></script>
 @endsection
