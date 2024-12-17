@@ -31,11 +31,22 @@ class PostController extends Controller
 
     public function index()
     {
-        $tags = Tag::all();
-        $posts = Post::all(); // データベースからすべての投稿を取得
+        // $tags = Tag::all();
+        // $posts = Post::all(); // データベースからすべての投稿を取得
 
-        $country = Post::with('country')->get();
-        return view('posts.top', compact('tags', 'posts'));
+        // $country = Post::with('country')->get();
+        // return view('posts.top', compact('tags', 'posts'));
+
+        $tags = Tag::all();
+
+    // 新しい順に10件の投稿を取得し、関連データも一緒にロードする
+    $posts = Post::with(['user', 'images', 'country'])
+                ->orderBy('updated_at', 'desc') // 新しい順に並び替え
+                ->paginate(10); // ページネーションで10件ずつ取得
+                // ->take(10)                     // 10件のみ取得
+                // ->get();
+
+    return view('posts.top', compact('tags', 'posts'));
 
     }
 
@@ -205,7 +216,7 @@ class PostController extends Controller
     //         ->get();
 
     //     return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
-
+        }}
     public function showResults(Request $request)
     {
         $posts = Post::with('country')->get();

@@ -35,12 +35,13 @@
 
         <div>
             @if($user->icon)
-                <div>
-                    <img src="{{ asset('storage/' . $user->icon) }}" alt="プロフィールアイコン" style="max-width: 150px;">
-                </div>
+            <div>
+            <img src="{{ asset('storage/' . $user->icon) }}" alt="プロフィールアイコン" style="max-width: 150px;">
+            </div>
             @endif
             <label>Icon</label>
             <input type="file" name="icon">
+
         </div>
         <div>
             <label>Name</label>

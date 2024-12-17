@@ -30,7 +30,11 @@
         <a href="{{ route('posts.post') }}" class="article_card_link">
         <div class="article_card_left">
             <h1 class="username">{{ $post->user->name }}</h1>
-            <img src="{{ asset('img/Morocco.jpg') }}" alt="旅行写真" class="travel_img">
+        @if ($post->images->isNotEmpty()) 
+        <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
+    @else
+        <img src="{{ asset('img/black_white_trippy.jpg') }}" alt="デフォルト画像" class="travel_img">
+    @endif
         </div>
         <div class="article_card_right">
             <ul class="where">
@@ -39,7 +43,7 @@
             </ul>
             <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
             <p class="trip_title">{{ $post->title }}</p>
-            <p class="article_tag">#海</p>
+            <p class="article_tag" data-tag="{{ $tag->id }}">#{{ $tag ->tag_name }}</p>
             <div class="like_and_comment">
                 <div class="like">
                     <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon"><p class="like_number">111</p>
@@ -53,6 +57,8 @@
     @endforeach
 </div>
 </section>
+
+<div class="page">{{ $posts->links() }}</div>
 
 
 {{-- タグ一覧のScriptタグ --}}
