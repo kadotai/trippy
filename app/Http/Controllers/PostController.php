@@ -68,6 +68,7 @@ public function showPost($id)
 
     public function store(Request $request)
     {
+        try{
         //デバッグ用↓
         dd($request->all());
 
@@ -80,9 +81,9 @@ public function showPost($id)
         'end_date' => 'nullable|date',
         'tags' => 'nullable|array',
         'tags.*' => 'exists:tags,id',
-        'images' => 'required|array',
+        'images' => 'nullable|array',
         'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'route_data' => 'nullable|array',
+        'route_data' => 'nullable|json',
         'duration' => 'nullable|string',
     ]);
     
@@ -102,6 +103,8 @@ public function showPost($id)
         'duration' => $request->input('duration'),
         'post_type' => $request->input('open') === 'public',
     ]);
+
+    dd($request);
 
     // **post_images テーブルに画像を保存**
     if ($request->hasFile('images') && is_array($request->file('images'))) {
@@ -124,8 +127,26 @@ public function showPost($id)
         }
     }
 
-    // **完了後のリダイレクト**
+    // 完了後のリダイレクト
     return redirect()->route('posts.create')->with('success', '投稿が保存されました。');
+} catch (\Throwable $e) {
+    // 開発中のみエラーメッセージを表示
+    if (app()->environment('local')) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+            'data' => $request->all(),
+        ], 500);
+    }
+
+    // 本番環境ではログに記録して一般的なエラーを表示
+    \Log::error('システムエラー: ', [
+        'message' => $e->getMessage(),
+        'trace' => $e->getTraceAsString(),
+        'request_data' => $request->except(['images']),
+    ]);
+    return redirect()->back()->withInput()->withErrors(['error' => '予期しないエラーが発生しました。再度お試しください。']);
+}
 }
 
     public function showResults(Request $request)
