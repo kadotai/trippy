@@ -1,6 +1,6 @@
 
 body {
-    background-color: rgb(255, 208, 232);
+    background-color: rgb(254, 249, 234);
     color: #333;
     padding: 15%;
 }
@@ -16,7 +16,7 @@ p {
     width: 100%;
     font-size: 13px;
     margin: 0;
-    background-color: rgb(255, 208, 232);
+    background-color: rgb(254, 249, 234);
     border-style: solid;
     border-color: #FFF;
 }

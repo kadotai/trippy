@@ -9,14 +9,15 @@
     width: 220px;
 }
 .search_button{
+    color: #fff;
     height: 30px;
     width: 60px;
     border: none;
-    background-color: yellow;
+    background-color: #028391;
     /* ↑いったん見えないから黄色にしてる */
 }
 .top_selected_tag{
-    background-color: yellow; 
+    background-color: #fff; 
     /* ↑いったん見えないから黄色にしてる */
     height: 45px;
     width: 100%;
@@ -24,19 +25,21 @@
     white-space: nowrap; /* 横に並べる */
 }
 .tag-button{
+    color: #028391;
     display: inline-block;
     font-size: 13px;
-    border: #333;
-    background-color: #FFF;
+    border-color: #028391;
+    background-color: #fff;
     width: fit-content;
-    clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%);
-    padding: 0 20px 0 0;
+    /* clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%); */
+    border-radius: 10px;
+    padding: 5px 10px;
     cursor: pointer;
 }
 .tag-button.selected{
-    background-color: #007bff;
+    background-color: #028391;
     color: #fff;
-    border-color: #0056b3;
+    border-color: #028391;
 }
 
 /* 検索欄 */
@@ -137,7 +140,7 @@ a {
 .article_card_link {
     text-decoration: none;
     display: flex;
-    background-color: rgb(254, 255, 196);
+    background-color: rgb(254, 249, 234);
     padding: 5px 0;
     border: solid;
     border-color: #333;
