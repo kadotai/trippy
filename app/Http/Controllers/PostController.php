@@ -241,7 +241,7 @@ $posts = Post::withCount('likes')->get();
     $tags = Tag::all();
 
     return view('posts.result', compact('results', 'tags'));
-}
+
 }
     public function edit($id)
 {
@@ -277,5 +277,6 @@ public function update(Request $request, $id)
 
     return redirect()->route('posts.index')->with('success', '投稿が更新されました！');
 // }一旦ねnao
-}
+    }
+
 }

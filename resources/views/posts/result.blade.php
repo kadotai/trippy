@@ -76,7 +76,11 @@
                         </ul>
                         <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
                         <p class="trip_title">{{ $post->title }}</p>
-                        <p class="article_tag">{{ $post->tag }}</p>
+                        <p class="result_tag">
+                            @foreach ($post->tags as $tag)
+                                <span class="result_tag">{{ $tag->tag_name }}</span>
+                            @endforeach
+                        </p>
                         <div class="like_and_comment">
                             <div class="like">
                                 <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon">
