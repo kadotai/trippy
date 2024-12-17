@@ -67,7 +67,7 @@ class PostController extends Controller
         'route_data' => 'nullable|array',
         'duration' => 'nullable|string',
     ]);
-
+    
     // **2. 国のIDを取得**
     $country = Country::where('country_name', $request->input('country'))->first();
 
@@ -205,7 +205,8 @@ class PostController extends Controller
     //         ->get();
 
     //     return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
-
+}
+} 
     public function showResults(Request $request)
     {
         $posts = Post::with('country')->get();
@@ -235,7 +236,7 @@ $posts = Post::withCount('comments')->get();
 $posts = Post::withCount('likes')->get();
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
     }
-
+        
     public function edit($id)
 {
     $post = Post::with('tags', 'photos')->findOrFail($id);
