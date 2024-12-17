@@ -54,7 +54,7 @@ class Post extends Model
     {
         return $this->hasMany(Like::class,'post_id', 'id');
     }
-  
+
     public function comments()
     {
         return $this->hasMany(Comment::class,'post_id','id');
@@ -63,5 +63,11 @@ class Post extends Model
     public function getLikesCountAttribute()
     {
     return $this->likes()->count();  // 関連するいいねの数をカウント
+    }
+
+    public function isLikedBy($user)
+    {
+        // ログイン中のユーザーがこの投稿をいいねしているかをチェック
+        return $this->likes->contains('user_id', $user->id);
     }
 }

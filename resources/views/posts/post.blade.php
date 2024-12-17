@@ -68,8 +68,17 @@
             <div class="Tracking">
                 <h1>Tracking</h1>
             </div>
+            
+            
+            {{-- されてるコメント表示 --}}
+            @foreach ($post->comments as $comment)
+            <div>
+                <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
+                <p>投稿日: {{ $comment->created_at->format('Y-m-d H:i') }}</p>
+            </div>
+            @endforeach
 
-        @endforeach
+        {{-- @endforeach --}}
 
             {{-- Like --}}
             <div class="Like">
@@ -91,12 +100,23 @@
 @endforeach --}}
 
             {{-- Comment --}}
-            <div class="Comment">
+            <!-- コメントフォーム -->
+<form action="{{ route('comments.store', $post->id) }}" method="POST">
+    @csrf
+    <textarea name="comment" required placeholder="コメントを入力してください"></textarea>
+    <button type="submit">コメントする</button>
+</form>
+
+
+
+            {{-- <div class="Comment">
                 <h1>Comment</h1>
                 <input type="text">
-            <div class="Comment_a"><a href="#">コメント投稿</a></div>
-    </div>
-    </div>
+                <div class="Comment_a"><a href="#">コメント投稿</a></div>
+            </div>
+    </div> --}}
+    @endforeach
+
 
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 

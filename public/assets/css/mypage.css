@@ -1,4 +1,19 @@
+
+
 /* プロフィールセクションのレイアウト調整 */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-container {
+    min-height: calc(100vh - 60px); /* フッターの高さ分を差し引いてコンテンツを表示 */
+    padding-bottom: 60px; /* フッターの高さと同じ値を設定 */
+}
+
 .profile {
     display: flex;
     align-items: center;
@@ -144,7 +159,7 @@ h2 {
 }
 
 .like-btn, .comment-btn, .edit-btn {
-    padding: 5px 10px;
+    padding: 8px 12px;
     border: none;
     background: none;
     cursor: pointer;
@@ -216,4 +231,23 @@ h2 {
     font-size: 15px;
     border-radius: 10px;
     height: 28px;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    color: #ff6b81; /* ハートの色 */
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.like-button .fa-heart {
+    transition: color 0.3s;
+}
+
+.like-button:hover .fa-heart {
+    color: #ff4757; /* ホバー時の色 */
 }

@@ -33,6 +33,7 @@ class PostController extends Controller
     {
         $tags = Tag::all();
         $posts = Post::all(); // データベースからすべての投稿を取得
+
         $country = Post::with('country')->get();
         return view('posts.top', compact('tags', 'posts'));
 
@@ -47,6 +48,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+
         //デバッグ用↓
         // dd($request->all(), $request->file('images'));
 
@@ -65,7 +67,7 @@ class PostController extends Controller
         'route_data' => 'nullable|array',
         'duration' => 'nullable|string',
     ]);
-
+    
     // **2. 国のIDを取得**
     $country = Country::where('country_name', $request->input('country'))->first();
 
@@ -82,8 +84,8 @@ class PostController extends Controller
         'duration' => $request->input('duration'),
         'post_type' => $request->input('open') === 'public',
     ]);
-
-        // 3. デバッグコードで送信された画像データを確認
+      
+              // 3. デバッグコードで送信された画像データを確認
         if (is_array($request->file('images'))) {
             foreach ($request->file('images') as $image) {
                 // 4. 画像をストレージに保存
@@ -98,7 +100,6 @@ class PostController extends Controller
         } else {
             // 配列で送信されていない場合
             dd('images is not an array', $request->file('images'));
-        }
 
     // **4. post_images テーブルに画像を保存**
     if ($request->hasFile('images') && is_array($request->file('images'))) {
@@ -119,11 +120,22 @@ class PostController extends Controller
                 'tag_id' => $tagId,
             ]);
         }
+
+
+    // **5. post_tags テーブルにタグを保存**
+    if ($request->has('tags')) {
+        foreach ($request->input('tags') as $tagId) {
+            Post_tag::create([
+                'post_id' => $post->id,
+                'tag_id' => $tagId,
+            ]);
+        }
     }
 
     // **6. 完了後のリダイレクト**
     return redirect()->route('posts.create')->with('success', '投稿が保存されました。');
 }
+
     //     // フォームからのデータを検証します
     //     $validatedData = $request->validate([
     //         'img.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -193,7 +205,8 @@ class PostController extends Controller
     //         ->get();
 
     //     return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
-
+}
+} 
     public function showResults(Request $request)
     {
         $posts = Post::with(['country', 'user'])->get();
