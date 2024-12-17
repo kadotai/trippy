@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Post_image;
 use App\Models\Post_tag;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 class PostController extends Controller
 {
@@ -222,7 +223,15 @@ class PostController extends Controller
         // データベース検索処理
         $results = Post::query()
             ->when($searchQuery, function ($query) use ($searchQuery) {
-                return $query->where('title', 'LIKE', "%{$searchQuery}%");
+                //カラム一覧を取得
+                $columns = Schema::getColumnListing('posts');
+
+                //カラムごとに検索条件を追加
+                $query->where(function ($q) use ($columns, $searchQuery) {
+                    foreach ($columns as $column) {
+                        $q->orWhere($column, 'LIKE', "%{$searchQuery}%");
+                    }
+                });
             })
             ->when(!empty($selectedTagsArray), function ($query) use ($selectedTagsArray) {
                 return $query->whereHas('tags',function($subQuery) use ($selectedTagsArray){
