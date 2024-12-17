@@ -27,9 +27,9 @@ return new class extends Migration
             $table->boolean('post_type')->default(false); //公開/非公開
 
 
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('country_id')->references('id')->on('countries');
-            // $table->foreign('prefecture_id')->references('id')->on('prefectures');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('prefecture_id')->references('id')->on('prefectures');
         });
     }
 
