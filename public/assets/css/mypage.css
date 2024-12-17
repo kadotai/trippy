@@ -1,3 +1,5 @@
+
+
 /* プロフィールセクションのレイアウト調整 */
 .profile {
     display: flex;
@@ -216,4 +218,8 @@ h2 {
     font-size: 15px;
     border-radius: 10px;
     height: 28px;
+}
+
+#map_container {
+    text-align: center;
 }

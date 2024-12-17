@@ -32,7 +32,7 @@
 
     {{-- 世界地図 --}}
     <div id="map-container">
-        <div id="regions_div"></div>
+        <div id="regions_div" style="width: 100vw;"></div>
     </div>
 
     {{-- タブヘッダー --}}
@@ -55,9 +55,9 @@
                         <div class="post-details">
                             <div class="title-wrapper">
                                 <h2 class="title">タイトル名:{{ $post->title }}</h2>
-                                <span class="status">公開中:{{ $post->is_public ? '公開' : '非公開' }}</span>
+                                <span class="status">公開中:{{ $post->post_id ? '公開' : '非公開' }}</span>
                             </div>
-                            <p class="post-location">国:{{ $post->country->name }} / エリア: {{ $post->city }}</p>
+                            <p class="post-location">国:{{ $post->country->country_name }} / エリア: {{ $post->city }}</p>
                             <p class="post-date">年月日:{{ $post->start_date }}~{{ $post->end_date }}</p>
                             <p class="post-comment">コメント:{{ $post->content }}</p>
                             <div class="post-actions">
@@ -87,7 +87,7 @@
                         @endforeach
                         <div class="post-details">
                             <h2 class="title">タイトル名:{{ $plan->title }}</h2>
-                            <p class="post-location">国:{{ $plan->country->name }} / エリア: {{ $plan->city }}</p>
+                            <p class="post-location">国:{{ $plan->country_id }} / エリア: {{ $plan->city }}</p>
                             <p class="post-date">年月日:{{ $plan->start_date }}~{{ $plan->end_date }}</p>
                             <p class="post-comment">コメント:{{ $plan->content }}</p>
                             <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">編集</button>
@@ -197,8 +197,10 @@
             ]);
 
             var options = {
-                colorAxis: { colors: ['#e0f3f8', '#41b62c'] }, // カラースケール設定
+                backgroundColor: '#028391',
+                colorAxis: { colors: ['#99ab4e', '#99ab4e'] }, // カラースケール設定
                 legend: 'none', // カラーバーを非表示
+                
             };
 
             var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));

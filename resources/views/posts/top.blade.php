@@ -29,7 +29,7 @@
         @foreach ($posts as $post)
         <a href="{{ route('posts.post') }}" class="article_card_link">
         <div class="article_card_left">
-            <h1 class="username">Takeru Sato</h1>
+            <h1 class="username">{{ $post->user->name }}</h1>
             <img src="{{ asset('img/Morocco.jpg') }}" alt="旅行写真" class="travel_img">
         </div>
         <div class="article_card_right">
