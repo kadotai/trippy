@@ -144,7 +144,8 @@ input , .City select {
     border-radius: 20px;
     padding: 10px 20px;
     text-decoration: none;
-    margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 80px;
 }
 
 .link {
