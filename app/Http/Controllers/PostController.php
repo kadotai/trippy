@@ -18,7 +18,8 @@ class PostController extends Controller
 public function showPost($id)
 {
     $post = Post::Find($id);
-    return view('posts.post',['post'=>$post]);
+    $routeData = json_decode($post->route_data, true);
+    return view('posts.post',['post'=>$post], compact('post', 'routeData'));
 }
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑
     
