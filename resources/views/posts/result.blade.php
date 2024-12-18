@@ -49,21 +49,16 @@
                 </div>
             @endforeach
         </section> --}}
-
-        <div id="results">
     
         {{-- その他の記事 --}}
-        <section class="top_all_article_list">
-            @foreach($results as $post)
-            <div class="article_card">
+        @foreach ($results as $post)
+            <div class="article_card" data-id="{{ $post->id }}">
                 <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
                     <div class="article_card_left">
                         <h1 class="username">{{ $post->user->name }}</h1>
                         @if ($post->images->isNotEmpty())
-                            {{-- 画像がある場合は表示 --}}
-                            <img src="{{ asset($post->images->first()->image_path) }}" alt="旅行写真" class="travel_img">
+                            <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
                         @else
-                            {{-- 画像がない場合のデフォルト --}}
                             <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
                         @endif
                     </div>
@@ -74,7 +69,7 @@
                         </ul>
                         <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
                         <p class="trip_title">{{ $post->title }}</p>
-                        <p class="result_tag">
+                        <p class="article_result_tag">
                             @foreach ($post->tags as $tag)
                                 <span class="result_tag">{{ $tag->tag_name }}</span>
                             @endforeach
@@ -92,10 +87,10 @@
                     </div>
                 </a>
             </div>
-            @endforeach
-        </section>
+        @endforeach
         @endsection
-    </div>
+    </section>
+
 
     {{-- タグ一覧のScriptタグ --}}
     <script>
@@ -187,6 +182,7 @@
         })
         .catch(error => console.error('Error:', error)); // エラーハンドリング
 });
+    
 
     </script>
 </body>

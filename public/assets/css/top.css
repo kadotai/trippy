@@ -127,14 +127,37 @@
     line-height: 1.5;
 }
 
-.result_tag {
+/* .result_tag {
     color: #fff;
-    /* height: 10px;
-    width: 60px; */
-    border: none;
+    display: inline-block;
+    font-size: 10px;
     background-color: #028391;
+    width: fit-content;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+} */
+
+.article_result_tag {
 
 }
+
+.article_card {
+    margin-bottom: 20px; /* カード間の余白 */
+  }
+  
+  .top_all_article_list {
+    display: flex;
+    flex-wrap: wrap; /* レスポンシブデザインのための設定 */
+    justify-content: space-between;
+    margin-bottom: 50px; /* 最後のカードが切れないように余白を設定 */
+  }
+  
+  #results {
+    overflow-y: auto; /* 垂直方向にスクロールできるように設定 */
+    height: calc(100vh - 100px); /* 高さの調整、必要に応じて調整 */
+    }
 
 
 
@@ -150,7 +173,6 @@ a {
     padding: 5px 0;
     border: solid;
     border-color: #333;
-
 }
 
 .article_card_left {
