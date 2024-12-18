@@ -35,6 +35,7 @@
     padding: 5px 10px;
     cursor: pointer;
 }
+
 .tag-button.selected{
     background-color: #028391;
     color: #fff;
@@ -59,7 +60,8 @@
     white-space: nowrap;
 }
 
-.tag {
+
+.tag-button_result {
     color: #028391;
     display: inline-block;
     font-size: 13px;
@@ -71,15 +73,10 @@
     cursor: pointer;
 }
 
-.tag:hover {
-    background-color: #007bff;
+.tag-button_result.selected{
+    background-color: #028391;
     color: #fff;
-}
-
-.tag.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #0056b3;
+    border-color: #028391;
 }
 
 /* 投稿結果 */
@@ -127,7 +124,7 @@
     line-height: 1.5;
 }
 
-/* .result_tag {
+.result_tag {
     color: #fff;
     display: inline-block;
     font-size: 10px;
@@ -137,10 +134,15 @@
     padding: 5px 10px;
     cursor: pointer;
     margin-top: 10px;
-} */
+}
+
 
 .article_result_tag {
-
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 5px; 
+    margin: 10px 0; 
+    padding: 0; 
 }
 
 .article_card {
