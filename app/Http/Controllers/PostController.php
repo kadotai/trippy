@@ -188,7 +188,10 @@ $posts = Post::withCount('likes')->get();
     }
 
     public function result(Request $request)
-{
+    {
+    
+    $search = $request->input('search');
+    $tagId = $request->input('tag_id'); // タグIDを取得
     $query = Post::query();
 
     // 検索キーワードが入力されている場合のみ条件を追加
@@ -200,8 +203,6 @@ $posts = Post::withCount('likes')->get();
 
     // 検索結果を取得
     $results = $query->get();
-
-    // タグを取得（必要であれば）
     $tags = Tag::all();
 
     return view('posts.result', compact('results', 'tags'));
