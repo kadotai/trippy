@@ -15,20 +15,20 @@
         {{-- 検索欄 --}}
         <section class="result_search">
             <div class="search">
-                <form action="{{ route('posts.result') }}" method="GET">
+                {{-- <form action="{{ route('posts.result') }}" method="GET"> --}}
                     {{-- キーワード検索 --}}
                     <input type="search" name="search" 
                     id="post_search" class="search_box" placeholder="投稿を検索" 
                     value="{{ request('search') }}">
                     <button type="submit" class="search_button">検索</button>
-                </form>
+                {{-- </form> --}}
             </div>
         </section>
 
         {{-- タグ --}}
         <section class="result_selected_tag">
             @foreach ($tags as $tag)
-                <button class="tag-button_result" data-tag="{{ $tag->id }}">#{{ $tag->tag_name }}</button>
+                <button class="tag-button-result" data-tag-result="{{ $tag->id }}">#{{ $tag->tag_name }}</button>
             @endforeach
         </section>
     
@@ -38,21 +38,8 @@
         </section>
     
         {{-- 検索結果 --}}
-        {{-- <section class="result_posts">
-            @foreach ($results as $post)
-                <div class="post">
-                    <p>タグ: 
-                        @foreach ($post->tags as $tag)
-                            <span class="tag">{{ $tag->tag_name }}</span>
-                        @endforeach
-                    </p>
-                </div>
-            @endforeach
-        </section> --}}
-    
-        {{-- その他の記事 --}}
         @foreach ($results as $post)
-            <div class="article_card" data-id="{{ $post->id }}">
+            <div class="article_card_result" data-id="{{ $post->id }}">
                 <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
                     <div class="article_card_left">
                         <h1 class="username">{{ $post->user->name }}</h1>
@@ -134,21 +121,19 @@
     
     検索機能のscriptタグ----------------------
     document.addEventListener("DOMContentLoaded", () => {
-        const selectedTags = new Set();
-    
-        // タグ選択を管理
-        document.querySelectorAll(".tag-button").forEach(button => {
-            button.addEventListener("click", () => {
-                const tagId = button.dataset.tagId;
-                if (selectedTags.has(tagId)) {
-                    selectedTags.delete(tagId);
-                    button.classList.remove("selected");
-                } else {
-                    selectedTags.add(tagId);
-                    button.classList.add("selected");
-                }
-            });
+
+            document.querySelectorAll(".tag-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const tagId = button.dataset.tagId;
+            if (selectedTags.has(tagId)) {
+                selectedTags.delete(tagId);
+                button.classList.remove("selected");
+            } else {
+                selectedTags.add(tagId);
+                button.classList.add("selected");
+            }
         });
+    });
     
         // 検索ボタンの動作
         document.getElementById("search_button").addEventListener("click", () => {
