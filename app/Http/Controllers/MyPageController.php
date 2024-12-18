@@ -15,7 +15,7 @@ class MyPageController extends Controller
         // 現在ログインしているユーザーを取得
         $user = Auth::user();
 
-        if (!$user) {
+      if (!$user) {
             // ユーザーが未ログインの場合はログイン画面へリダイレクト
             return redirect()->route('login')->with('error', 'ログインしてください。');
         }

@@ -43,9 +43,10 @@
                             <img src="{{ asset('storage/' . $image->img) }}" alt="投稿画像" class="post-photo">
                         @endforeach
                         <div class="post-details">
+                            {{-- <div>{{ dd($post) }}</div> --}}
                             <div class="title-wrapper">
                                 <h2 class="title">タイトル名:{{ $post->title }}</h2>
-                                <span class="status">公開中:{{ $post->post_id ? '公開' : '非公開' }}</span>
+                                <span class="status">公開中:{{ $post->post_type ? '公開' : '非公開' }}</span>
                             </div>
                             <p class="post-location">国:{{ $post->country->country_name }} / エリア: {{ $post->city }}</p>
                             <p class="post-date">年月日:{{ $post->start_date }}~{{ $post->end_date }}</p>
@@ -53,6 +54,7 @@
                             <div class="post-actions">
                                 <div id="post-{{ $post->id }}">
                                     <button onclick="toggleLike({{ $post->id }})" class="like-button">
+                                        {{-- <div>{{ dd($post) }}</div> --}}
                                         <i class="{{ $post->isLikedBy(Auth::user()) ? 'fas fa-heart' : 'far fa-heart' }}"></i>
                                         <span>{{ $post->likes->count() }}</span>
                                     </button>
@@ -99,7 +101,7 @@
                             <p class="post-date">年月日:{{ $like->start_date }}~{{ $like->end_date }}</p>
                             <p class="post-comment">コメント:{{ $like->content }}</p>
                             <div class="post-actions">
-                                <button onclick="toggleLike({{ $like->id }})" class="like-button">
+                                <button onClick="toggleLike({{ $like->id }})" class="like-button">
                                     <i class="{{ $like->isLikedBy(Auth::user()) ? 'fas fa-heart' : 'far fa-heart' }}"></i>
                                     <span>{{ $like->likes->count() }}</span>
                                 </button>
@@ -113,6 +115,7 @@
     </div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('assets/js/mypage.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Google GeoChart の初期設定
@@ -138,36 +141,36 @@
                 var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
                 chart.draw(data, options);
             }
+        });
     
             // いいねボタンのトグル機能
-            function toggleLike(postId) {
-                fetch(`/posts/${postId}/like`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const likeButton = document.querySelector(`#post-${postId} .like-button`);
-                    const heartIcon = likeButton.querySelector('i');
-                    const likeCount = likeButton.querySelector('span');
-    
-                    if (heartIcon.classList.contains('fas')) {
-                        heartIcon.classList.remove('fas');
-                        heartIcon.classList.add('far');
-                    } else {
-                        heartIcon.classList.remove('far');
-                        heartIcon.classList.add('fas');
-                    }
-    
-                    likeCount.textContent = data.likes_count;
-                })
-                .catch(error => console.error('Error:', error));
-            }
-        }); // document.addEventListenerの終了
+        function toggleLike(postId) {
+            fetch(`/posts/${postId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const likeButton = document.querySelector(`#post-${postId} .like-button`);
+                const heartIcon = likeButton.querySelector('i');
+                const likeCount = likeButton.querySelector('span');
+
+                if (heartIcon.classList.contains('fas')) {
+                    heartIcon.classList.remove('fas');
+                    heartIcon.classList.add('far');
+                } else {
+                    heartIcon.classList.remove('far');
+                    heartIcon.classList.add('fas');
+                }
+
+                likeCount.textContent = data.likes_count;
+            })
+            .catch(error => console.error('Error:', error));
+        }; // document.addEventListenerの終了
     </script>
     
-    <script src="{{ asset('assets/js/mypage.js') }}"></script>
+
 @endsection

@@ -83,6 +83,12 @@ p {
     height: 100px;
 }
 
+#map{
+    width: 100%;  /* 地図の横幅を調整 */
+    height: 400px; /* 地図の高さを調整 */
+    margin: 0;
+}
+
 .Like {
     text-align: center;
     margin: 20px 0;
