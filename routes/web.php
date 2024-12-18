@@ -78,7 +78,7 @@ Route::post('/create', [PostController::class, 'store'])->name('posts.store');
 
 Route::post('/post/{id}', [PostController::class, 'show'])->name('posts.show');
 
-// Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
