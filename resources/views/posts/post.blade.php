@@ -1,24 +1,4 @@
 
-
-
-
-
-
-
-{{-- <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>create|TRiPPY</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-
-</head>
-
-<body> --}}
-
     @extends('layouts.footer')
     @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
@@ -28,7 +8,6 @@
     @section('content')
 
     <div class="posts">
-        {{-- @foreach ($posts as $post) --}}
             {{-- Title --}}
             <div class="Title">
                 <h1>Title</h1>
@@ -88,51 +67,32 @@
             
             
             {{-- されてるコメント表示 --}}
+            <div class="coments">コメント一覧</div>
             @foreach ($post->comments as $comment)
             <div>
-                <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
                 <p>投稿日: {{ $comment->created_at->format('Y-m-d H:i') }}</p>
+                <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
             </div>
             @endforeach
 
-        
-
-            {{-- Like --}}
-            <div class="Like">
-                <a href="#">この投稿好きやで〜</a>
-            </div>
-        
-    {{-- ちょっと練習で記載させてもろてますcana--}}
-            {{-- @foreach ($posts as $post)
-    <div class="post">
-        <h3>{{ $post->title }}</h3>
-        <button 
-            class="like-button" 
-            data-post-id="{{ $post->id }}" 
-            data-liked="{{ $post->likes->contains('user_id', auth()->id()) ? 'true' : 'false' }}">
-            {{ $post->likes->contains('user_id', auth()->id()) ? 'いいね解除' : 'いいね' }}
-        </button>
-        <p>いいね数: {{ $post->likes->count() }}</p>
-    </div>
-@endforeach --}}
-
             {{-- Comment --}}
-            {{-- <!-- コメントフォーム -->
-{{-- <form action="{{ route('comments.store', $post->id) }}" method="POST"> --}}
-    {{-- @csrf
-    <textarea name="comment" required placeholder="コメントを入力してください"></textarea>
-    <button type="submit">コメントする</button>
-</form>  --}}
 
-
-
-            <div class="Comment">
-                <h1>Comment</h1>
-                <input type="text">
-                <div class="Comment_a"><a href="#">コメント投稿</a></div>
+            <div class="comment-form">
+            <form action="{{ route('comments.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                <textarea name="comment" rows="5" required></textarea>
+                <div class="comment-btn">
+                <button type="submit">コメントを投稿する</button>
+                </div>
+            </form>
             </div>
     </div>
-   
+            
+                {{-- Like --}}
+                <div class="Like">
+                    <a href="#">この投稿好きやで〜</a>
+                </div>
 
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
@@ -143,6 +103,7 @@
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }
         });
     </script>
+
 
    {{-- GoogleMapAPI --}}
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSeGO53Uzs4JgZGrKy-eokk0aAb_vGbM&callback=initMap" async defer></script>
@@ -224,7 +185,3 @@ window.onload = initMap;
     {{-- </script> --}}
 
     @endsection
-{{-- </body>
-
-
-</html> --}}
