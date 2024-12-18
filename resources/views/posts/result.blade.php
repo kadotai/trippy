@@ -15,13 +15,14 @@
         {{-- 検索欄 --}}
         <section class="result_search">
             <div class="search">
-                {{-- <form action="{{ route('posts.result') }}" method="GET"> --}}
+                <form action="{{ route('posts.result') }}" method="GET">
                     {{-- キーワード検索 --}}
                     <input type="search" name="search" 
                     id="post_search" class="search_box" placeholder="投稿を検索" 
                     value="{{ request('search') }}">
+                    <input type="hidden" name="tags" id="selected-tags">
                     <button type="submit" class="search_button">検索</button>
-                {{-- </form> --}}
+                </form>
             </div>
         </section>
 
@@ -31,52 +32,56 @@
                 <button class="tag-button-result" data-tag-result="{{ $tag->id }}">#{{ $tag->tag_name }}</button>
             @endforeach
         </section>
-    
+
         {{-- 検索結果の件数 --}}
         <section class="result_count">
-            <p>検索結果: {{ $results->count() }} 件</p>
+            <p>Search Results: {{ $results->count() }} Post</p>
         </section>
     
         {{-- 検索結果 --}}
-        @foreach ($results as $post)
-            <div class="article_card_result" data-id="{{ $post->id }}">
-                <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
-                    <div class="article_card_left">
-                        <h1 class="username">{{ $post->user->name }}</h1>
-                        @if ($post->images->isNotEmpty())
-                            <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
-                        @else
-                            <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
-                        @endif
-                    </div>
-                    <div class="article_card_right">
-                        <ul class="where">
-                            <li class="country">{{ $post->country->country_name ?? 'Country not found' }}</li>
-                            <li class="city">&nbsp;{{ $post->city }}</li>
-                        </ul>
-                        <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
-                        <p class="trip_title">{{ $post->title }}</p>
-                        <p class="article_result_tag">
-                            @foreach ($post->tags as $tag)
-                                <span class="result_tag">#{{ $tag->tag_name }}</span>
-                            @endforeach
-                        </p>
-                        <div class="like_and_comment">
-                            <div class="like">
-                                <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon">
-                                <p class="like_number">{{ $post->likes->count() }}</p>
-                            </div>
-                            <div class="comment">
-                                <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon">
-                                <p class="comment_number">{{ $post->comments->count() }}</p>
-                            </div>
+        @if ($results->count() > 0)
+    @foreach ($results as $post)
+        <div class="article_card_result" data-id="{{ $post->id }}">
+            <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
+                <div class="article_card_left">
+                    <h1 class="username">{{ $post->user->name }}</h1>
+                    @if ($post->images->isNotEmpty())
+                        <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
+                    @else
+                        <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
+                    @endif
+                </div>
+                <div class="article_card_right">
+                    <ul class="where">
+                        <li class="country">{{ $post->country->country_name ?? 'Country not found' }}</li>
+                        <li class="city">&nbsp;{{ $post->city }}</li>
+                    </ul>
+                    <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
+                    <p class="trip_title">{{ $post->title }}</p>
+                    <p class="article_result_tag">
+                        @foreach ($post->tags as $tag)
+                            <span class="result_tag">#{{ $tag->tag_name }}</span>
+                        @endforeach
+                    </p>
+                    <div class="like_and_comment">
+                        <div class="like">
+                            <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon">
+                            <p class="like_number">{{ $post->likes->count() }}</p>
+                        </div>
+                        <div class="comment">
+                            <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon">
+                            <p class="comment_number">{{ $post->comments->count() }}</p>
                         </div>
                     </div>
-                </a>
-            </div>
-        @endforeach
+                </div>
+            </a>
+        </div>
+    @endforeach
+@else
+    <p>No matching posts.</p>
+@endif
         @endsection
-    </section>
+
 
 
     {{-- タグ一覧のScriptタグ --}}
@@ -118,58 +123,14 @@
       }
     });
 
-    
-    検索機能のscriptタグ----------------------
-    document.addEventListener("DOMContentLoaded", () => {
-
-            document.querySelectorAll(".tag-button").forEach(button => {
-        button.addEventListener("click", () => {
-            const tagId = button.dataset.tagId;
-            if (selectedTags.has(tagId)) {
-                selectedTags.delete(tagId);
-                button.classList.remove("selected");
-            } else {
-                selectedTags.add(tagId);
-                button.classList.add("selected");
-            }
-        });
-    });
-    
-        // 検索ボタンの動作
-        document.getElementById("search_button").addEventListener("click", () => {
-            const searchQuery = document.getElementById("post-search").value.trim();
-            const tags = Array.from(selectedTags);
-    
-            // クエリパラメータを作成
-            const queryParams = new URLSearchParams();
-            if (searchQuery) queryParams.append("search", searchQuery);
-            if (tags.length > 0) queryParams.append("tags", tags.join(","));
-    
-            // 検索結果ページにリダイレクト
-            window.location.href = `/result?${queryParams.toString()}`;
-        });
-    });
-
-    document.getElementById('search_button').addEventListener('click', function() {
-    const keyword = document.getElementById('post_search').value; // idを統一
-    fetch(`/search?keyword=${encodeURIComponent(keyword)}`)
-        .then(response => response.json())
-        .then(data => {
-            const resultContainer = document.getElementById('results'); // 結果表示領域
-            resultContainer.innerHTML = ''; // 結果をクリア
-            data.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.innerHTML = `
-                    <h3>${post.title}</h3>
-                    <p>${post.content}</p>
-                `;
-                resultContainer.appendChild(postElement);
-            });
-        })
-        .catch(error => console.error('Error:', error)); // エラーハンドリング
+    document.addEventListener('DOMContentLoaded', () => {
+    const tagButtons = document.querySelectorAll('.tag-button-result');
+    if (tagButtons.length === 0) {
+        console.log("タグボタンが見つかりません！");
+    } else {
+        console.log(tagButtons); // ボタンがあるか再確認
+    }
 });
-    
-
     </script>
 </body>
 </html>
