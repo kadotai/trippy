@@ -15,6 +15,10 @@ class Post extends Model
     
     protected $table = 'posts';
 
+    protected $casts = [
+        'route_date' => 'array', //route_dateはJSONとして扱う
+    ];
+
     // リレーション: 多対多 (Post と Tag)
     public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
@@ -23,7 +27,7 @@ class Post extends Model
 
     public function images()
     {
-        return $this->hasMany(Post_image::class,);
+        return $this->hasMany(Post_image::class,'post_id');
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

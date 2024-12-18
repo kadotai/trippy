@@ -38,7 +38,7 @@
         <div class="tab-pane active" id="posts">
             <div class="post-list-container">
                 @foreach ($posts as $post)
-                    <div class="post-card clickable" data-route="{{ route('posts.post', $post->id) }}">
+                    <div class="post-card clickable" data-route="{{ route('posts.showPost',['id'=> $post->id]) }}">
                         @foreach ($post->photos as $image)
                             <img src="{{ asset('storage/' . $image->img) }}" alt="投稿画像" class="post-photo">
                         @endforeach

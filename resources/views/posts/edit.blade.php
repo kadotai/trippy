@@ -13,14 +13,32 @@
         @method('PUT') <!-- 編集にはPUTメソッドを使用 -->
 
         {{-- Photo --}}
-        <div class="Photo">
+        {{-- <div class="Photo">
             <p>Photo</p>
             <input id="inputElm" type="file" name="img[]" multiple />
             <div id="preview">
                 @foreach($post->photos as $photo)
-                    <img src="{{ asset('storage/' . $photo->path) }}" alt="Photo">
+                @if ($post->images->isNotEmpty()) 
+                <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
+            @else
+                <img src="{{ asset('img/black_white_trippy.jpg') }}" alt="デフォルト画像" class="travel_img">
+            @endif
                 @endforeach
+            </div> --}}
+            <div class="Photo">
+                <p>Photo</p>
+                <input id="inputElm" type="file" name="img[]" multiple />
+                <div id="preview">
+                    @if ($post->photos->isNotEmpty())
+                        @foreach($post->photos as $photo)
+                            <img src="{{ asset('storage/' . $photo->img) }}" alt="旅行写真" class="travel_img">
+                        @endforeach
+                    @else
+                        <img src="{{ asset('img/black_white_trippy.jpg') }}" alt="デフォルト画像" class="travel_img">
+                    @endif
+                </div>
             </div>
+            
         </div>
 
         {{-- Title --}}

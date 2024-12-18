@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
+    // いいねをトグルするメソッド
     public function toggleLike(Post $post)
     {
         $user = Auth::user();
-    
+
         // すでにいいねしているか確認
         $like = Like::where('post_id', $post->id)->where('user_id', $user->id)->first();
-    
+
         if ($like) {
             // いいねを削除
             $like->delete();
@@ -28,7 +29,7 @@ class LikeController extends Controller
             ]);
             $liked = true;
         }
-    
+
         // 更新後のいいね数と状態を返す
         return response()->json([
             'likes_count' => $post->likes()->count(),
@@ -39,11 +40,12 @@ class LikeController extends Controller
     }
 
 
-public function unlike(Request $request, Post $post)
-{
-    // いいねを削除
-    $post->likes()->where('user_id',$request->user()->id)->delete();
+    // いいねを解除するメソッド
+    public function unlike(Request $request, Post $post)
+    {
+        // いいねを削除
+        $post->likes()->where('user_id', $request->user()->id)->delete();
 
-    return response()->json(['message'=>'いいねを解除しました!']);
-}
+      return response()->json(['message' => 'いいねを解除しました!']);
+    }
 }
