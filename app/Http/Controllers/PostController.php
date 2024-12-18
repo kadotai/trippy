@@ -198,7 +198,7 @@ $posts = Post::withCount('likes')->get();
     if ($request->has('search') && !empty($request->input('search'))) {
         $keyword = $request->input('search');
         $query->where('title', 'LIKE', "%{$keyword}%")
-              ->orWhere('content', 'LIKE', "%{$keyword}%");
+                ->orWhere('content', 'LIKE', "%{$keyword}%");
     }
 
     // 検索結果を取得

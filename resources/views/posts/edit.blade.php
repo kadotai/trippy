@@ -50,7 +50,7 @@
         {{-- Country --}}
         <div class="Country">
             <p>Country</p>
-            <select name="country" id="select_country">
+            <select name="country_id" id="select_country">
                 @foreach ($countries as $country)
                 <option value="{{ $country->id }}" {{ $post->country_id == $country->id ? 'selected' : '' }}>
                     {{ $country->country_name }}
@@ -96,16 +96,7 @@
         {{-- Caption --}}
         <div class="Caption">
             <p>Caption</p>
-            <input type="text" name="caption" value="{{ $post->content }}">
-        </div>
-
-        {{-- Map --}}
-        <div class="Tracking">
-            <p>Tracking</p>
-            <div id="map" style="height: 400px;"></div> <!-- 地図の表示領域 -->
-            {{-- 隠しフィールド --}}
-            <input type="hidden" name="route_data" id="routeDataInput" value="{{ $post->route_data }}">
-            <input type="hidden" name="duration" id="durationInput" value="{{ $post->duration }}">
+            <input type="text" name="content" value="{{ $post->content }}">
         </div>
 
         {{-- Public --}}
