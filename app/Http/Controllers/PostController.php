@@ -105,7 +105,7 @@ public function showPost($id)
         'post_type' => $request->input('open') === 'public',
     ]);
 
-    dd($request);
+    // dd($request);
 
     // **post_images テーブルに画像を保存**
     if ($request->hasFile('images') && is_array($request->file('images'))) {
