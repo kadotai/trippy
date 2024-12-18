@@ -59,9 +59,9 @@
                 <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
                     <div class="article_card_left">
                         <h1 class="username">{{ $post->user->name }}</h1>
-                        @if ($post->images->isNotEmpty())
+                        @if ($post->images && $post->images->isNotEmpty()))
                             {{-- 画像がある場合は表示 --}}
-                            <img src="{{ asset($post->images->first()->image_path) }}" alt="旅行写真" class="travel_img">
+                            <img src="{{ asset('storage/' . $post->images->first()->image_path) }}" alt="旅行写真" class="travel_img">
                         @else
                             {{-- 画像がない場合のデフォルト --}}
                             <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
