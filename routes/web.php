@@ -77,7 +77,7 @@ Route::get('/search', [PostController::class, 'search'])->name('posts.search');
 
 Route::post('/post/{id}', [PostController::class, 'show'])->name('posts.show');
 
-// Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

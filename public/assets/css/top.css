@@ -219,10 +219,12 @@ a {
     border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .like_and_comment {
     display: flex;
+    margin-top: 20px;
 }
 
 .like {
@@ -258,7 +260,8 @@ a {
 .page {
     display: flex; /* Flexboxを使用 */
     justify-content: center; /* 中央揃え */
-    margin: 20px 0; /* 上下の余白 */
+    margin-bottom: 80px; /* 上下の余白 */
+    margin-top: 20px;
 }
 
 .page nav {
