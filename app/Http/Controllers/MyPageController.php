@@ -26,16 +26,15 @@ class MyPageController extends Controller
         ->distinct('country_id')
         ->count();
 
-        if (!$user) {
-            // ユーザーが未ログインの場合はログイン画面へリダイレクト
-            return redirect()->route('login')->with('error', 'ログインしてください。');
-        }
-
                 // ユーザーの投稿一覧
-                $posts = Post::withCount('likes')->where('user_id', $user->id)->get();
-                $posts = Post::with('images')->where('user_id', $user->id)->get();  // imagesも含めて取得
+                $posts = Post::with(['images']) // imagesリレーションを取得
+                ->withCount('likes') // likesリレーションの件数をカウント
+                ->where('user_id', $user->id) // 特定のユーザーの投稿に絞り込み
+                ->get();
+
                 // 計画中の投稿一覧（post_typeがfalseのもの）
                 $plannedPosts = Post::where('user_id', $user->id)->where('post_type', false)->get();
+                // dd($posts);
 
                 // いいねした投稿一覧
                 $likedPostIds = Like::where('user_id', $user->id)->pluck('post_id');
