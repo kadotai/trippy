@@ -7,6 +7,7 @@ use App\Http\Controllers\RouteController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 
 
 
@@ -87,3 +88,10 @@ Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edi
 Route::put('/post/{id}', [PostController::class, 'update'])->name('posts.update');
 
 Route::get('post/{id}',[PostController::class,'showPost'])->name('posts.showPost');
+
+
+// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+Route::get("/comments/create/{post_id}",[CommentController::class, "create"])->name("comments.create");
+
+Route::post("/comments",[CommentController::class, "store"])->name("comments.store");
+// ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
