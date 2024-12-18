@@ -24,7 +24,7 @@
     </div>
 
     <div id="map-container">
-        <div id="regions_div" style="width: 100vw;"></div>
+        <div id="regions_div"></div>
     </div>
 
     <div class="tab-header">
@@ -121,20 +121,19 @@
     
             // 地図描画関数
             function drawRegionsMap() {
-                // サンプルデータを使用（必要に応じてサーバーからデータを取得して更新）
                 var data = google.visualization.arrayToDataTable([
                     ['Country', 'Popularity'],
-                    ['Japan', 100], // 必要に応じてデータを追加
-                    ['United States', 80],
-                    ['France', 60],
-                    ['Brazil', 50]
+                    @foreach ($visitedCountries as $country)
+                        ['{{ $country }}', 10],
+                    @endforeach
                 ]);
+
     
                 var options = {
-                    backgroundColor: '#028391',
-                    colorAxis: { colors: ['#99ab4e', '#99ab4e'] }, // カラースケール設定
-                    legend: 'none', // カラーバーを非表示
+                backgroundColor: '#028391',
+                legend: 'none',
                 };
+
     
                 var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
                 chart.draw(data, options);
