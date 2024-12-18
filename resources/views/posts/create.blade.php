@@ -100,9 +100,9 @@
 
         <div class="link">
             {{-- Delete --}}
-            <div class="Delete">
+            {{-- <div class="Delete">
                 <a href="#">削除</a>
-            </div>
+            </div> --}}
 
             {{-- Store --}}
             <div class="Store">
