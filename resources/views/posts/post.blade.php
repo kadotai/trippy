@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+
+
+
+
+
+
+
+{{-- <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -10,9 +17,18 @@
 
 </head>
 
-<body>
+<body> --}}
+
+    @extends('layouts.footer')
+    @section('css')
+    <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    @endsection
+
+    @section('content')
+
     <div class="posts">
-        @foreach ($posts as $post)
+        {{-- @foreach ($posts as $post) --}}
             {{-- Title --}}
             <div class="Title">
                 <h1>Title</h1>
@@ -37,7 +53,7 @@
             {{-- Country --}}
             <div class="Country">
                 <h1>Country</h1>
-                <p>{{ $post->country }}</p>
+                <p>{{ $post->country->country_name }}</p>
             </div>
 
             {{-- City --}}
@@ -61,7 +77,7 @@
             {{-- Caption --}}
             <div class="Caption">
                 <h1>Caption</h1>
-                <p>{{ $post->caption }}</p>
+                <p>{{ $post->content }}</p>
             </div>
 
             {{-- Tracking --}}
@@ -78,7 +94,7 @@
             </div>
             @endforeach
 
-        {{-- @endforeach --}}
+        
 
             {{-- Like --}}
             <div class="Like">
@@ -100,23 +116,22 @@
 @endforeach --}}
 
             {{-- Comment --}}
-            <!-- コメントフォーム -->
-<form action="{{ route('comments.store', $post->id) }}" method="POST">
-    @csrf
+            {{-- <!-- コメントフォーム -->
+{{-- <form action="{{ route('comments.store', $post->id) }}" method="POST"> --}}
+    {{-- @csrf
     <textarea name="comment" required placeholder="コメントを入力してください"></textarea>
     <button type="submit">コメントする</button>
-</form>
+</form>  --}}
 
 
 
-            {{-- <div class="Comment">
+            <div class="Comment">
                 <h1>Comment</h1>
                 <input type="text">
                 <div class="Comment_a"><a href="#">コメント投稿</a></div>
             </div>
-    </div> --}}
-    @endforeach
-
+    </div>
+   
 
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
@@ -150,8 +165,8 @@
     //     }); --}}
     {{-- </script> --}}
 
-    
-</body>
+    @endsection
+{{-- </body>
 
 
-</html>
+</html> --}}

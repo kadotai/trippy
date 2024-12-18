@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Schema;
 
 class PostController extends Controller
 {
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+public function showPost($id)
+{
+    $post = Post::Find($id);
+    return view('posts.post',['post'=>$post]);
+}
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑
+    
     public function show()
     {
         // 投稿と関連する画像を取得
@@ -32,11 +40,22 @@ class PostController extends Controller
 
     public function index()
     {
-        $tags = Tag::all();
-        $posts = Post::all(); // データベースからすべての投稿を取得
+        // $tags = Tag::all();
+        // $posts = Post::all(); // データベースからすべての投稿を取得
 
-        $country = Post::with('country')->get();
-        return view('posts.top', compact('tags', 'posts'));
+        // $country = Post::with('country')->get();
+        // return view('posts.top', compact('tags', 'posts'));
+
+        $tags = Tag::all();
+
+    // 新しい順に10件の投稿を取得し、関連データも一緒にロードする
+    $posts = Post::with(['user', 'images', 'country'])
+                ->orderBy('updated_at', 'desc') // 新しい順に並び替え
+                ->paginate(10); // ページネーションで10件ずつ取得
+                // ->take(10)                     // 10件のみ取得
+                // ->get();
+
+    return view('posts.top', compact('tags', 'posts'));
 
     }
 
@@ -49,11 +68,11 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-
+        try{
         //デバッグ用↓
-        // dd($request->all(), $request->file('images'));
+        dd($request->all());
 
-         // **1. バリデーション**
+         // **バリデーション**
     $request->validate([
         'title' => 'nullable|string|max:255',
         'country' => 'required|exists:countries,country_name',
@@ -62,17 +81,16 @@ class PostController extends Controller
         'end_date' => 'nullable|date',
         'tags' => 'nullable|array',
         'tags.*' => 'exists:tags,id',
-        'images' => 'required|array',
-        // 'img' => 'nullable|array',
+        'images' => 'nullable|array',
         'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'route_data' => 'nullable|array',
+        'route_data' => 'nullable|json',
         'duration' => 'nullable|string',
     ]);
     
-    // **2. 国のIDを取得**
+    // **国のIDを取得**
     $country = Country::where('country_name', $request->input('country'))->first();
 
-    // **3. posts テーブルに保存**
+    // **posts テーブルに保存**
     $post = Post::create([
         'user_id' => auth()->id(),
         'country_id' => $country->id,
@@ -85,24 +103,10 @@ class PostController extends Controller
         'duration' => $request->input('duration'),
         'post_type' => $request->input('open') === 'public',
     ]);
-      
-              // 3. デバッグコードで送信された画像データを確認
-        if (is_array($request->file('images'))) {
-            foreach ($request->file('images') as $image) {
-                // 4. 画像をストレージに保存
-                $path = $image->store('img', 'public');
-    
-                // 5. Post_image（子）データを保存
-                Post_image::create([
-                    'post_id' => $post->id, // 外部キー
-                    'img' => $path,         // 保存パス
-                ]);
-            }
-        } else {
-            // 配列で送信されていない場合
-            dd('images is not an array', $request->file('images'));
 
-    // **4. post_images テーブルに画像を保存**
+    dd($request);
+
+    // **post_images テーブルに画像を保存**
     if ($request->hasFile('images') && is_array($request->file('images'))) {
         foreach ($request->file('images') as $image) {
             $path = $image->store('img', 'public'); // `storage/app/public/images/` に保存
@@ -113,17 +117,7 @@ class PostController extends Controller
         }
     }
 
-    // **5. post_tags テーブルにタグを保存**
-    if ($request->has('tags')) {
-        foreach ($request->input('tags') as $tagId) {
-            Post_tag::create([
-                'post_id' => $post->id,
-                'tag_id' => $tagId,
-            ]);
-        }
-
-
-    // **5. post_tags テーブルにタグを保存**
+    // **post_tags テーブルにタグを保存**
     if ($request->has('tags')) {
         foreach ($request->input('tags') as $tagId) {
             Post_tag::create([
@@ -133,81 +127,28 @@ class PostController extends Controller
         }
     }
 
-    // **6. 完了後のリダイレクト**
+    // 完了後のリダイレクト
     return redirect()->route('posts.create')->with('success', '投稿が保存されました。');
+} catch (\Throwable $e) {
+    // 開発中のみエラーメッセージを表示
+    if (app()->environment('local')) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+            'data' => $request->all(),
+        ], 500);
+    }
+
+    // 本番環境ではログに記録して一般的なエラーを表示
+    \Log::error('システムエラー: ', [
+        'message' => $e->getMessage(),
+        'trace' => $e->getTraceAsString(),
+        'request_data' => $request->except(['images']),
+    ]);
+    return redirect()->back()->withInput()->withErrors(['error' => '予期しないエラーが発生しました。再度お試しください。']);
+}
 }
 
-    //     // フォームからのデータを検証します
-    //     $validatedData = $request->validate([
-    //         'img.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'title' => 'required|string|max:255',
-    //         'country' => 'required|string|size:2',
-    //         'city' => 'required|string|max:255',
-    //         'start_date' => 'required|date|before_or_equal:end_date',
-    //         'end_date' => 'required|date|after_or_equal:start_date',
-    //         'content' => 'required|string',
-    //         'post_type' => 'required|in:public,private',
-    //     ]);
-
-    //     // 写真を保存
-    //     $photoPath = null;
-    //     if ($request->hasFile('photo')) {
-    //         $photoPath = $request->file('photo')->store('photos', 'public');
-    //     }
-
-    //     // データベースに保存
-    //     $post = new Post();
-    //     $post->user_id = auth()->id(); // ログインしているユーザーのID
-    //     $post->title = $validatedData['title'];
-    //     $post->country = $validatedData['country'];
-    //     $post->city = $validatedData['city'];
-    //     $post->start_date = $validatedData['start_date'];
-    //     $post->end_date = $validatedData['end_date'];
-    //     $post->content = $validatedData['content'];
-    //     $post->route_data = json_encode([]); // 空のデータで初期化
-    //     $post->distance = 0;
-    //     $post->duration = 0;
-    //     $post->post_type = $validatedData['post_type'];
-    //     $post->save();
-
-    //     // 画像がある場合、別テーブルに保存
-    //     if ($photoPath) {
-    //         $post->images()->create([
-    //             'img' => $photoPath,
-    //         ]);
-    //     }
-
-    //     return redirect()->back()->with('success', '投稿が保存されました！');
-    // }
-
-    // public function showResults(Request $request)
-    // {
-    //     $posts = Post::with('country')->get();
-    //     $posts = Post::with('user')->get();
-
-    //     $searchQuery = $request->query('search'); // 検索キーワード
-    //     $selectedTags = $request->query('tags'); // 選択されたタグ（カンマ区切り）
-
-    //     $selectedTagsArray = $selectedTags ? explode(',', $selectedTags) : [];
-
-    //     //タグ一覧を取得
-    //     $tags = Tag::all();
-
-    //     // データベース検索処理
-    //     $results = Post::query()
-    //         ->when($searchQuery, function ($query) use ($searchQuery) {
-    //             return $query->where('title', 'LIKE', "%{$searchQuery}%");
-    //         })
-    //         ->when(!empty($selectedTagsArray), function ($query) use ($selectedTagsArray) {
-    //             return $query->whereHas('tags',function($subQuery) use ($selectedTagsArray){
-    //                 $subQuery->whereIn('tags.id', $selectedTagsArray);
-    //             });
-    //         })
-    //         ->get();
-
-    //     return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags', 'posts')); 
-}
-} 
     public function showResults(Request $request)
     {
         $posts = Post::with(['country', 'user'])->get();
@@ -301,4 +242,9 @@ public function update(Request $request, $id)
     return redirect()->route('posts.index')->with('success', '投稿が更新されました！');
 // }一旦ねnao
     }
+
+// public function images()
+// {
+//     return $this->hasMany(Image::class);
+// }
 }

@@ -23,7 +23,7 @@ class Post extends Model
 
     public function images()
     {
-        return $this->hasMany(Post_image::class,);
+        return $this->hasMany(Post_image::class,'post_id');
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
