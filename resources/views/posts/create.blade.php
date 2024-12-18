@@ -90,7 +90,7 @@
         <div class="Public">
             <div class="public_private">
                 <input type="radio" id="contactChoice2" name="open" value="private">
-                <label for="contactChoice2">非公開</label>
+                <label for="contactChoice2">計画中</label>
             </div>
             <div class="public_public">
                 <input type="radio" id="contactChoice1" name="open" value="public">

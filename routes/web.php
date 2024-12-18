@@ -51,9 +51,9 @@ Route::get('/result', [PostController::class, 'showResults'])->name('posts.resul
 
 Route::get('/post', [PostController::class, 'show'])->name('posts.post');
 
-Route::post('/posts/{post}/like',[LikeController::class,'like'])->name('posts.like');
+// Route::post('/post/{post}/like',[LikeController::class,'like'])->name('posts.like');
 
-Route::delete('posts/{post}/like',[LikeController::class,'unlike'])->name('posts.unlike');
+Route::delete('post/{post}/like',[LikeController::class,'unlike'])->name('posts.unlike');
 
 Route::get('/notification', function () {return view('posts.notification');})->name('notification');
 
