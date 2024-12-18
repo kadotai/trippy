@@ -251,3 +251,9 @@ h2 {
 .like-button:hover .fa-heart {
     color: #ff4757; /* ホバー時の色 */
 }
+
+#regions_div {
+    width: 100vw;
+    overflow: hidden; /* 地図の外側が切れる場合に使用 */
+    align-items: center;
+}
