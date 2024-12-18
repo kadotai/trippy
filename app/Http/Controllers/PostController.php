@@ -198,7 +198,7 @@ $posts = Post::withCount('likes')->get();
     if ($request->has('search') && !empty($request->input('search'))) {
         $keyword = $request->input('search');
         $query->where('title', 'LIKE', "%{$keyword}%")
-              ->orWhere('content', 'LIKE', "%{$keyword}%");
+                ->orWhere('content', 'LIKE', "%{$keyword}%");
     }
 
     // 検索結果を取得
@@ -225,15 +225,17 @@ public function update(Request $request, $id)
     $post = Post::findOrFail($id);
 
     // 入力データの検証
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-        // 他の検証ルールを追加
-    ]);
+    $request->all();
+    
+    // validate([
+    //     'title' => 'required|string|max:255',
+    //     'start_date' => 'required|date',
+    //     'end_date' => 'required|date|after_or_equal:start_date',
+    //     // 他の検証ルールを追加
+    // ]);
 
     // データ更新
-    $post->update($request->only(['title', 'country', 'city', 'start_date', 'end_date', 'content', 'post_type']));
+    $post->update($request->all());
 
     // タグの更新
     if ($request->has('tags')) {

@@ -57,6 +57,17 @@
                     <div class="article_card_left">
                         <h1 class="username">{{ $post->user->name }}</h1>
                         @if ($post->images->isNotEmpty())
+        <section class="top_all_article_list">
+            @foreach($results as $post)
+            <div class="article_card">
+                <a href="{{ route('posts.showPost',['id'=> $post->id]) }}" class="article_card_link">
+
+                    <div class="article_card_left">
+                        <h1 class="username">{{ $post->user->name }}</h1>
+                        @if ($post->images->isNotEmpty())
+                            {{-- 画像がある場合は表示 --}}
+                            {{-- {{ dd($post->images) }} --}}
+                            {{-- {{dd($post->images->first()->toArray());}} --}}
                             <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
                         @else
                             <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
@@ -77,11 +88,11 @@
                         <div class="like_and_comment">
                             <div class="like">
                                 <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon">
-                                <p class="like_number">{{ $post->likes }}</p>
+                                <p class="like_number">{{ $post->likes->count() }}</p>
                             </div>
                             <div class="comment">
                                 <img src="{{ asset('img/comment_icon.png') }}" alt="comment" class="comment_icon">
-                                <p class="comment_number">{{ $post->comments }}</p>
+                                <p class="comment_number">{{ $post->comments->count() }}</p>
                             </div>
                         </div>
                     </div>
