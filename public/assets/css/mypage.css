@@ -225,12 +225,12 @@ h2 {
 }
 
 .logout-btn {
-    color: #333;
-    background-color: rgb(254, 249, 234);
+    color: brown;
     text-decoration: none;
     font-size: 15px;
-    border-radius: 10px;
+    border: none;
     height: 28px;
+    background-color: #fff;
 }
 
 .like-button {

@@ -57,21 +57,38 @@ input {
     height: 100px;
 }
 
-.public_private , .public_public {
-    font-size: 13px;
+/* 外枠全体を中央揃え */
+.Public {
     display: flex;
-    align-items: center;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center; /* 垂直方向に中央揃え */
+    height: 50px; /* 全体の高さ */
+    gap: 20px; /* ラジオボタンブロック間の間隔 */
 }
 
+/* チェックボックスとラベルを横並びに */
+.public_private, 
+.public_public {
+    display: flex;
+    align-items: center; /* 縦方向の位置揃え */
+    gap: 8px; /* チェックボックスとラベルの間隔 */
+}
+
+/* ラベルのスタイル調整 */
+.public_private label, 
+.public_public label {
+    font-size: 14px; /* ラベルの文字サイズ */
+    line-height: 1; /* 文字の縦方向の高さ調整 */
+    white-space: nowrap; /* ラベル内の文字を折り返さない */
+}
+
+/* ラジオボタンのスタイル調整 */
 .Public input[type="radio"] {
-    accent-color: #333;
-    transform: scale(0.5);
-    margin: 0;
+    accent-color: #333; /* カスタムカラー */
+    transform: scale(1.5); /* ラジオボタンの標準サイズ */
+    margin: 0; /* 不要な余白を削除 */
 }
 
-.Public label {
-    width: 200px;
-}
 
 .Delete a {
     font-size: 13px;
