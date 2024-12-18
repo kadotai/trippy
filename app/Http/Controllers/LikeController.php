@@ -34,10 +34,11 @@ class LikeController extends Controller
             'likes_count' => $post->likes()->count(),
             'liked' => $liked,
         ]);
+
+        return response()->json(['message' => 'いいねしました!']);
     }
 
-    return response()->json(['message' => 'いいねしました!']);
-}
+
 public function unlike(Request $request, Post $post)
 {
     // いいねを削除
