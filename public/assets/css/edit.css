@@ -97,3 +97,10 @@ input {
     display: flex;
     justify-content: center;
 }
+
+.travel_img {
+    width: 120px;
+    height: 120px;
+    text-align: center;
+
+}

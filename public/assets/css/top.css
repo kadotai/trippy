@@ -31,7 +31,6 @@
     border-color: #028391;
     background-color: #fff;
     width: fit-content;
-    /* clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%); */
     border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
@@ -54,23 +53,22 @@
 /* タグ表示 */
 .result_selected_tag {
     background-color: #fff; 
-    /* ↑いったん見えないから黄色にしてる */
     height: 45px;
     width: 100%;
-    overflow-x: scroll; /* 横スクロールを有効にする */
-    white-space: nowrap; /* 横に並べる */
+    overflow-x: scroll;
+    white-space: nowrap;
 }
 
 .tag {
+    color: #028391;
     display: inline-block;
-    width: fit-content;
-    /* clip-path: polygon(0% 0%, 50% 0%, 100% 50%, 50% 100%, 0% 100%); */
     font-size: 13px;
-    color: #fff;
-    background-color: #028391;
-    padding: 0 20px 0 0;
+    border-color: #028391;
+    background-color: #fff;
+    width: fit-content;
+    border-radius: 10px;
+    padding: 5px 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .tag:hover {
@@ -86,14 +84,12 @@
 
 /* 投稿結果 */
 .result_search {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: #fff;
     z-index: 10;
     padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     height: auto;
 }
 .result_posts {
@@ -219,10 +215,12 @@ a {
     border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .like_and_comment {
     display: flex;
+    margin-top: 20px;
 }
 
 .like {
@@ -258,7 +256,8 @@ a {
 .page {
     display: flex; /* Flexboxを使用 */
     justify-content: center; /* 中央揃え */
-    margin: 20px 0; /* 上下の余白 */
+    margin-bottom: 80px; /* 上下の余白 */
+    margin-top: 20px;
 }
 
 .page nav {

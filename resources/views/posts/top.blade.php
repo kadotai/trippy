@@ -57,10 +57,11 @@
         </div>
     </a>
     @endforeach
+    <div class="page">{{ $posts->links() }}</div>
 </div>
 </section>
 
-<div class="page">{{ $posts->links() }}</div>
+
 
 
 {{-- タグ一覧のScriptタグ --}}

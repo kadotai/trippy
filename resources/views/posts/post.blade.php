@@ -62,6 +62,7 @@
             {{-- Tracking --}}
             <div class="Tracking">
                 <h1>Tracking</h1>
+                <div id="map"></div>
             </div>
             
             
@@ -103,5 +104,84 @@
         });
     </script>
 
+
+   {{-- GoogleMapAPI --}}
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSeGO53Uzs4JgZGrKy-eokk0aAb_vGbM&callback=initMap" async defer></script>
+    {{-- ルートトラッキングデータ表示させる --}}
+    <script>
+        // PHPから渡されたデータ
+        const routeData = @json($routeData);
+        function initMap() {
+    try {
+        // routeDataをパースして配列形式に変換
+        let parsedRouteData;
+        if (typeof routeData === "string") {
+            parsedRouteData = JSON.parse(routeData);
+        } else {
+            parsedRouteData = routeData;
+        }
+
+        // データを数値型に変換
+        const processedRouteData = parsedRouteData.map(point => ({
+            lat: parseFloat(point.lat),
+            lng: parseFloat(point.lng),
+        }));
+
+        // データが正しいかチェック
+        if (!processedRouteData || processedRouteData.length === 0) {
+            return;
+        }
+
+        // 地図の中心を設定
+        const center = processedRouteData[0];
+
+        // 地図を表示
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 14,
+            center: center,
+        });
+
+        // Polylineを作成して地図上に表示
+        const routePath = new google.maps.Polyline({
+        path: processedRouteData, // 保存したルートデータ
+        geodesic: true,
+        strokeColor: "#FF0000", // 線の色
+        strokeOpacity: 1.0, // 不透明度（完全に不透明）
+        strokeWeight: 5, // 線の太さ（強調するために太く設定）
+        });
+
+        routePath.setMap(map); // 地図に描画
+    } catch (error) {
+        console.error("Error initializing map:", error);
+    }
+}
+
+// ページ読み込み時に地図を初期化
+window.onload = initMap;
+
+    </script>
+
+
+{{-- <script> いいねつけたり消したり練習でつけさしてもろてますcana--}}
+    {{-- //     document.querySelectorAll('.like-button').forEach(button => {
+    //         button.addEventListener('click', function() {
+    //             const postId = this.dataset.postId;
+    //             const liked = this.dataset.liked === 'true';
+    
+    //             fetch(`/posts/${postId}/like`, {
+    //                 method: liked ? 'DELETE' : 'POST',
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                     'Content-Type': 'application/json',
+    //                 }
+    //             })
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 alert(data.message);
+    //                 location.reload(); // 状態更新のためリロード
+    //             });
+    //         });
+    //     }); --}}
+    {{-- </script> --}}
 
     @endsection
