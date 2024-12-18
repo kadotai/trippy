@@ -42,7 +42,7 @@
         @if ($results->count() > 0)
     @foreach ($results as $post)
         <div class="article_card_result" data-id="{{ $post->id }}">
-            <a href="{{ route('posts.post', $post->id) }}" class="article_card_link">
+            <a href="{{ route('posts.showPost',['id'=> $post->id]) }}" class="article_card_link">
                 <div class="article_card_left">
                     <h1 class="username">{{ $post->user->name }}</h1>
                     @if ($post->images->isNotEmpty())
