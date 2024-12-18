@@ -71,7 +71,7 @@ public function showPost($id)
     {
         try{
         //デバッグ用↓
-        dd($request->all());
+        // dd($request->all());
 
          // **バリデーション**
     $request->validate([
