@@ -131,33 +131,24 @@
       }
     });
 
-    const tagButtons = document.querySelectorAll('.tag-button_result');
-
-        // ボタンクリック時にイベントを設定
-        tagButtons.forEach(button => {
-        button.addEventListener('click', () => {
-        // クラスをトグル（ON/OFF切り替え）
-        button.classList.toggle('selected');
-    });
-    });
     
-    // 検索機能のscriptタグ----------------------
-    // document.addEventListener("DOMContentLoaded", () => {
-    //     const selectedTags = new Set();
+    検索機能のscriptタグ----------------------
+    document.addEventListener("DOMContentLoaded", () => {
+        const selectedTags = new Set();
     
-    //     // タグ選択を管理
-    //     document.querySelectorAll(".tag-button").forEach(button => {
-    //         button.addEventListener("click", () => {
-    //             const tagId = button.dataset.tagId;
-    //             if (selectedTags.has(tagId)) {
-    //                 selectedTags.delete(tagId);
-    //                 button.classList.remove("selected");
-    //             } else {
-    //                 selectedTags.add(tagId);
-    //                 button.classList.add("selected");
-    //             }
-    //         });
-    //     });
+        // タグ選択を管理
+        document.querySelectorAll(".tag-button").forEach(button => {
+            button.addEventListener("click", () => {
+                const tagId = button.dataset.tagId;
+                if (selectedTags.has(tagId)) {
+                    selectedTags.delete(tagId);
+                    button.classList.remove("selected");
+                } else {
+                    selectedTags.add(tagId);
+                    button.classList.add("selected");
+                }
+            });
+        });
     
         // 検索ボタンの動作
         document.getElementById("search_button").addEventListener("click", () => {
