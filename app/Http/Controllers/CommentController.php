@@ -37,7 +37,29 @@ class CommentController extends Controller
         return view('posts.post', ['post' => $post])
             ->with('success', 'コメントを投稿しました！');
     }
+    public function destroy($id)
+    {
+        $comment = Comment::find($id);
+
+        // コメントが存在するか確認
+        if (!$comment) {
+            return redirect()->back()->with('error', 'コメントが見つかりません。');
+        }
+
+        // ログインユーザーがコメントの所有者か確認
+        if ($comment->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'このコメントを削除する権限がありません。');
+        }
+
+        // コメントを削除
+        $comment->delete();
+
+        return redirect()->back()->with('success', 'コメントを削除しました。');
+    }
 }
+
+
+
 
 
 

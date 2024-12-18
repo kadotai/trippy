@@ -130,3 +130,38 @@ p {
     margin: 20px;
     text-align: center;
 }
+
+.Like{
+    margin-bottom: 85px;
+}
+
+.comment-form{
+    display: flex;
+    justify-content: center;
+}
+
+input{
+    width: 80%;
+}
+
+.comment-btn{
+    display: flex;
+    justify-content: center;
+}
+
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}

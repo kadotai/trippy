@@ -50,7 +50,10 @@
             {{-- Tag --}}
             <div class="Tag">
                 <h1>Tag</h1>
-                <p class="article_tag">{{ implode(', ', $post->tags->pluck('name')->toArray()) }}</p>
+                @foreach ($post->tags as $tag)
+                                <span class="result_tag">{{ $tag->tag_name }}</span>
+                @endforeach
+                {{-- <p class="article_tag">{{ implode(', ', $post->tags->pluck('name')->toArray()) }}</p> --}}
             </div>
 
             {{-- Caption --}}
@@ -67,13 +70,35 @@
             
             
             {{-- されてるコメント表示 --}}
-            <div class="coments">コメント一覧</div>
+
+
+            <div class="comments">コメント一覧</div>
+
+            @foreach ($post->comments as $comment)
+                <div>
+                    <!-- コメントの投稿日時 -->
+                    <p>投稿日: {{ $comment->created_at->format('Y-m-d H:i') }}</p>
+                    <!-- 投稿者名とコメント内容 -->
+                    <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
+            
+                    <!-- ログインユーザーが投稿したコメントのみ削除ボタンを表示 -->
+                    @if (Auth::id() === $comment->user_id)
+                        <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか？')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">削除</button>
+                        </form>
+                    @endif
+                </div>
+            @endforeach
+
+            {{-- <div class="coments">コメント一覧</div>
             @foreach ($post->comments as $comment)
             <div>
                 <p>投稿日: {{ $comment->created_at->format('Y-m-d H:i') }}</p>
                 <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
             </div>
-            @endforeach
+            @endforeach --}}
 
             {{-- Comment --}}
 
@@ -81,9 +106,9 @@
             <form action="{{ route('comments.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
-                <textarea name="comment" rows="5" required></textarea>
+                <textarea name="comment" rows="3" required></textarea>
                 <div class="comment-btn">
-                <button type="submit">コメントを投稿する</button>
+                <button type="submit">コメントする</button>
                 </div>
             </form>
             </div>
