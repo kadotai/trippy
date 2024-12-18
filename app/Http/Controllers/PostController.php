@@ -250,8 +250,26 @@ public function update(Request $request, $id)
 // }一旦ねnao
     }
 
-// public function images()
-// {
-//     return $this->hasMany(Image::class);
-// }
+
+public function search(Request $request)
+{
+    $query = Post::query();
+
+    if ($request->has('search')) {
+        $query->where('title', 'like', '%' . $request->input('search') . '%')
+              ->orWhere('content', 'like', '%' . $request->input('search') . '%');
+    }
+
+    if ($request->has('tags')) {
+        $tags = explode(',', $request->input('tags'));
+        $query->whereHas('tags', function ($query) use ($tags) {
+            $query->whereIn('id', $tags);
+        });
+    }
+
+    $posts = $query->get();
+
+    return response()->json($posts);
+}
+
 }

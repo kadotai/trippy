@@ -1,3 +1,4 @@
+
 .search{
     display: flex;
     justify-content: center;
@@ -56,12 +57,11 @@
     background-color: #fff; 
     height: 45px;
     width: 100%;
-    overflow-x: scroll;
-    white-space: nowrap;
+    overflow-x: scroll; 
+    white-space: nowrap; 
 }
 
-
-.tag-button_result {
+.tag-button-result {
     color: #028391;
     display: inline-block;
     font-size: 13px;
@@ -73,28 +73,17 @@
     cursor: pointer;
 }
 
-.tag-button_result.selected{
+.tag-button-result.selected {
     background-color: #028391;
     color: #fff;
     border-color: #028391;
 }
 
 /* 投稿結果 */
-.result_search {
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    z-index: 10;
-    padding: 10px;
-    height: auto;
-}
+
 .result_posts {
-    margin-top: 60px; /* 検索バーの高さ分だけ余白をつける */
-    height: calc(100vh - 60px); /* 残りの画面の高さを計算 */
-    overflow-y: auto; /* スクロール可能にする */
-    padding: 10px;
-    background-color: #f9f9f9;
+    padding: 15px; 
+    background-color: #fff;
 }
 
 .post {
@@ -145,23 +134,6 @@
     padding: 0; 
 }
 
-.article_card {
-    margin-bottom: 20px; /* カード間の余白 */
-  }
-  
-  .top_all_article_list {
-    display: flex;
-    flex-wrap: wrap; /* レスポンシブデザインのための設定 */
-    justify-content: space-between;
-    margin-bottom: 50px; /* 最後のカードが切れないように余白を設定 */
-  }
-  
-  #results {
-    overflow-y: auto; /* 垂直方向にスクロールできるように設定 */
-    height: calc(100vh - 100px); /* 高さの調整、必要に応じて調整 */
-    }
-
-
 
 /* 記事一覧nao */
 a {
@@ -209,8 +181,6 @@ a {
     justify-content: flex-start;
     padding: 0;
     margin: 0;
-
-    
 }
 
 .country {
