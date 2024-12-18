@@ -19,6 +19,10 @@ public function showPost($id)
 {
     $post = Post::Find($id);
     $routeData = json_decode($post->route_data, true);
+    // routeDataがnullまたは空の場合、空の配列をセット
+    if (is_null($routeData) || empty($routeData)) {
+        $routeData = [];
+    }
     return view('posts.post',['post'=>$post], compact('post', 'routeData'));
 }
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑

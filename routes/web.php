@@ -93,4 +93,7 @@ Route::get('post/{id}',[PostController::class,'showPost'])->name('posts.showPost
 Route::get("/comments/create/{post_id}",[CommentController::class, "create"])->name("comments.create");
 
 Route::post("/comments",[CommentController::class, "store"])->name("comments.store");
+
+Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
 // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
