@@ -79,19 +79,24 @@
             </div>
         </div>
 
-        {{-- Tag --}}
+        {{-- Tag
         <div class="Tag">
             <p>Tag</p>
             <section class="edit_selected_tag">
-                @foreach ($tags as $tag)
+                @foreach ($post->tags as $tag)
                     <button type="button" class="tag-button {{ in_array($tag->id, $post->tags->pluck('id')->toArray()) ? 'selected' : '' }}" 
                         name="tags[]" 
                         data-tag="{{ $tag->id }}">
                         {{ $tag->tag_name }}
                     </button>
                 @endforeach
+                <p class="article_result_tag">
+                    @foreach 
+                        <span class="result_tag">#{{ $tag->tag_name }}</span>
+                    @endforeach
+                </p>
             </section>
-        </div>
+        </div> --}}
 
         {{-- Caption --}}
         <div class="Caption">
