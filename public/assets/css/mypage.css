@@ -50,15 +50,20 @@ h2 {
     margin: 0;
 }
 
+.mypage-container {
+    height: 190px;
+}
+
 .profile-section, .tab-header, .post-list-container {
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto 100px;
+    max-width: 300px;
+    margin: 0 auto 20px;
     padding: 20px;
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .post-card {
     display: flex;
