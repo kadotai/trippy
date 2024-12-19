@@ -46,6 +46,7 @@
             <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
             <p class="trip_title">{{ $post->title }}</p>
             <p class="article_tag" data-tag="{{ $tag->id }}">#{{ $tag ->tag_name }}</p>
+
             <div class="like_and_comment">
                 <div class="like">
                     <img src="{{ asset('img/like_icon.png') }}" alt="like" class="like_icon"><p class="like_number">{{ $post->likes->count() }}</p>
@@ -60,7 +61,6 @@
     <div class="page">{{ $posts->links() }}</div>
 </div>
 </section>
-
 
 
 

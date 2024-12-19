@@ -40,8 +40,8 @@
                 <h1>Photo</h1>
                 <div class="swiper">
                     <div class="swiper-wrapper">
-                        @foreach ($post->photos as $photo)
-                            <img src="{{ asset('storage/' . $photo->path) }}" alt="画像" class="swiper-slide">
+                        @foreach ($post->images as $image)
+                            <img src="{{ asset('storage/' . $image->img) }}" alt="画像" class="swiper-slide">
                         @endforeach
                     </div>
                     <div class="swiper-button-prev"></div>
