@@ -87,6 +87,10 @@ p {
     width: 100%;  /* 地図の横幅を調整 */
     height: 400px; /* 地図の高さを調整 */
     margin: 0;
+    border-style: solid;
+    border-color: #FFF;
+    text-align: center;
+    align-content: center;
 }
 
 .Like {
@@ -165,4 +169,24 @@ input{
 .alert-danger {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+.result_tag {
+    color: #fff;
+    display: inline-block;
+    font-size: 10px;
+    background-color: #028391;
+    width: fit-content;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+.article_result_tag {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 5px; 
+    margin: 10px 0; 
+    padding: 0; 
 }
