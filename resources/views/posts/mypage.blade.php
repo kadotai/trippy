@@ -39,9 +39,13 @@
             <div class="post-list-container">
                 @foreach ($posts as $post)
                     <div class="post-card clickable" data-route="{{ route('posts.showPost',['id'=> $post->id]) }}">
-                        @foreach ($post->photos as $image)
-                            <img src="{{ asset('storage/' . $image->img) }}" alt="投稿画像" class="post-photo">
-                        @endforeach
+
+                        @if ($post->images->isNotEmpty()) 
+                        <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="post-photo">
+                        @else
+                        <img src="{{ asset('img/black_white_trippy.jpg') }}" alt="デフォルト画像" class="travel_img">
+                        @endif
+
                         <div class="post-details">
                             {{-- <div>{{ dd($post) }}</div> --}}
                             <div class="title-wrapper">
@@ -72,10 +76,14 @@
         <div class="tab-pane" id="planning">
             <div class="post-list-container">
                 @foreach ($plannedPosts as $plan)
-                    <div class="post-card clickable" data-route="{{ route('posts.showPost',['id'=> $post->id]) }}">
-                        @foreach ($plan->photos as $photo)
-                            <img src="{{ asset('storage/' . $photo->img) }}" alt="投稿画像" class="post-image">
-                        @endforeach
+                    <div class="post-card clickable" data-route="{{ route('posts.showPost',['id'=> $plan->id]) }}">
+
+                        @if ($plan->images->isNotEmpty()) 
+                        <img src="{{ asset('storage/' . $plan->images->first()->img) }}" alt="旅行写真" class="post-photo">
+                        @else
+                        <img src="{{ asset('img/black_white_trippy.jpg') }}" alt="デフォルト画像" class="travel_img">
+                        @endif
+
                         <div class="post-details">
                             <h2 class="title">{{ $plan->title }}</h2>
                             <p class="post-location">{{ $plan->country->country_name }} / {{ $plan->city }}</p>
