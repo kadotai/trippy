@@ -45,7 +45,6 @@
             </ul>
             <p class="date">{{ $post->start_date }}~{{ $post->end_date }}</p>
             <p class="trip_title">{{ $post->title }}</p>
-            {{-- <p class="article_tag" data-tag="{{ $tag->id }}">#{{ $tag ->tag_name }}</p> --}}
 
             <p class="article_result_tag">
                 @foreach ($post->tags as $tag)
