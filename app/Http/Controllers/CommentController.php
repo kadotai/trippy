@@ -32,11 +32,21 @@ class CommentController extends Controller
     
         // 投稿データを取得
         $post = Post::find($request->post_id);
+
+         // もし$postにroute_dataがあれば、$routeDataをセット
+        $routeData = json_decode($post->route_data, true);
+
+        // routeDataがnullまたは空の場合、空の配列をセット
+        if (is_null($routeData) || empty($routeData)) {
+        $routeData = [];
+    }
     
         // `posts.post` ビューを返す
-        return view('posts.post', ['post' => $post])
+        return view('posts.post', ['post' => $post, 'routeData' => $routeData])
             ->with('success', 'コメントを投稿しました！');
     }
+
+    
     public function destroy($id)
     {
         $comment = Comment::find($id);
@@ -54,8 +64,21 @@ class CommentController extends Controller
         // コメントを削除
         $comment->delete();
 
-        return redirect()->back()->with('success', 'コメントを削除しました。');
-    }
+        // 投稿データを取得
+        $post = Post::find($comment->post_id);
+
+        // もし$postにroute_dataがあれば、$routeDataをセット
+        $routeData = json_decode($post->route_data, true);
+    
+        // routeDataがnullまたは空の場合、空の配列をセット
+        if (is_null($routeData) || empty($routeData)) {
+        $routeData = [];
+        }
+
+        // 投稿を表示するビューに$postと$routeDataを渡す
+        return view('posts.post', ['post' => $post, 'routeData' => $routeData])
+        ->with('success', 'コメントを削除しました。');
+        }
 }
 
 
