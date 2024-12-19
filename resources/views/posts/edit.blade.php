@@ -105,16 +105,17 @@
         </div>
 
         {{-- Public --}}
-        <div class="Public">
-            <div class="public_private">
-                <input type="radio" id="private" name="open" value="private" {{ $post->post_type == 'private' ? 'checked' : '' }}>
-                <label for="private">非公開</label>
-            </div>
-            <div class="public_public">
-                <input type="radio" id="public" name="open" value="public" {{ $post->post_type == 'public' ? 'checked' : '' }}>
-                <label for="public">公開</label>
-            </div>
-        </div>
+<div class="Public">
+    <div class="public_private">
+        <input type="radio" id="private" name="post_type" value="0" {{ $post->post_type == 0 ? 'checked' : '' }}>
+        <label for="private">非公開</label>
+    </div>
+    <div class="public_public">
+        <input type="radio" id="public" name="post_type" value="1" {{ $post->post_type == 1 ? 'checked' : '' }}>
+        <label for="public">公開</label>
+    </div>
+</div>
+
 
         <div class="link">
             {{-- Delete --}}
