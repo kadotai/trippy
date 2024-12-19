@@ -28,6 +28,7 @@ class MyPageController extends Controller
 
         // 訪問した国のリストを取得
         $visitedCountries = DB::table('posts')
+            ->where('user_id', $user->id)
             ->join('countries', 'posts.country_id', '=', 'countries.id')
             ->distinct()
             ->pluck('countries.country_name');
