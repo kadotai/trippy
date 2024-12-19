@@ -139,7 +139,7 @@ public function showPost($id)
     }
 
     // 完了後のリダイレクト
-    return redirect()->route('posts.create')->with('success', '投稿が保存されました。');
+    return redirect()->route('mypage')->with('success', '投稿が保存されました。');
 // } catch (\Throwable $e) {
 //     // 本番環境ではログに記録して一般的なエラーを表示
 //     \Log::error('システムエラー: ', [
