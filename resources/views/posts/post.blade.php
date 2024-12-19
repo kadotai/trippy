@@ -144,12 +144,12 @@
                 return;
             }
         // routeDataをパースして配列形式に変換
-        let parsedRouteData;
-        if (typeof routeData === "string") {
-            parsedRouteData = JSON.parse(routeData);
-        } else {
-            parsedRouteData = routeData;
-        }
+        // let parsedRouteData;
+        // if (typeof routeData === "string") {
+        //     parsedRouteData = JSON.parse(routeData);
+        // } else {
+        //     parsedRouteData = routeData;
+        // }
 
         // データを数値型に変換
         const processedRouteData = parsedRouteData.map(point => ({
@@ -159,6 +159,7 @@
 
         // データが正しいかチェック
         if (!processedRouteData || processedRouteData.length === 0) {
+            document.getElementById("map").innerText = "Invalid route data";
             return;
         }
 

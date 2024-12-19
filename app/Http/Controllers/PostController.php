@@ -26,7 +26,10 @@ public function showPost($id)
         $routeData = [];
     }
 
-    return view('posts.post',['post'=>$post], compact('post', 'routeData'));
+    //デバック用
+    // dd($routeData);
+
+    return view('posts.post', compact('post', 'routeData'));
 }
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑
     
