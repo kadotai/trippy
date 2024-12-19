@@ -18,7 +18,7 @@
                 <form action="{{ route('posts.result') }}" method="GET">
                     {{-- キーワード検索 --}}
                     <input type="search" name="search" 
-                    id="post_search" class="search_box" placeholder="投稿を検索" 
+                    id="post_search" class="search_box" placeholder="キーワードを入力(例:Cebu)" 
                     value="{{ request('search') }}">
                     <input type="hidden" name="tags" id="selected-tags">
                     <button type="submit" class="search_button">検索</button>
@@ -48,7 +48,7 @@
                     @if ($post->images->isNotEmpty())
                         <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
                     @else
-                        <img src="{{ asset('img/default_image.jpg') }}" alt="デフォルト画像" class="travel_img">
+                        <img src="{{ asset('img/black_white_trippy.jpg') }}" alt="デフォルト画像" class="travel_img">
                     @endif
                 </div>
                 <div class="article_card_right">
@@ -94,7 +94,7 @@
     let startY = 0;
     
     // スワイプ対象のエリアを取得
-    const swipeArea = document.querySelector('.top_selected_tag');
+    const swipeArea = document.querySelector('.result_selected_tag');
     
     // スワイプ開始時の処理
     swipeArea.addEventListener('touchstart', (e) => {
@@ -123,13 +123,37 @@
       }
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-    const tagButtons = document.querySelectorAll('.tag-button-result');
-    if (tagButtons.length === 0) {
-        console.log("タグボタンが見つかりません！");
-    } else {
-        console.log(tagButtons); // ボタンがあるか再確認
-    }
+    // 検索機能のscriptタグ----------------------
+    document.addEventListener("DOMContentLoaded", () => {
+    const selectedTags = new Set();
+
+    // タグ選択を管理
+    document.querySelectorAll(".tag-button-result").forEach(button => {
+        button.addEventListener("click", () => {
+            const tagId = button.dataset.tagId;
+            if (selectedTags.has(tagId)) {
+                selectedTags.delete(tagId);
+                button.classList.remove("selected");
+            } else {
+                selectedTags.add(tagId);
+                button.classList.add("selected");
+            }
+        });
+    });
+
+    // 検索ボタンの動作
+    document.getElementById("search_button").addEventListener("click", () => {
+        const searchQuery = document.getElementById("post-search").value.trim();
+        const tags = Array.from(selectedTags);
+
+        // クエリパラメータを作成
+        const queryParams = new URLSearchParams();
+        if (searchQuery) queryParams.append("search", searchQuery);
+        if (tags.length > 0) queryParams.append("tags", tags.join(","));
+
+        // 検索結果ページにリダイレクト
+        window.location.href = `/result?${queryParams.toString()}`;
+    });
 });
     </script>
 </body>

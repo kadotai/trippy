@@ -51,20 +51,12 @@ public function showPost($id)
 
     public function index()
     {
-        // $tags = Tag::all();
-        // $posts = Post::all(); // データベースからすべての投稿を取得
-
-        // $country = Post::with('country')->get();
-        // return view('posts.top', compact('tags', 'posts'));
-
         $tags = Tag::all();
 
-    // 新しい順に10件の投稿を取得し、関連データも一緒にロードする
-    $posts = Post::with(['user', 'images', 'country'])
+        // 新しい順に投稿を取得し、関連データも一緒にロードする
+        $posts = Post::with(['user', 'images', 'country'])
                 ->orderBy('updated_at', 'desc') // 新しい順に並び替え
                 ->paginate(10); // ページネーションで10件ずつ取得
-                // ->take(10)                     // 10件のみ取得
-                // ->get();
 
     return view('posts.top', compact('tags', 'posts'));
 

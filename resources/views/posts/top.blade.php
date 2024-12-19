@@ -34,9 +34,9 @@
             <h1 class="username">{{ $post->user->name }}</h1>
         @if ($post->images->isNotEmpty()) 
         <img src="{{ asset('storage/' . $post->images->first()->img) }}" alt="旅行写真" class="travel_img">
-    @else
+        @else
         <img src="{{ asset('img/black_white_trippy.jpg') }}" alt="デフォルト画像" class="travel_img">
-    @endif
+        @endif
         </div>
         <div class="article_card_right">
             <ul class="where">
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // タグ選択を管理
     document.querySelectorAll(".tag-button").forEach(button => {
         button.addEventListener("click", () => {
-            const tagId = button.dataset.tagId;
+            const tagId = button.dataset.tag;
             if (selectedTags.has(tagId)) {
                 selectedTags.delete(tagId);
                 button.classList.remove("selected");
