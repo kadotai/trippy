@@ -20,13 +20,12 @@ public function showPost($id)
     // $post = Post::Find($id);  //一旦コメントアウトしてみたい
     $post = Post::with('images')->findOrFail($id);
     $routeData = json_decode($post->route_data, true);
+  
+    // routeDataがnullまたは空の場合、空の配列をセット
+    if (is_null($routeData) || empty($routeData)) {
+        $routeData = [];
+    }
 
-        // routeDataがnullまたは空の場合、空の配列をセット
-        if (is_null($routeData) || empty($routeData)) {
-            $routeData = [];
-        }
-
-        
     return view('posts.post',['post'=>$post], compact('post', 'routeData'));
 }
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -199,7 +198,7 @@ public function showPost($id)
     if ($request->has('search') && !empty($request->input('search'))) {
         $keyword = $request->input('search');
         $query->where('title', 'LIKE', "%{$keyword}%")
-              ->orWhere('content', 'LIKE', "%{$keyword}%");
+                ->orWhere('content', 'LIKE', "%{$keyword}%");
     }
 
     // 検索結果を取得
@@ -226,15 +225,17 @@ public function update(Request $request, $id)
     $post = Post::findOrFail($id);
 
     // 入力データの検証
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-        // 他の検証ルールを追加
-    ]);
+    $request->all();
+    
+    // validate([
+    //     'title' => 'required|string|max:255',
+    //     'start_date' => 'required|date',
+    //     'end_date' => 'required|date|after_or_equal:start_date',
+    //     // 他の検証ルールを追加
+    // ]);
 
     // データ更新
-    $post->update($request->only(['title', 'country', 'city', 'start_date', 'end_date', 'content', 'post_type']));
+    $post->update($request->all());
 
     // タグの更新
     if ($request->has('tags')) {
@@ -245,8 +246,26 @@ public function update(Request $request, $id)
 // }一旦ねnao
     }
 
-// public function images()
-// {
-//     return $this->hasMany(Image::class);
-// }
+
+public function search(Request $request)
+{
+    $query = Post::query();
+
+    if ($request->has('search')) {
+        $query->where('title', 'like', '%' . $request->input('search') . '%')
+              ->orWhere('content', 'like', '%' . $request->input('search') . '%');
+    }
+
+    if ($request->has('tags')) {
+        $tags = explode(',', $request->input('tags'));
+        $query->whereHas('tags', function ($query) use ($tags) {
+            $query->whereIn('id', $tags);
+        });
+    }
+
+    $posts = $query->get();
+
+    return response()->json($posts);
+}
+
 }

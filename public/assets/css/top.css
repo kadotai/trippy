@@ -1,3 +1,4 @@
+
 .search{
     display: flex;
     justify-content: center;
@@ -35,6 +36,7 @@
     padding: 5px 10px;
     cursor: pointer;
 }
+
 .tag-button.selected{
     background-color: #028391;
     color: #fff;
@@ -55,11 +57,11 @@
     background-color: #fff; 
     height: 45px;
     width: 100%;
-    overflow-x: scroll;
-    white-space: nowrap;
+    overflow-x: scroll; 
+    white-space: nowrap; 
 }
 
-.tag {
+.tag-button-result {
     color: #028391;
     display: inline-block;
     font-size: 13px;
@@ -71,33 +73,17 @@
     cursor: pointer;
 }
 
-.tag:hover {
-    background-color: #007bff;
+.tag-button-result.selected {
+    background-color: #028391;
     color: #fff;
-}
-
-.tag.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #0056b3;
+    border-color: #028391;
 }
 
 /* 投稿結果 */
-.result_search {
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    z-index: 10;
-    padding: 10px;
-    height: auto;
-}
+
 .result_posts {
-    margin-top: 60px; /* 検索バーの高さ分だけ余白をつける */
-    height: calc(100vh - 60px); /* 残りの画面の高さを計算 */
-    overflow-y: auto; /* スクロール可能にする */
-    padding: 10px;
-    background-color: #f9f9f9;
+    padding: 15px; 
+    background-color: #fff;
 }
 
 .post {
@@ -129,13 +115,24 @@
 
 .result_tag {
     color: #fff;
-    /* height: 10px;
-    width: 60px; */
-    border: none;
+    display: inline-block;
+    font-size: 10px;
     background-color: #028391;
-
+    width: fit-content;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
+
+.article_result_tag {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 5px; 
+    margin: 10px 0; 
+    padding: 0; 
+}
 
 
 /* 記事一覧nao */
@@ -150,7 +147,6 @@ a {
     padding: 5px 0;
     border: solid;
     border-color: #333;
-
 }
 
 .article_card_left {
@@ -185,8 +181,6 @@ a {
     justify-content: flex-start;
     padding: 0;
     margin: 0;
-
-    
 }
 
 .country {

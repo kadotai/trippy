@@ -1,24 +1,4 @@
 
-
-
-
-
-
-
-{{-- <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>create|TRiPPY</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-
-</head>
-
-<body> --}}
-
     @extends('layouts.footer')
     @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
@@ -28,7 +8,6 @@
     @section('content')
 
     <div class="posts">
-        {{-- @foreach ($posts as $post) --}}
             {{-- Title --}}
             <div class="Title">
                 <h1>Title</h1>
@@ -71,7 +50,10 @@
             {{-- Tag --}}
             <div class="Tag">
                 <h1>Tag</h1>
-                <p class="article_tag">{{ implode(', ', $post->tags->pluck('name')->toArray()) }}</p>
+                @foreach ($post->tags as $tag)
+                                <span class="result_tag">{{ $tag->tag_name }}</span>
+                @endforeach
+                {{-- <p class="article_tag">{{ implode(', ', $post->tags->pluck('name')->toArray()) }}</p> --}}
             </div>
 
             {{-- Caption --}}
@@ -88,51 +70,54 @@
             
             
             {{-- されてるコメント表示 --}}
+
+
+            <div class="comments">コメント一覧</div>
+
             @foreach ($post->comments as $comment)
-            <div>
-                <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
-                <p>投稿日: {{ $comment->created_at->format('Y-m-d H:i') }}</p>
-            </div>
+                <div>
+                    <!-- コメントの投稿日時 -->
+                    <p>投稿日: {{ $comment->created_at->format('Y-m-d H:i') }}</p>
+                    <!-- 投稿者名とコメント内容 -->
+                    <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
+            
+                    <!-- ログインユーザーが投稿したコメントのみ削除ボタンを表示 -->
+                    @if (Auth::id() === $comment->user_id)
+                        <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか？')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">削除</button>
+                        </form>
+                    @endif
+                </div>
             @endforeach
 
-        
-
-            {{-- Like --}}
-            <div class="Like">
-                <a href="#">この投稿好きやで〜</a>
+            {{-- <div class="coments">コメント一覧</div>
+            @foreach ($post->comments as $comment)
+            <div>
+                <p>投稿日: {{ $comment->created_at->format('Y-m-d H:i') }}</p>
+                <p>{{ $comment->user->name }}: {{ $comment->comment }}</p> <!-- content を comment に変更 -->
             </div>
-        
-    {{-- ちょっと練習で記載させてもろてますcana--}}
-            {{-- @foreach ($posts as $post)
-    <div class="post">
-        <h3>{{ $post->title }}</h3>
-        <button 
-            class="like-button" 
-            data-post-id="{{ $post->id }}" 
-            data-liked="{{ $post->likes->contains('user_id', auth()->id()) ? 'true' : 'false' }}">
-            {{ $post->likes->contains('user_id', auth()->id()) ? 'いいね解除' : 'いいね' }}
-        </button>
-        <p>いいね数: {{ $post->likes->count() }}</p>
-    </div>
-@endforeach --}}
+            @endforeach --}}
 
             {{-- Comment --}}
-            {{-- <!-- コメントフォーム -->
-{{-- <form action="{{ route('comments.store', $post->id) }}" method="POST"> --}}
-    {{-- @csrf
-    <textarea name="comment" required placeholder="コメントを入力してください"></textarea>
-    <button type="submit">コメントする</button>
-</form>  --}}
 
-
-
-            <div class="Comment">
-                <h1>Comment</h1>
-                <input type="text">
-                <div class="Comment_a"><a href="#">コメント投稿</a></div>
+            <div class="comment-form">
+            <form action="{{ route('comments.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                <textarea name="comment" rows="3" required></textarea>
+                <div class="comment-btn">
+                <button type="submit">コメントする</button>
+                </div>
+            </form>
             </div>
     </div>
-   
+            
+                {{-- Like --}}
+                <div class="Like">
+                    <a href="#">この投稿好きやで〜</a>
+                </div>
 
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
@@ -143,6 +128,7 @@
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }
         });
     </script>
+
 
    {{-- GoogleMapAPI --}}
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsSeGO53Uzs4JgZGrKy-eokk0aAb_vGbM&callback=initMap" async defer></script>
@@ -224,7 +210,3 @@ window.onload = initMap;
     {{-- </script> --}}
 
     @endsection
-{{-- </body>
-
-
-</html> --}}
