@@ -81,7 +81,7 @@ public function showPost($id)
         // dd($request->all());
 
         $images = $request->file('images'); // 配列として受け取る
-    dd($images);
+
          // **バリデーション**
     $request->validate([
         'title' => 'nullable|string|max:255',
@@ -113,8 +113,6 @@ public function showPost($id)
         'duration' => $request->input('duration'),
         'post_type' => $request->input('open') === 'public',
     ]);
-
-    // dd($request);
 
     // **post_images テーブルに画像を保存**
     if ($request->hasFile('images') && is_array($request->file('images'))) {
