@@ -72,13 +72,13 @@
         <div class="tab-pane" id="planning">
             <div class="post-list-container">
                 @foreach ($plannedPosts as $plan)
-                    <div class="post-card">
+                    <div class="post-card clickable" data-route="{{ route('posts.showPost',['id'=> $post->id]) }}">
                         @foreach ($plan->photos as $photo)
                             <img src="{{ asset('storage/' . $photo->img) }}" alt="投稿画像" class="post-image">
                         @endforeach
                         <div class="post-details">
                             <h2 class="title">{{ $plan->title }}</h2>
-                            <p class="post-location">{{ $plan->country_id }} / {{ $plan->city }}</p>
+                            <p class="post-location">{{ $plan->country->country_name }} / {{ $plan->city }}</p>
                             <p class="post-date">{{ $plan->start_date }}~{{ $plan->end_date }}</p>
                             <p class="post-comment">{{ $plan->content }}</p>
                             <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">Edit</button>
