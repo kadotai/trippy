@@ -17,12 +17,15 @@ class PostController extends Controller
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 public function showPost($id)
 {
-    $post = Post::Find($id);
+    // $post = Post::Find($id);  //一旦コメントアウトしてみたい
+    $post = Post::with('images')->findOrFail($id);
     $routeData = json_decode($post->route_data, true);
+  
     // routeDataがnullまたは空の場合、空の配列をセット
     if (is_null($routeData) || empty($routeData)) {
         $routeData = [];
     }
+
     return view('posts.post',['post'=>$post], compact('post', 'routeData'));
 }
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -73,10 +76,12 @@ public function showPost($id)
 
     public function store(Request $request)
     {
-        try{
+        // try{
         //デバッグ用↓
         // dd($request->all());
 
+        $images = $request->file('images'); // 配列として受け取る
+    dd($images);
          // **バリデーション**
     $request->validate([
         'title' => 'nullable|string|max:255',
@@ -114,7 +119,7 @@ public function showPost($id)
     // **post_images テーブルに画像を保存**
     if ($request->hasFile('images') && is_array($request->file('images'))) {
         foreach ($request->file('images') as $image) {
-            $path = $image->store('img', 'public'); // `storage/app/public/images/` に保存
+            $path = $image->store('img', 'public'); // `storage/app/public/img/` に保存
             Post_image::create([
                 'post_id' => $post->id,
                 'img' => $path,
@@ -134,24 +139,15 @@ public function showPost($id)
 
     // 完了後のリダイレクト
     return redirect()->route('posts.create')->with('success', '投稿が保存されました。');
-} catch (\Throwable $e) {
-    // 開発中のみエラーメッセージを表示
-    if (app()->environment('local')) {
-        return response()->json([
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString(),
-            'data' => $request->all(),
-        ], 500);
-    }
-
-    // 本番環境ではログに記録して一般的なエラーを表示
-    \Log::error('システムエラー: ', [
-        'message' => $e->getMessage(),
-        'trace' => $e->getTraceAsString(),
-        'request_data' => $request->except(['images']),
-    ]);
-    return redirect()->back()->withInput()->withErrors(['error' => '予期しないエラーが発生しました。再度お試しください。']);
-}
+// } catch (\Throwable $e) {
+//     // 本番環境ではログに記録して一般的なエラーを表示
+//     \Log::error('システムエラー: ', [
+//         'message' => $e->getMessage(),
+//         'trace' => $e->getTraceAsString(),
+//         'request_data' => $request->except(['images']),
+//     ]);
+//     return redirect()->back()->withInput()->withErrors(['error' => '予期しないエラーが発生しました。再度お試しください。']);
+// }
 }
 
     public function showResults(Request $request)
@@ -186,8 +182,8 @@ public function showPost($id)
             })
             ->get();
 
-$posts = Post::withCount('comments')->get();
-$posts = Post::withCount('likes')->get();
+        $posts = Post::withCount('comments')->get();
+        $posts = Post::withCount('likes')->get();
         return view('posts.result', compact('results', 'searchQuery', 'selectedTagsArray', 'tags','posts')); 
     }
 

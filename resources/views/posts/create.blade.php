@@ -5,7 +5,6 @@
     <title>create|TRiPPY</title>
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
    @endsection
-
    @section('content')
    
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" id="tripForm">
@@ -187,37 +186,39 @@
             document.getElementById('startTracking').disabled = false;
             document.getElementById('stopTracking').disabled = true;
         });
-
+    
         document.getElementById('inputElm').addEventListener('change', function(event) {
     const preview = document.getElementById('preview');
-    Array.from(event.target.files).forEach(file => {
+    const inputElm = event.target;
+    const files = event.target.files;
+
+    // ファイルをプレビューに表示
+    Array.from(files).forEach(file => {
         const reader = new FileReader();
         reader.onload = function(e) {
             const img = document.createElement('img');
-            img.src = e.target.result; // プレビュー画像のソース
-            img.style.maxWidth = '150px'; // プレビュー画像の最大幅
+            img.src = e.target.result;
+            img.style.maxWidth = '150px';
             img.style.marginRight = '10px';
             img.style.marginBottom = '10px';
-            preview.appendChild(img); // プレビューに画像を追加
-        }
-        reader.readAsDataURL(file); // ファイルデータを読み込む
+            preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // 送信する画像データをhidden inputにセット
+    const form = document.querySelector('form'); // フォームを取得
+    Array.from(files).forEach(file => {
+        let input = document.createElement('input');
+        input.type = 'hidden'; // 隠しフィールドとして追加
+        input.name = 'images[]'; // 同じname属性にすることで配列として送信される
+        input.value = file.name; // ファイル名または他の情報を送信
+        form.appendChild(input); // フォームに追加
     });
 });
 
-        // const inputElm = document.getElementById('inputElm');
-        // inputElm.addEventListener('change', (e) => {
-        //     const file = e.target.files[0];
-        //     const fileReader = new FileReader();
 
-        //     fileReader.readAsDataURL(file);
-        //     fileReader.addEventListener('load', (e) => {
-        //         const imgElm = document.createElement('img');
-        //         imgElm.src = e.target.result;
 
-        //         const targetElm = document.getElementById('preview');
-        //         targetElm.appendChild(imgElm);
-        //     });
-        // });
 
           // タグの選択機能
     document.addEventListener('DOMContentLoaded', () => {
@@ -232,7 +233,6 @@
 
                 const tagId = button.getAttribute('data-tag'); // タグのIDを取得
 
-                
                 // 選択状態の切り替え
                 if (selectedTags.has(tagId)) {
                     selectedTags.delete(tagId);
