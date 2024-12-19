@@ -138,6 +138,11 @@
         const routeData = @json($routeData);
         function initMap() {
     try {
+        // データがnullまたは空の場合
+        if (!routeData || routeData.length === 0) {
+                document.getElementById("map").innerText = "No Data Available";
+                return;
+            }
         // routeDataをパースして配列形式に変換
         let parsedRouteData;
         if (typeof routeData === "string") {

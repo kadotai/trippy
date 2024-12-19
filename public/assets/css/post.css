@@ -87,6 +87,10 @@ p {
     width: 100%;  /* 地図の横幅を調整 */
     height: 400px; /* 地図の高さを調整 */
     margin: 0;
+    border-style: solid;
+    border-color: #FFF;
+    text-align: center;
+    align-content: center;
 }
 
 .Like {
@@ -183,5 +187,6 @@ input{
     display: flex; 
     flex-wrap: wrap; 
     gap: 5px; 
+    margin: 10px 0; 
     padding: 0; 
 }
