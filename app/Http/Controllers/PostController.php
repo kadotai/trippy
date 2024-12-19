@@ -268,4 +268,13 @@ public function search(Request $request)
     return response()->json($posts);
 }
 
+function destroy($id)
+    {
+        $post = Post::find($id);
+
+        $post -> delete();
+
+        return redirect()->route('mypage');
+    }
+
 }

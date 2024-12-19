@@ -88,6 +88,11 @@ Route::put('/post/{id}', [PostController::class, 'update'])->name('posts.update'
 
 Route::get('post/{id}',[PostController::class,'showPost'])->name('posts.showPost');
 
+Route::delete('/post/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+
+
 
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 Route::get("/comments/create/{post_id}",[CommentController::class, "create"])->name("comments.create");

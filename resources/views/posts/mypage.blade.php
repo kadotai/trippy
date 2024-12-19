@@ -12,7 +12,7 @@
                 <img src="{{ $user->icon ? asset('storage/'.$user->icon) : asset('assets/images/default-icon.png') }}" alt="User Icon" class="profile-icon">
                 <div class="small-profile">
                     <h2 class="username">{{ $user->name }}</h2>
-                    <p class="visited-info">行った国数: <strong>{{ $visitedCountriesCount }}</strong></p>
+                    <p class="visited-info">Country Count: <strong>{{ $visitedCountriesCount }}</strong></p>
                 </div>
             </div>
             <form action="{{ route('logout') }}" method="POST" style="margin-top: 10px;">
@@ -45,12 +45,12 @@
                         <div class="post-details">
                             {{-- <div>{{ dd($post) }}</div> --}}
                             <div class="title-wrapper">
-                                <h2 class="title">タイトル名:{{ $post->title }}</h2>
-                                <span class="status">公開中:{{ $post->post_type ? '公開' : '非公開' }}</span>
+                                <h2 class="title">{{ $post->title }}</h2>
+                                <span class="status">{{ $post->post_type ? '公開' : '非公開' }}</span>
                             </div>
-                            <p class="post-location">国:{{ $post->country->country_name }} / エリア: {{ $post->city }}</p>
-                            <p class="post-date">年月日:{{ $post->start_date }}~{{ $post->end_date }}</p>
-                            <p class="post-comment">コメント:{{ $post->content }}</p>
+                            <p class="post-location">{{ $post->country->country_name }} / {{ $post->city }}</p>
+                            <p class="post-date">{{ $post->start_date }}~{{ $post->end_date }}</p>
+                            <p class="post-comment">{{ $post->content }}</p>
                             <div class="post-actions">
                                 <div id="post-{{ $post->id }}">
                                     <button onclick="toggleLike({{ $post->id }})" class="like-button">
@@ -60,7 +60,7 @@
                                     </button>
                                 </div>
                                 <button class="comment-btn">💬</button>
-                                <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">編集</button>
+                                <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -77,11 +77,11 @@
                             <img src="{{ asset('storage/' . $photo->img) }}" alt="投稿画像" class="post-image">
                         @endforeach
                         <div class="post-details">
-                            <h2 class="title">タイトル名:{{ $plan->title }}</h2>
-                            <p class="post-location">国:{{ $plan->country_id }} / エリア: {{ $plan->city }}</p>
-                            <p class="post-date">年月日:{{ $plan->start_date }}~{{ $plan->end_date }}</p>
-                            <p class="post-comment">コメント:{{ $plan->content }}</p>
-                            <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">編集</button>
+                            <h2 class="title">{{ $plan->title }}</h2>
+                            <p class="post-location">{{ $plan->country_id }} / {{ $plan->city }}</p>
+                            <p class="post-date">{{ $plan->start_date }}~{{ $plan->end_date }}</p>
+                            <p class="post-comment">{{ $plan->content }}</p>
+                            <button class="edit-btn clickable" data-route="{{ route('posts.edit',$post->id) }}">Edit</button>
                         </div>
                     </div>
                 @endforeach
@@ -95,11 +95,11 @@
                     <div class="post-card clickable" data-route="{{ route('posts.post', $like->id) }}">
                         <img src="{{ $like->images->first() ? asset('storage/'.$like->images->first()->image) : 'https://via.placeholder.com/80' }}" alt="投稿写真" class="post-photo">
                         <div class="post-details">
-                            <h2 class="title">タイトル名:{{ $like->title }}</h2>
-                            <div class="user-name-overlay">ユーザー名:{{ $like->user->name }}</div>
-                            <p class="post-location">国:{{ $like->country_id }} / エリア:  {{ $like->city }}</p>
-                            <p class="post-date">年月日:{{ $like->start_date }}~{{ $like->end_date }}</p>
-                            <p class="post-comment">コメント:{{ $like->content }}</p>
+                            <h2 class="title">{{ $like->title }}</h2>
+                            <div class="user-name-overlay">{{ $like->user->name }}</div>
+                            <p class="post-location">{{ $like->country_id }} / {{ $like->city }}</p>
+                            <p class="post-date">{{ $like->start_date }}~{{ $like->end_date }}</p>
+                            <p class="post-comment">{{ $like->content }}</p>
                             <div class="post-actions">
                                 <button onClick="toggleLike({{ $like->id }})" class="like-button">
                                     <i class="{{ $like->isLikedBy(Auth::user()) ? 'fas fa-heart' : 'far fa-heart' }}"></i>

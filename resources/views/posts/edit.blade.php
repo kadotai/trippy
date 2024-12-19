@@ -119,9 +119,13 @@
 
         <div class="link">
             {{-- Delete --}}
-            {{-- <div class="Delete">
-                <a href="{{ route('posts.destroy', $post->id) }}" onclick="return confirm('削除してもよろしいですか？')">削除</a>
-            </div> --}}
+            <div class="Delete">
+                <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">削除</button>
+                </form>
+            </div>
 
             {{-- Update --}}
             <div class="Update">
