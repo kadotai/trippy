@@ -15,17 +15,16 @@
     width: 60px;
     border: none;
     background-color: #028391;
-    /* ↑いったん見えないから黄色にしてる */
 }
-.top_selected_tag{
+
+.top_selected_tag, .result_selected_tag{
     background-color: #fff; 
-    /* ↑いったん見えないから黄色にしてる */
     height: 45px;
     width: 100%;
     overflow-x: scroll; /* 横スクロールを有効にする */
     white-space: nowrap; /* 横に並べる */
 }
-.tag-button{
+.tag-button, .tag-button-result{
     color: #028391;
     display: inline-block;
     font-size: 13px;
@@ -38,6 +37,12 @@
 }
 
 .tag-button.selected{
+    background-color: #028391;
+    color: #fff;
+    border-color: #028391;
+}
+
+.tag-button-result.selected{
     background-color: #028391;
     color: #fff;
     border-color: #028391;
@@ -71,12 +76,6 @@
     border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
-}
-
-.tag-button-result.selected {
-    background-color: #028391;
-    color: #fff;
-    border-color: #028391;
 }
 
 /* 投稿結果 */
