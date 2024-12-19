@@ -215,6 +215,10 @@ h2 {
     display: block;
 }
 
+.mypage-container {
+    width: 100%;
+}
+
 .mypage-container a {
     color: #333;
     background-color: rgb(254, 249, 234);
