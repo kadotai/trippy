@@ -39,6 +39,7 @@
         </section>
     
         {{-- 検索結果 --}}
+        <div class="margin">
         @if ($results->count() > 0)
     @foreach ($results as $post)
         <div class="article_card_result" data-id="{{ $post->id }}">
@@ -77,6 +78,7 @@
             </a>
         </div>
     @endforeach
+    </div>
 @else
     <p>No matching posts.</p>
 @endif

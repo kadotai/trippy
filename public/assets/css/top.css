@@ -288,3 +288,7 @@ a {
 .page .pagination li a:hover {
     background-color: #e9ecef; /* ホバー時の背景色 */
 }
+
+.margin{
+    margin-bottom: 80px;
+}
