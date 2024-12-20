@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Post | TRiPPY</title>
+@extends('layouts.footer')
+
+@section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/edit.css') }}">
-</head>
-<body>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+@endsection
+
+@section('content')
     <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data" id="editForm">
         @csrf
         @method('PUT') <!-- 編集にはPUTメソッドを使用 -->
@@ -134,5 +132,4 @@
         </div>
     </form>
 
-</body>
-</html>
+@endsection
